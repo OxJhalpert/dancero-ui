@@ -1,11 +1,47 @@
+import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
 import React, { useState } from "react";
 import Web3 from 'web3';
-import DanceroToken from "./abis/DanceroToken.json"
-import UsdtToken from "./abis/UsdtToken.json"
+import UstToken from "./abis/UstToken.json"
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import cali from './images/cali.jpg';
+import bogota from './images/bogota.jpg';
+import cartagena from './images/cartagena.jpeg';
+import hombre from './images/Hombre.png';
+import medellin from './images/medellin.jpg';
+import mujer from './images/mujer.png';
+import offline from './images/offline.jpg';
+import online from './images/online.jpg';
+import salsa from './images/salsa.jpg';
+import reggaeton from './images/reaggaeton.jpg';
+import bachata from './images/bachata.jpg';
 
 export default function App() {
   const [page, setPage] = useState(1);
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    user : ""
+  });
+
+  async function connect (){
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      window.ethereum.enable();
+
+      var account = await window.web3.eth.getAccounts();
+      updateData("user", account[0]);
+
+      } else if (window.web3) {
+          window.web3 = new Web3(window.web3.currentProvider);
+      } else {
+          window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+    }
+  }
 
   function goNextPage() {
     if (page === 6) return;
@@ -22,7 +58,7 @@ export default function App() {
 
 async function  transferToken ( amount,_contractAbi,_addressContract){
 
-  var user = await window.web3.eth.getAccounts()             
+  const user = await window.web3.eth.getAccounts();
   window.web3.eth.getBlock("latest").then(async function(response){
   console.log(response.gasLimit)
   window.web3.eth.getGasPrice().then(function(gas){
@@ -36,7 +72,7 @@ async function  transferToken ( amount,_contractAbi,_addressContract){
     amount = window.web3.utils.toWei(amount, 'Ether');
     const contract = new window.web3.eth.Contract(_contractAbi,_addressContract);
     contract.methods
-    .transfer( "0x880A36731521B1E295AEa30443Bbc9bd23FfB2e9",amount) 
+    .transfer( "0x02a10A6182B60Ee989fd611cab17bd0512885205",amount) 
     .send(
       item
     );
@@ -47,6 +83,25 @@ async function  transferToken ( amount,_contractAbi,_addressContract){
 
   return (
     <div className="App">
+     <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Dancero App
+          </Typography>
+          <p color="inherit">Wallet: {data.user}</p>
+        </Toolbar>
+      </AppBar>
+    </Box>
       <div>
         <progress max="6" value={page} />
       </div>
@@ -56,45 +111,28 @@ async function  transferToken ( amount,_contractAbi,_addressContract){
         {page === 3 && <StepThree data={data} update={updateData} />}
         {page === 4 && <StepFour data={data} update={updateData} />}
         {page === 5 && <StepFive data={data} update={updateData} />}
-        {page === 6 && <StepSix data={data} />}
+        {page === 6 && <StepSix data={data} update={updateData}/>}
       </div>
 
       {page !== 6}
       {page === 6 && (
         <>
-          <button
-            onClick={(e) => {
-              if (window.ethereum) {
-                window.web3 = new Web3(window.ethereum)
-                window.ethereum.enable()
-
-                } else if (window.web3) {
-                    window.web3 = new Web3(window.web3.currentProvider)
-                } else {
-                    window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
-              }
+          <Button variant="contained" style={{margin: "10px"}}
+            onClick={async (e) => {
+              connect();
             }}
           >
           Connect Metamask
-          </button>
-          <button
-            onClick={async (event) =>{
-              var amount = "10"
-              var _contractAbi = DanceroToken.abi
-              var _addressContract="0x30fA1ef775DFdF02935b4eDb5fDF0F308E6F96F1"
-              transferToken (amount,_contractAbi, _addressContract)
-          }}>
-            Pay with DCO
-          </button>
-          <button
+          </Button>
+          <Button variant="contained" style={{margin: "10px"}}
             onClick={async (event) =>{
               var amount = "15"
-              var _contractAbi=UsdtToken.abi
-              var _addressContract="0x0dE2A5ea877C76c190F8659f78e5772743db02d2"
+              var _contractAbi=UstToken.abi
+              var _addressContract="0x67862E5fD5DdCDAC1007786d8ce4469dDa847635"
               transferToken(amount,_contractAbi, _addressContract)
           }}>
             Pay with UST
-          </button>
+          </Button>
           <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
             <input type="hidden" name="cmd" value="_xclick"/>
             <input type="hidden" name="business" value="ivan9711@outlook.com"/>
@@ -117,52 +155,247 @@ async function  transferToken ( amount,_contractAbi,_addressContract){
 
 function StepOne({ update }) {
   return (
-    <div>
-      modo en que vera las clases:
-      <br></br>
-      <button onClick={() => update("modo", "online ")}>online</button>
-      <button onClick={() => update("modo", "offline ")}>offline</button>
-    </div>
+    <Grid sx={{ flexGrow: 1 }} container spacing={2}>
+    <Grid item xs={12}>
+      <Grid container justifyContent="center" spacing={2}>
+          <Grid key={1} item>
+          <Card sx={{ maxWidth: 345 }}>
+            <CardMedia
+              component="img"
+              alt="Online"
+              height="140"
+              image={online}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Online
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" variant="contained" onClick={() => update("Mode", "Online ")}>Select</Button>
+            </CardActions>
+          </Card>
+          </Grid>
+          <Grid key={1} item>
+          <Card sx={{ maxWidth: 345 }}>
+            <CardMedia
+              component="img"
+              alt="Offline"
+              height="140"
+              image={offline}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Offline
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" variant="contained" onClick={() => update("Mode", "Offline ")}>Select</Button>
+            </CardActions>
+          </Card>
+          </Grid>
+      </Grid>
+    </Grid>
+  </Grid>
   );
 }
 
 function StepTwo({ update }) {
   return (
-    <div>
-      escoja su genero:
-      <br></br>
-      <button onClick={() => update("genero", "hombre")}>Hombre</button>
-      <button onClick={() => update("genero", "mujer")}>Mujer</button>
-    </div>
+    <Grid sx={{ flexGrow: 1 }} container spacing={2}>
+      <Grid item xs={12}>
+        <Grid container justifyContent="center" spacing={2}>
+            <Grid key={1} item>
+            <Card sx={{ maxWidth: 345 }}>
+            <CardMedia
+              component="img"
+              alt="Woman"
+              height="140"
+              image={mujer}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Woman
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" variant="contained" onClick={() => update("Gender", "Woman")}>Select</Button>
+            </CardActions>
+          </Card>
+            </Grid>
+            <Grid key={1} item>
+            <Card sx={{ maxWidth: 345 }}>
+            <CardMedia
+              component="img"
+              alt="Man"
+              height="140"
+              image={hombre}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Man
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" variant="contained" onClick={() => update("Gender", "Man")}>Select</Button>
+            </CardActions>
+          </Card>
+            </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 
 function StepThree({ update }) {
   return (
-    <div>
-      escoja el genero deseado para aprender:
-      <br></br>
-      <button onClick={() => update("genero_musical", "salsa ")}>salsa</button>
-      <button onClick={() => update("genero_musical", "bachata ")}>
-        bachata
-      </button>
-      <button onClick={() => update("genero_musical", "reggaeton ")}>
-        reggaeton
-      </button>
-    </div>
+    <Grid sx={{ flexGrow: 1 }} container spacing={2}>
+      <Grid item xs={12}>
+        <Grid container justifyContent="center" spacing={2}>
+            <Grid key={1} item>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardMedia
+                component="img"
+                alt="reggaeton"
+                height="140"
+                image={reggaeton}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Reggaeton
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" variant="contained" onClick={() => update("Musical_gender", "Reggaeton ")}>Select</Button>
+              </CardActions>
+            </Card>
+            </Grid>
+            <Grid key={1} item>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardMedia
+                component="img"
+                alt="salsa"
+                height="140"
+                image={salsa}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Salsa
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" variant="contained" onClick={() => update("Musical_gender", "Salsa ")}>Select</Button>
+              </CardActions>
+            </Card>
+            </Grid>
+            <Grid key={1} item>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardMedia
+                component="img"
+                alt="bachata"
+                height="140"
+                image={bachata}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Bachata
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" variant="contained" onClick={() => update("Musical_gender", "Bachata ")} >Select</Button>
+              </CardActions>
+            </Card>
+            </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 
 function StepFour({ update }) {
   return (
-    <div>
-      escoja su ciudad:
-      <br></br>
-      <button onClick={() => update("ciudad", "medellin ")}>medellin</button>
-      <button onClick={() => update("ciudad", "bogota ")}>bogota</button>
-      <button onClick={() => update("ciudad", "cali")}>cali</button>
-      <button onClick={() => update("ciudad", "cartagena")}>cartagena</button>
-    </div>
+    <Grid sx={{ flexGrow: 1 }} container spacing={2}>
+      <Grid item xs={12}>
+        <Grid container justifyContent="center" spacing={2}>
+            <Grid key={1} item>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardMedia
+                component="img"
+                alt="cartagena"
+                height="140"
+                image={cartagena}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Cartagena
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" variant="contained" onClick={() => update("City", "Cartagena")}>Select</Button>
+              </CardActions>
+            </Card>
+
+            </Grid>
+            <Grid key={1} item>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardMedia
+                component="img"
+                alt="bogota"
+                height="140"
+                image={bogota}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Bogota
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" variant="contained" onClick={() => update("City", "Bogota ")} >Select</Button>
+              </CardActions>
+            </Card>
+
+            </Grid>
+            <Grid key={1} item>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardMedia
+                component="img"
+                alt="medellin"
+                height="140"
+                image={medellin}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Medellin
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" variant="contained" onClick={() => update("City", "Medellin ")}>Select</Button>
+              </CardActions>
+            </Card>
+
+            </Grid>
+            <Grid key={1} item>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardMedia
+                component="img"
+                alt="cali"
+                height="140"
+                image={cali}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Cali
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" variant="contained" onClick={() => update("City", "Cali")} >Select</Button>
+              </CardActions>
+            </Card>
+
+            </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 
@@ -175,7 +408,7 @@ function StepFive({ update }) {
       <p>Date To</p>
       <input></input>
       <br></br>
-      <button onClick={() => update("dateFrom" ,"dateto")}>next</button>
+      <Button variant ="contained" style={{margin: "10px"}} onClick={() => update("Date_From" ,"Date_to")}>next</Button>
     </div>
   );
 }
@@ -183,7 +416,7 @@ function StepFive({ update }) {
 function StepSix({ data }) {
   return (
     <div>
-      resumen:
+      Resume:
       <br></br>
       <p> {JSON.stringify(data)} </p>
     </div>

@@ -4,8 +4,8 @@ pragma solidity ^0.8.2;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract UsdtToken  is ERC20, Ownable {
-    constructor() ERC20("Usdt token", "USDT") {}
+contract UstToken  is ERC20, Ownable {
+    constructor() ERC20("Ust token", "UST") {}
 
     function mint(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
