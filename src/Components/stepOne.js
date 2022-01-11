@@ -32,7 +32,7 @@ function StepOne({ update }) {
                   <Button
                     size="small"
                     variant="contained"
-                    onClick={() => update("Mode", "Online ")}
+                    onClick={() => update("Mode", "Online")}
                   >
                     Select
                   </Button>
@@ -56,7 +56,7 @@ function StepOne({ update }) {
                   <Button
                     size="small"
                     variant="contained"
-                    onClick={() => update("Mode", "Offline ")}
+                    onClick={() => update("Mode", "Offline")}
                   >
                     Select
                   </Button>

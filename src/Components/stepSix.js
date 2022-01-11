@@ -9,7 +9,7 @@ import StarIcon from "@mui/icons-material/Star";
 import DiamondIcon from "@mui/icons-material/Diamond";
 
 
-function StepSix({ update }) {
+function StepSix({ update,goBackPage }) {
     return (
       <Grid sx={{ flexGrow: 3 }} container spacing={2}>
         <Grid item xs={12}>
@@ -70,6 +70,14 @@ function StepSix({ update }) {
                   </Button>
                 </CardActions>
               </Card>
+            </Grid>
+            <Grid key={26} item>
+            <Button
+                  variant="contained"
+                  onClick={()=> goBackPage()}
+                  >                  
+                    back
+                  </Button>
             </Grid>
           </Grid>
         </Grid>

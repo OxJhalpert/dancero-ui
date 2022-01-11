@@ -10,24 +10,26 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
 import UstToken from "../abis/UstToken.json";
+import { Typography } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
 
-function createData(name, option) {
-  return { name, option };
+function createData(name, option, name2, option2) {
+  return { name, option, name2 ,option2 };
 }
 
 
-function StepNine({ data, connect, transferToken }) {
+function StepNine({ data, connect, transferToken, goBackPage }) {
+
     const rows = [
-      createData("User", data.user),
-      createData("Mode", data.Mode),
-      createData("Gender", data.Gender),
-      createData("Musical gender", data.Musical_gender),
-      createData("City", data.City),
-      createData("Service", data.Service),
-      createData("Level", data.Level),
-      createData("Hours", data.Hours),
+      createData(<b>Date from</b>, '', <b>City</b>, data.City),
+      createData(<b>Date to</b>, '', <b>Service</b>, data.Service),
+      createData(<b>Mode</b>, data.Mode, <b>Level</b>, data.Level),
+      createData(<b>Gender</b> , data.Gender, <b>Hours</b>, data.Hours),
+      createData(<b>Musical gender</b>, data.Musical_gender),
+
     ];
     return (
       <Grid sx={{ flexGrow: 1 }} container spacing={2}>
@@ -38,33 +40,58 @@ function StepNine({ data, connect, transferToken }) {
                 <Table sx={{ minWidth: 400 }} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Status</TableCell>
-                      <TableCell align="right">Option</TableCell>
                     </TableRow>
                   </TableHead>
+                  <TableBody>
+                    
+                  </TableBody>
                   <TableBody>
                     {rows.map((row) => (
                       <TableRow
                         key={row.name}
                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+
                       >
                         <TableCell component="th" scope="row">
                           {row.name}
                         </TableCell>
                         <TableCell align="right">{row.option}</TableCell>
+                        <TableCell align="right">{row.name2}</TableCell>
+                        <TableCell align="right">{row.option2}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
               </TableContainer>
-            </Grid>
-            <Grid key={18} item>
-              <List
-                sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-              >
+            </Grid>            
+            <Grid key={30} item>
+              <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
                 <ListItem>
-                  <ListItemAvatar>
-                    <Button
+                <Grid key={19} item>
+                  <Card sx={{ maxWidth: 345 }}>
+                  <CardContent>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                      Total to Pay
+                  </Typography>
+                  <Typography variant="h2" component="div">
+                  10 USD
+                  </Typography>
+                  </CardContent>
+                  <CardActions>
+                  </CardActions>
+                  </Card>
+                </Grid>
+                </ListItem>
+                <ListItem>
+                <Grid key={19} item>
+                  <Card sx={{ maxWidth: 345 }}>
+                  <CardContent>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                      Pay with crypto
+                  </Typography>
+                  </CardContent>
+                  <CardActions>
+                  <Button
                       variant="contained"
                       style={{ margin: "10px" }}
                       onClick={async (e) => {
@@ -73,13 +100,11 @@ function StepNine({ data, connect, transferToken }) {
                     >
                       Connect Metamask
                     </Button>
-                  </ListItemAvatar>
-                </ListItem>
-                <ListItem>
-                  <ListItemAvatar>
                     <Button
                       variant="contained"
                       style={{ margin: "10px" }}
+                      disabled = {!data.user }
+                      id="btnPay"
                       onClick={async (event) => {
                         var amount = "15";
                         var _contractAbi = UstToken.abi;
@@ -90,12 +115,38 @@ function StepNine({ data, connect, transferToken }) {
                     >
                       Pay with UST
                     </Button>
-                  </ListItemAvatar>
+                  </CardActions>
+                  </Card>
+                </Grid>
                 </ListItem>
                 <ListItem>
-                  <ListItemAvatar>
-                    <Button variant="contained">Pay with paypal</Button>
-                  </ListItemAvatar>
+                <Grid key={19} item>
+                  <Card sx={{ maxWidth: 345 }}>
+                  <CardContent>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                      Pay with FIAT
+                  </Typography>
+                  </CardContent>
+                  <CardActions>
+                  <Button variant ="contained" >pay with paypal</Button>
+                  <Button variant="contained" >pay with stripe</Button>
+                  </CardActions>
+                  </Card>
+                </Grid>
+                </ListItem>
+                <ListItem>
+                <Grid key={19} item>
+                  <Card sx={{ maxWidth: 80 }}>
+                  <CardActions>
+                  <Button
+                  variant="contained"
+                  onClick={()=> goBackPage()}
+                  >                  
+                    back
+                  </Button>
+                  </CardActions>
+                  </Card>
+                </Grid>
                 </ListItem>
               </List>
             </Grid>

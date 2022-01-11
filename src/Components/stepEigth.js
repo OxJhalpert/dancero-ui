@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 
-function StepEigth({ update }) {
+function StepEigth({ update, goBackPage }) {
     return (
       <Grid sx={{ flexGrow: 3 }} container spacing={2}>
         <Grid item xs={12}>
@@ -26,7 +26,7 @@ function StepEigth({ update }) {
                   <Button
                     size="small"
                     variant="contained"
-                    onClick={() => update("hours", "Five ")}
+                    onClick={() => update("Hours", "Five")}
                   >
                     Select
                   </Button>
@@ -69,7 +69,7 @@ function StepEigth({ update }) {
                 </CardActions>
               </Card>
             </Grid>
-            <Grid key={18} item>
+            <Grid key={21} item>
               <Card sx={{ maxWidth: 345 }}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -87,7 +87,7 @@ function StepEigth({ update }) {
                 </CardActions>
               </Card>
             </Grid>
-            <Grid key={18} item>
+            <Grid key={22} item>
               <Card sx={{ maxWidth: 345 }}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -105,7 +105,7 @@ function StepEigth({ update }) {
                 </CardActions>
               </Card>
             </Grid>
-            <Grid key={18} item>
+            <Grid key={23} item>
               <Card sx={{ maxWidth: 345 }}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -123,7 +123,7 @@ function StepEigth({ update }) {
                 </CardActions>
               </Card>
             </Grid>
-            <Grid key={18} item>
+            <Grid key={24} item>
               <Card sx={{ maxWidth: 345 }}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -141,6 +141,13 @@ function StepEigth({ update }) {
                 </CardActions>
               </Card>
             </Grid>
+            <Button
+                  size='samll'
+                  variant="contained"
+                  onClick={()=> goBackPage()}
+                  >                  
+                    back
+                  </Button>
           </Grid>
         </Grid>
       </Grid>

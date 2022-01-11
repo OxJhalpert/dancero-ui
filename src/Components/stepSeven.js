@@ -7,7 +7,7 @@ import CardContent from "@mui/material/CardContent";
 
 
 
-function StepSeven({ update }) {
+function StepSeven({ update, goBackPage }) {
     return (
       <Grid sx={{ flexGrow: 3 }} container spacing={2}>
         <Grid item xs={12}>
@@ -65,6 +65,14 @@ function StepSeven({ update }) {
                   </Button>
                 </CardActions>
               </Card>
+            </Grid>
+            <Grid key={26} item>
+            <Button
+                  variant="contained"
+                  onClick={()=> goBackPage()}
+                  >                  
+                    back
+                  </Button>
             </Grid>
           </Grid>
         </Grid>

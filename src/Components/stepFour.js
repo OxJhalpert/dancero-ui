@@ -11,7 +11,7 @@ import cartagena from "../images/cartagena.jpeg";
 import medellin from "../images/medellin.jpg";
 
 
-function StepFour({ update }) {
+function StepFour({ update, goBackPage }) {
     return (
       <Grid sx={{ flexGrow: 4 }} container spacing={2}>
         <Grid item xs={12}>
@@ -106,6 +106,14 @@ function StepFour({ update }) {
                   </Button>
                 </CardActions>
               </Card>
+            </Grid>
+            <Grid key={26} item>
+            <Button
+                  variant="contained"
+                  onClick={()=> goBackPage()}
+                  >                  
+                    back
+                  </Button>
             </Grid>
           </Grid>
         </Grid>

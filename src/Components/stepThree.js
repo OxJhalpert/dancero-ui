@@ -9,7 +9,7 @@ import salsa from "../images/salsa.jpg";
 import reggaeton from "../images/reggaeton.jpg";
 import bachata from "../images/bachata.jpg";
 
-function StepThree({ update }) {
+function StepThree({ update, goBackPage }) {
     return (
       <Grid sx={{ flexGrow: 3 }} container spacing={2}>
         <Grid item xs={12}>
@@ -85,6 +85,14 @@ function StepThree({ update }) {
                   </Button>
                 </CardActions>
               </Card>
+            </Grid>
+            <Grid key={26} item>
+            <Button
+                  variant="contained"
+                  onClick={()=> goBackPage()}
+                  >                  
+                    back
+                  </Button>
             </Grid>
           </Grid>
         </Grid>

@@ -8,7 +8,7 @@ import CardMedia from "@mui/material/CardMedia";
 import hombre from "../images/Hombre.png";
 import mujer from "../images/mujer.png";
 
-function StepTwo ({ update }) {
+function StepTwo ({ update, goBackPage }) {
     return (
       <Grid sx={{ flexGrow: 2 }} container spacing={2}>
         <Grid item xs={12}>
@@ -60,6 +60,14 @@ function StepTwo ({ update }) {
                   </Button>
                 </CardActions>
               </Card>
+            </Grid>
+            <Grid key={25} item>
+            <Button
+                  variant="contained"
+                  onClick={()=> goBackPage()}
+                  >                  
+                    back
+                  </Button>
             </Grid>
           </Grid>
         </Grid>

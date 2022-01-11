@@ -25,13 +25,13 @@ export default function App() {
   async function connect() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
-      window.ethereum.enable();
-
-      var account = await window.web3.eth.getAccounts();
+      const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
       updateData("user", account[0]);
+      
     } else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider);
     } else {
+ 
       window.alert(
         "Non-Ethereum browser detected. You should consider trying MetaMask!"
       );
@@ -43,12 +43,19 @@ export default function App() {
     setPage((page) => page + 1);
   }
 
+  function goBackPage() {
+    if (page === 1) return;
+    setPage((page) => page - 1);
+  }
+
   function updateData(type, newData) {
     setData((data) => {
       return { ...data, [type]: newData };
     });
     goNextPage();
+    
   }
+   
 
   async function transferToken(amount, _contractAbi, _addressContract) {
     const user = await window.web3.eth.getAccounts();
@@ -78,7 +85,7 @@ export default function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App" >
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
@@ -103,14 +110,14 @@ export default function App() {
       </div>
        <div>
         {page === 1 && <StepOne data={data} update={updateData} />}
-        {page === 2 && <StepTwo  data={data} update={updateData}/>}
-        {page === 3 && <StepThree  data={data} update={updateData}/>}
-        {page === 4 && <StepFour  data={data} update={updateData}/>}
-        {page === 5 && <StepFive  data={data} update={updateData}/>}
-        {page === 6 && <StepSix  data={data} update={updateData}/>}
-        {page === 7 && <StepSeven  data={data} update={updateData}/>}
-        {page === 8 && <StepEigth  data={data} update={updateData}/>}
-        {page === 9 && (<StepNine  data={data} update={updateData} connect={connect} transferToken={transferToken} />
+        {page === 2 && <StepTwo  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 3 && <StepThree  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 4 && <StepFour  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 5 && <StepFive  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 6 && <StepSix  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 7 && <StepSeven  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 8 && <StepEigth  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 9 && (<StepNine  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage}/>
         )}
        </div>  
     </div>
