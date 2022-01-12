@@ -13,8 +13,13 @@ function StepTwo ({ update, goBackPage }) {
       <Grid sx={{ flexGrow: 2 }} container spacing={2}>
         <Grid item xs={12}>
           <Grid container justifyContent="center" spacing={2}>
+            <Grid item xs={12}>
+              <Grid container justifyContent="center" spacing={2}>
+                <h2>Please select gender of the teacher :</h2>
+              </Grid>
+            </Grid>
             <Grid key={3} item>
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }}  onClick={() => update("Gender", "Woman")}>
                 <CardMedia
                   component="img"
                   alt="Woman"
@@ -27,18 +32,11 @@ function StepTwo ({ update, goBackPage }) {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("Gender", "Woman")}
-                  >
-                    Select
-                  </Button>
                 </CardActions>
               </Card>
             </Grid>
             <Grid key={4} item>
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }}  onClick={() => update("Gender", "Man")}>
                 <CardMedia
                   component="img"
                   alt="Man"
@@ -51,17 +49,10 @@ function StepTwo ({ update, goBackPage }) {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("Gender", "Man")}
-                  >
-                    Select
-                  </Button>
                 </CardActions>
               </Card>
             </Grid>
-            <Grid key={25} item>
+            <Grid xs={12} item container justifyContent="center" >
             <Button
                   variant="contained"
                   onClick={()=> goBackPage()}

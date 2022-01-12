@@ -14,8 +14,13 @@ function StepThree({ update, goBackPage }) {
       <Grid sx={{ flexGrow: 3 }} container spacing={2}>
         <Grid item xs={12}>
           <Grid container justifyContent="center" spacing={2}>
+          <Grid item xs={12}>
+              <Grid container justifyContent="center" spacing={2}>
+                <h2>Please select the music genre :</h2>
+              </Grid>
+            </Grid>
             <Grid key={5} item>
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Musical_gender", "Reggaeton ")}>
                 <CardMedia
                   component="img"
                   alt="reggaeton"
@@ -28,18 +33,11 @@ function StepThree({ update, goBackPage }) {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("Musical_gender", "Reggaeton ")}
-                  >
-                    Select
-                  </Button>
                 </CardActions>
               </Card>
             </Grid>
             <Grid key={6} item>
-              <Card sx={{ maxWidth: 200 }}>
+              <Card sx={{ maxWidth: 200 }} onClick={() => update("Musical_gender", "Salsa ")}>
                 <CardMedia
                   component="img"
                   alt="salsa"
@@ -52,18 +50,11 @@ function StepThree({ update, goBackPage }) {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("Musical_gender", "Salsa ")}
-                  >
-                    Select
-                  </Button>
                 </CardActions>
               </Card>
             </Grid>
             <Grid key={7} item>
-              <Card sx={{ maxWidth: 200 }}>
+              <Card sx={{ maxWidth: 200 }} onClick={() => update("Musical_gender", "Bachata ")}>
                 <CardMedia
                   component="img"
                   alt="bachata"
@@ -76,22 +67,15 @@ function StepThree({ update, goBackPage }) {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("Musical_gender", "Bachata ")}
-                  >
-                    Select
-                  </Button>
                 </CardActions>
               </Card>
             </Grid>
-            <Grid key={26} item>
+            <Grid xs={12} item container justifyContent="center" >
             <Button
                   variant="contained"
                   onClick={()=> goBackPage()}
                   >                  
-                    back
+                    Back
                   </Button>
             </Grid>
           </Grid>

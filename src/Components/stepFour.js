@@ -17,7 +17,7 @@ function StepFour({ update, goBackPage }) {
         <Grid item xs={12}>
           <Grid container justifyContent="center" spacing={2}>
             <Grid key={8} item>
-              <Card sx={{ maxWidth: 200 }}>
+              <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Cartagena")}>
                 <CardMedia
                   component="img"
                   alt="cartagena"
@@ -29,19 +29,10 @@ function StepFour({ update, goBackPage }) {
                     Cartagena
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("City", "Cartagena")}
-                  >
-                    Select
-                  </Button>
-                </CardActions>
               </Card>
             </Grid>
             <Grid key={9} item>
-              <Card sx={{ maxWidth: 200 }}>
+              <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Bogota ")}>
                 <CardMedia
                   component="img"
                   alt="bogota"
@@ -53,19 +44,10 @@ function StepFour({ update, goBackPage }) {
                     Bogota
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("City", "Bogota ")}
-                  >
-                    Select
-                  </Button>
-                </CardActions>
               </Card>
             </Grid>
             <Grid key={10} item>
-              <Card sx={{ maxWidth: 200 }}>
+              <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Medellin ")}>
                 <CardMedia
                   component="img"
                   alt="medellin"
@@ -77,37 +59,19 @@ function StepFour({ update, goBackPage }) {
                     Medellin
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("City", "Medellin ")}
-                  >
-                    Select
-                  </Button>
-                </CardActions>
               </Card>
             </Grid>
             <Grid key={11} item>
-              <Card sx={{ maxWidth: 200 }}>
+              <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Cali")}>
                 <CardMedia component="img" alt="cali" height="140" image={cali} />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     Cali
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("City", "Cali")}
-                  >
-                    Select
-                  </Button>
-                </CardActions>
               </Card>
             </Grid>
-            <Grid key={26} item>
+            <Grid xs={12} item container justifyContent="center" >
             <Button
                   variant="contained"
                   onClick={()=> goBackPage()}

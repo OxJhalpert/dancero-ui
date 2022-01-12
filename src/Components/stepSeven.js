@@ -13,60 +13,33 @@ function StepSeven({ update, goBackPage }) {
         <Grid item xs={12}>
           <Grid container justifyContent="center" spacing={2}>
             <Grid key={15} item>
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Level", "Semi")}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     Semi
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("Level", "Semi")}
-                  >
-                    Select
-                  </Button>
-                </CardActions>
               </Card>
             </Grid>
             <Grid key={16} item>
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Level", "Pro")}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     Pro
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("Level", "Pro")}
-                  >
-                    Select
-                  </Button>
-                </CardActions>
               </Card>
             </Grid>
             <Grid key={17} item>
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Level", "Master")}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     Master
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("Level", "Master")}
-                  >
-                    Select
-                  </Button>
-                </CardActions>
               </Card>
             </Grid>
-            <Grid key={26} item>
+            <Grid xs={12} item container justifyContent="center" >
             <Button
                   variant="contained"
                   onClick={()=> goBackPage()}

@@ -85,7 +85,7 @@ function StepFive({ update, goBackPage }) {
                         <CloseIcon fontSize="inherit" />
                         </IconButton>}
                   >
-                    This is a warning alert — check it out!
+                    Please select valid dates to continue
                   </Alert>  : null }
                       
                 </Grid>

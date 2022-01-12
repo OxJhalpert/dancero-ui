@@ -15,63 +15,36 @@ function StepSix({ update,goBackPage }) {
         <Grid item xs={12}>
           <Grid container justifyContent="center" spacing={2}>
             <Grid key={12} item>
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Service", "Basic ")}>
                 <CardContent>
                   <DoneIcon sx={{ minWidth: 200, fontSize: 80 }} />
                   <Typography gutterBottom variant="h5" component="div">
                     Basic
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("Service", "Basic ")}
-                  >
-                    Select
-                  </Button>
-                </CardActions>
               </Card>
             </Grid>
             <Grid key={13} item>
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Service", "Standard ")}>
                 <StarIcon sx={{ minWidth: 200, fontSize: 80 }} />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     Standard
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("Service", "Standard ")}
-                  >
-                    Select
-                  </Button>
-                </CardActions>
               </Card>
             </Grid>
             <Grid key={14} item>
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Service", "Premium ")}>
                 <DiamondIcon sx={{ minWidth: 200, fontSize: 80 }} />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     Premium
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => update("Service", "Premium ")}
-                  >
-                    Select
-                  </Button>
-                </CardActions>
               </Card>
             </Grid>
-            <Grid key={26} item>
+            <Grid xs={12} item container justifyContent="center" >
             <Button
                   variant="contained"
                   onClick={()=> goBackPage()}

@@ -3,7 +3,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import React, { useState } from "react";
 import Web3 from "web3";
 import Box from "@mui/material/Box";
-
+import Button from "@mui/material/Button";
 
 import StepOne from './Components/stepOne.js';
 import StepTwo from './Components/stepTwo.js';
@@ -101,7 +101,6 @@ export default function App() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
               Dancero App
             </Typography>
-            <p color="inherit">Wallet: {data.user}</p>
           </Toolbar>
         </AppBar>
       </Box>
