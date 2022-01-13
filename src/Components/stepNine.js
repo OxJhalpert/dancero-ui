@@ -5,7 +5,7 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
+//import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
@@ -18,6 +18,7 @@ import moment from 'moment'
 import UstToken from '../abis/UstToken.json';
 import UsdtToken from '../abis/UsdtToken.json';
 import UsdcToken from '../abis/UsdcToken.json';
+import getPriceAndCostCalculation from './utils';
 
 
 function createData(name, option, name2, option2) {
@@ -25,14 +26,23 @@ function createData(name, option, name2, option2) {
 }
 
 
-function StepNine({ data, connect, transferToken, goBackPage }) {
-  
+
+function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
+
+  var cost = getPriceAndCostCalculation(data.Service, data.Level, data.Hours,data.City,data.Venue,0); 
+  var rest= cost[1]-cost[0];
+  var total = rest;
+
+  rest = rest / exchangeRatio;
+  rest = Math.round(rest);
+  console.log(total, rest, cost);
+
   var initialDate = moment(data.dates.dateFrom).format("MMM Do YY");
   var finalDate = moment(data.dates.dateTo).format("MMM Do YY");
   const rows = [
     createData(<b>Date from</b>,initialDate, <b>City</b>, data.City),
     createData(<b>Date to</b>, finalDate, <b>Service Type</b>, data.Service),
-    createData(<b>Mode</b>, data.Mode, <b>Level</b>, data.Level),
+    createData(<b>Venue</b>, data.Venue, <b>Level</b>, data.Level),
     createData(<b>Teacher Gender</b>, data.Gender, <b>Hours Pack</b>, data.Hours),
     createData(<b>Musical genre</b>, data.Musical_gender),
 
@@ -44,13 +54,6 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
           <Grid key={1} item>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 400 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-
-                </TableBody>
                 <TableBody>
                   {rows.map((row) => (
                     <TableRow
@@ -75,14 +78,14 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                   <Card  >
                     <CardContent>
                       <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        Total to Pay
+                        Total to Pay  ({total} COP, ER = {exchangeRatio})
                       </Typography>
-                      <Typography variant="h2" component="div">
-                        10 USD
+                      <CardActions>
+                      </CardActions>
+                      <Typography variant="h3" component="div">
+                        {rest} USD
                       </Typography>
                     </CardContent>
-                    <CardActions>
-                    </CardActions>
                   </Card>
                 </Grid>
               </ListItem>
@@ -106,17 +109,17 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                       </Button>
     
                       <input type="radio" id="payWithUsdc" name="val" value="payWithUsdc"></input> 
-                      <label htmlFor="payWithUsdc" checked >Pay with USDC</label>
+                      <label htmlFor="payWithUsdc"  >USDC</label>
                       
                    
                      
-                      <input type="radio" id="payWithUsdt" name="val" value="payWithUsdt"></input>
-                      <label htmlFor="payWithUsdt">Pay with USDT</label>
+                      <input type="radio" id="payWithUsdt" name="val" value="payWithUsdt" checked ></input>
+                      <label htmlFor="payWithUsdt">USDT</label>
                       
                      
                     
                       <input type="radio" id="payWithUst" name="val" value="payWithUst"></input>
-                      <label htmlFor="payWithUsdc">Pay with UST</label>
+                      <label htmlFor="payWithUsdc">UST</label>
                       
                       <Button
                         variant="contained"
@@ -124,7 +127,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                         disabled={!data.user}
                         id="btnPay"
                         onClick={async (event) => {
-                          var amount = "15";
+                          var amount = rest.toString();
                           var _contractAbi = '';
                           var _addressContract ="";
 

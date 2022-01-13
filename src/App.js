@@ -20,7 +20,9 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
     user: "",
+    
   });
+  const [ exchangeRatio, setexchangeRatio] = useState(3800)
 
   async function connect() {
     if (window.ethereum) {
@@ -38,9 +40,23 @@ export default function App() {
     }
   }
 
+  function getExchangeRate(){
+    fetch('https://api.exchangerate-api.com/v4/latest/USD')
+    .then(res => {
+      return res.json();
+    })
+    .then(res => {
+      setexchangeRatio(res.rates.COP)
+    })
+  }
+
   function goNextPage() {
-    if (page === 9) return;
+    if (page === 9)  return; 
+    if(page === 8){
+      getExchangeRate()
+    }
     setPage((page) => page + 1);
+    
   }
 
   function goBackPage() {
@@ -116,7 +132,7 @@ export default function App() {
         {page === 6 && <StepSix  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 7 && <StepSeven  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 8 && <StepEigth  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 9 && (<StepNine  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage}/>
+        {page === 9 && (<StepNine  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} exchangeRatio={exchangeRatio}/>
         )}
        </div>  
     </div>

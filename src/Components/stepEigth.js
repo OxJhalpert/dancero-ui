@@ -5,6 +5,9 @@ import Card from "@mui/material/Card";
 //import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 
+
+
+
 function StepEigth({ update, goBackPage }) {
     return (
       <Grid sx={{ flexGrow: 3 }} container spacing={2}>
@@ -16,7 +19,7 @@ function StepEigth({ update, goBackPage }) {
         <Grid item xs={12}>
           <Grid container justifyContent="center" spacing={2}>
             <Grid key={18} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "Five")}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "5")}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     5
@@ -25,7 +28,7 @@ function StepEigth({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid key={19} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "Ten")}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "10")}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     10
@@ -34,7 +37,7 @@ function StepEigth({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid key={20} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "Fifteen")}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "15")}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     15
@@ -43,7 +46,7 @@ function StepEigth({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid key={21} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "Twenty")}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "20")}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     20
@@ -52,7 +55,7 @@ function StepEigth({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid key={22} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "Thirty")}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "30")}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     30
@@ -61,7 +64,7 @@ function StepEigth({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid key={23} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "Forty")}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "40")}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     40
@@ -70,7 +73,7 @@ function StepEigth({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid key={24} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "Fifty")}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Hours", "50")}>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     50

@@ -5,8 +5,9 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import offline from "../images/offline.jpg";
 import online from "../images/online.jpg";
+import studio from '../images/studio.jpg';
+import home from '../images/home.jpg';
 
 
 
@@ -25,8 +26,8 @@ function StepOne({ update }) {
         <Grid container justifyContent="center" spacing={2}>
           <Grid key={1} item>
             <Card
-              sx={{ maxWidth: 345 }}
-              onClick={() => update("Mode", "Online")}
+              sx={{ maxWidth: 200 }}
+              onClick={() => update("Venue", "Virtual")}
             >
               <CardMedia
                 component="img"
@@ -36,7 +37,26 @@ function StepOne({ update }) {
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Online
+                  Virtual
+                </Typography>
+              </CardContent>
+              <CardActions></CardActions>
+            </Card>
+          </Grid>
+          <Grid key={3} item>
+            <Card
+              sx={{ maxWidth: 200 }}
+              onClick={() => update("Venue", "Studio")}
+            >
+              <CardMedia
+                component="img"
+                alt="Studio"
+                height="140"
+                image={studio}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  Studio
                 </Typography>
               </CardContent>
               <CardActions></CardActions>
@@ -44,18 +64,18 @@ function StepOne({ update }) {
           </Grid>
           <Grid key={2} item>
             <Card
-              sx={{ maxWidth: 345 }}
-              onClick={() => update("Mode", "Offline")}
+              sx={{ maxWidth: 200 }}
+              onClick={() => update("Venue", "Home")}
             >
               <CardMedia
                 component="img"
-                alt="Offline"
+                alt="Home"
                 height="140"
-                image={offline}
+                image={home}
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  Offline
+                  Home
                 </Typography>
               </CardContent>
               <CardActions></CardActions>

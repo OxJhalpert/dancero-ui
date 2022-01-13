@@ -9,7 +9,7 @@
 */
 
 //getPriceAndCostCalculation("basic", "semi", 10, "medellin", "studio", 0);
-function getPriceAndCostCalculation(
+ export default function getPriceAndCostCalculation(
 	serviceType, 
 	level,
 	hours, 
@@ -52,7 +52,8 @@ function getTransformationHourPack(hours)
 
 function getLevelTransformation(level)
 {
- 	switch (level.toLowerCase()) {
+  level = level.toLowerCase();
+ 	switch (level) {
   	case "semi": return { 'ipp' : 0, 'dpp' : 10, 'ipc' : 0, 'dpc' : 10, 'iap' : 0, 'iac' : 0 };
     case "pro": return { 'ipp' : 0, 'dpp' : 0, 'ipc' : 0, 'dpc' : 0, 'iap' : 0, 'iac' : 0 };
     case "master": return { 'ipp' : 20, 'dpp' : 0, 'ipc' : 10, 'dpc' : 0, 'iap' : 0, 'iac' : 0 };
@@ -62,7 +63,8 @@ function getLevelTransformation(level)
 
 function getServiceAmountTransformation(service)
 {
- 	switch (service.toLowerCase()) {
+  service = service.toLowerCase();
+ 	switch (service) {
   	case "basic": return { 'ipp' : 0, 'dpp' : 0, 'ipc' : 0, 'dpc' : 0, 'iap' : 0, 'iac' : 0 };
     case "standard": return { 'ipp' : 15, 'dpp' : 0, 'ipc' : 0, 'dpc' : 0, 'iap' : 0, 'iac' : 0 };
     case "premium": return { 'ipp' : 30, 'dpp' : 0, 'ipc' : 0, 'dpc' : 0, 'iap' : 0, 'iac' : 0 };
@@ -72,8 +74,10 @@ function getServiceAmountTransformation(service)
 
 function getLocationTransformation(location, venue)
 {
-  if(venue.toLowerCase() == "virtual") { location = "" }
-	switch (location.toLowerCase() + venue.toLowerCase()) 
+  location = location.toLowerCase();
+  venue = venue.toLowerCase();
+  if(venue === "virtual") { location = "" }
+	switch (location + venue) 
   {
   	case "virtual" :        return { 'ipp' : 0, 'dpp' : 25, 'ipc' : 0, 'dpc' : 30, 'iap' : 0, 'iac' : 0 };
   	case "medellinhome" :   return { 'ipp' : 0, 'dpp' : 0, 'ipc' : 0, 'dpc' : 0, 'iap' : 0, 'iac' : 0 };
@@ -89,16 +93,16 @@ function getLocationTransformation(location, venue)
   
 }
 
-function getParticipantRatioDiscount()
-{
-    //TODO  
-}
+// function getParticipantRatioDiscount()
+// {
+//     //TODO  
+// }
 
 
-function getParticipantRatio(numberOfStudents, numberOfTeachers)
-{
-	return numberOfStudents / numberOfTeachers;
-}
+// function getParticipantRatio(numberOfStudents, numberOfTeachers)
+// {
+// 	return numberOfStudents / numberOfTeachers;
+// }
 
 function applyAmountTransformation(baseCost, basePrice, transformationObject)
 {
@@ -137,3 +141,4 @@ function calculatePercentageAmount(amount, percentage)
 {
 	return (amount * percentage) / 100
 }
+
