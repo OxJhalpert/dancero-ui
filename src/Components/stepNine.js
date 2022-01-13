@@ -113,7 +113,7 @@ function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
                       
                    
                      
-                      <input type="radio" id="payWithUsdt" name="val" value="payWithUsdt" checked ></input>
+                      <input type="radio" id="payWithUsdt" name="val" value="payWithUsdt" defaultChecked ></input>
                       <label htmlFor="payWithUsdt">USDT</label>
                       
                      
