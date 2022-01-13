@@ -10,11 +10,15 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import UstToken from "../abis/UstToken.json";
 import { Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import moment from 'moment'
+import UstToken from '../abis/UstToken.json';
+import UsdtToken from '../abis/UsdtToken.json';
+import UsdcToken from '../abis/UsdcToken.json';
+
 
 function createData(name, option, name2, option2) {
   return { name, option, name2, option2 };
@@ -22,10 +26,12 @@ function createData(name, option, name2, option2) {
 
 
 function StepNine({ data, connect, transferToken, goBackPage }) {
-
+  
+  var initialDate = moment(data.dates.dateFrom).format("MMM Do YY");
+  var finalDate = moment(data.dates.dateTo).format("MMM Do YY");
   const rows = [
-    createData(<b>Date from</b>, '', <b>City</b>, data.City),
-    createData(<b>Date to</b>, '', <b>Service Type</b>, data.Service),
+    createData(<b>Date from</b>,initialDate, <b>City</b>, data.City),
+    createData(<b>Date to</b>, finalDate, <b>Service Type</b>, data.Service),
     createData(<b>Mode</b>, data.Mode, <b>Level</b>, data.Level),
     createData(<b>Teacher Gender</b>, data.Gender, <b>Hours Pack</b>, data.Hours),
     createData(<b>Musical genre</b>, data.Musical_gender),
@@ -52,9 +58,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
 
                     >
-                      <TableCell component="th" scope="row">
-                        {row.name}
-                      </TableCell>
+                      <TableCell component="th" scope="row">{row.name}</TableCell>
                       <TableCell align="right">{row.option}</TableCell>
                       <TableCell align="right">{row.name2}</TableCell>
                       <TableCell align="right">{row.option2}</TableCell>
@@ -83,8 +87,8 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                 </Grid>
               </ListItem>
               <ListItem>
-                <Grid key={19} item>
-                  <Card sx={{ maxWidth: 345 }}>
+                <Grid key={31} item>
+                  <Card sx={{ maxWidth: 500 }}>
                     <CardContent>
                       <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         Pay with crypto
@@ -100,6 +104,20 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                       >
                         Connect Metamask
                       </Button>
+    
+                      <input type="radio" id="payWithUsdc" name="val" value="payWithUsdc"></input> 
+                      <label htmlFor="payWithUsdc" checked >Pay with USDC</label>
+                      
+                   
+                     
+                      <input type="radio" id="payWithUsdt" name="val" value="payWithUsdt"></input>
+                      <label htmlFor="payWithUsdt">Pay with USDT</label>
+                      
+                     
+                    
+                      <input type="radio" id="payWithUst" name="val" value="payWithUst"></input>
+                      <label htmlFor="payWithUsdc">Pay with UST</label>
+                      
                       <Button
                         variant="contained"
                         style={{ margin: "10px" }}
@@ -107,20 +125,47 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                         id="btnPay"
                         onClick={async (event) => {
                           var amount = "15";
-                          var _contractAbi = UstToken.abi;
-                          var _addressContract =
-                            "0x67862E5fD5DdCDAC1007786d8ce4469dDa847635";
-                          transferToken(amount, _contractAbi, _addressContract);
+                          var _contractAbi = '';
+                          var _addressContract ="";
+
+                          var ele = document.getElementsByName('val');
+                          var radiusValue = '';
+                          for( var i = 0; i < ele.length; i++) {
+                          if(ele[i].checked)
+                          radiusValue= ele[i].value
+                          }
+                          console.log(radiusValue)
+                          if(radiusValue !== ''){
+                            if(radiusValue === 'payWithUst') {
+                              amount = "15";
+                              _contractAbi = UstToken.abi;
+                              _addressContract ="0x67862E5fD5DdCDAC1007786d8ce4469dDa847635";
+                             
+ 
+                           }else if(radiusValue==='payWithUsdt'){
+                              _contractAbi = UsdtToken.abi;
+                              _addressContract ="0x649C680dF9a192d9eE1F4Ed368962914dc3EF8c4";
+                             
+ 
+                           }else if(radiusValue === 'payWithUsdc'){
+                              _contractAbi = UsdcToken.abi;
+                              _addressContract ="0x413e1A7a3702756588857259e4a55Bd2E272cE4b";
+                             
+                           }
+                           transferToken(amount, _contractAbi, _addressContract);
+
+                          }
+ 
                         }}
                       >
-                        Pay with UST
+                        Pay 
                       </Button>
                     </CardActions>
                   </Card>
                 </Grid>
               </ListItem>
               <ListItem>
-                <Grid key={19} item>
+                <Grid key={32} item>
                   <Card sx={{ maxWidth: 345 }}>
                     <CardContent>
                       <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -135,7 +180,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                 </Grid>
               </ListItem>
               <ListItem>
-                <Grid key={19} item>
+                <Grid key={33} item>
                   <Card sx={{ maxWidth: 80 }}>
                     <CardActions>
                       <Button

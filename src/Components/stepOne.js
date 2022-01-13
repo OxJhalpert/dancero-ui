@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import Button from "@mui/material/Button";
+//import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -15,13 +15,19 @@ function StepOne({ update }) {
     <Grid sx={{ flexGrow: 1 }} container spacing={2}>
       <Grid item xs={12}>
         <Grid container justifyContent="center" spacing={2}>
-          <h2>Welcome to Dancero wizard, please select one of the following options :</h2>
+          <h2>
+            Welcome to Dancero wizard, please select one of the following
+            options :
+          </h2>
         </Grid>
       </Grid>
       <Grid item xs={12}>
         <Grid container justifyContent="center" spacing={2}>
           <Grid key={1} item>
-            <Card sx={{ maxWidth: 345 }} onClick={() => update("Mode", "Online")}>
+            <Card
+              sx={{ maxWidth: 345 }}
+              onClick={() => update("Mode", "Online")}
+            >
               <CardMedia
                 component="img"
                 alt="Online"
@@ -33,12 +39,14 @@ function StepOne({ update }) {
                   Online
                 </Typography>
               </CardContent>
-              <CardActions>
-              </CardActions>
+              <CardActions></CardActions>
             </Card>
           </Grid>
           <Grid key={2} item>
-            <Card sx={{ maxWidth: 345 }} onClick={() => update("Mode", "Offline")}>
+            <Card
+              sx={{ maxWidth: 345 }}
+              onClick={() => update("Mode", "Offline")}
+            >
               <CardMedia
                 component="img"
                 alt="Offline"
@@ -50,8 +58,7 @@ function StepOne({ update }) {
                   Offline
                 </Typography>
               </CardContent>
-              <CardActions>
-              </CardActions>
+              <CardActions></CardActions>
             </Card>
           </Grid>
         </Grid>

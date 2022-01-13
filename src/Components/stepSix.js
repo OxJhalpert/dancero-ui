@@ -2,7 +2,7 @@ import {Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
+//import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import DoneIcon from "@mui/icons-material/Done";
 import StarIcon from "@mui/icons-material/Star";
@@ -14,6 +14,11 @@ function StepSix({ update,goBackPage }) {
       <Grid sx={{ flexGrow: 3 }} container spacing={2}>
         <Grid item xs={12}>
           <Grid container justifyContent="center" spacing={2}>
+          <Grid item xs={12}>
+              <Grid container justifyContent="center" spacing={2}>
+                <h2>Please select your membership :</h2>
+              </Grid>
+            </Grid>
             <Grid key={12} item>
               <Card sx={{ maxWidth: 345 }} onClick={() => update("Service", "Basic ")}>
                 <CardContent>

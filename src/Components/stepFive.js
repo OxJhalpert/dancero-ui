@@ -14,7 +14,9 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 
+
 function StepFive({ update, goBackPage }) {
+    
     const [value, setValue] = useState([null, null]);
     const [error, setError] = useState(false);
     return (
@@ -58,7 +60,7 @@ function StepFive({ update, goBackPage }) {
                     style={{ margin: "10px" }}
                     onClick={() =>{
                       if(value[0] != null && value[1] != null){
-                        update("dates", {dateFrom : value[0], dateTo : value[1]})
+                        update("dates", {dateFrom : value[0], dateTo : value[1]})                        
                       }else {
                         setError(true);
                         

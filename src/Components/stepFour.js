@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
+//import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import cali from "../images/cali.jpg";
@@ -16,6 +16,11 @@ function StepFour({ update, goBackPage }) {
       <Grid sx={{ flexGrow: 4 }} container spacing={2}>
         <Grid item xs={12}>
           <Grid container justifyContent="center" spacing={2}>
+          <Grid item xs={12}>
+              <Grid container justifyContent="center" spacing={2}>
+                <h2>Please select your city :</h2>
+              </Grid>
+            </Grid>
             <Grid key={8} item>
               <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Cartagena")}>
                 <CardMedia
