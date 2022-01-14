@@ -15,6 +15,8 @@ import StepSeven from './Components/stepSeven.js';
 import StepEigth from './Components/stepEigth.js';
 import StepNine from './Components/stepNine.js';
 
+import './css/cards.css';
+
 
 export default function App() {
   const [page, setPage] = useState(1);

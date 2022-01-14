@@ -22,7 +22,7 @@ function StepFive({ update, goBackPage }) {
     return (
       <div>
         <br></br>
-        <Grid sx={{ flexGrow: 1 }} container spacing={2}>
+        <Grid sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
           <Grid item xs={12}>
             <Grid container justifyContent="center" spacing={2}>
               <h2>Choose dates for you classes :</h2>

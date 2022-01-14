@@ -13,7 +13,7 @@ import medellin from "../images/medellin.jpg";
 
 function StepFour({ update, goBackPage }) {
     return (
-      <Grid sx={{ flexGrow: 4 }} container spacing={2}>
+      <Grid sx={{ flexGrow: 4 }} container spacing={2} p={2.5}>
         <Grid item xs={12}>
           <Grid container justifyContent="center" spacing={2}>
           <Grid item xs={12}>

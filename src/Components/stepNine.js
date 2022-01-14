@@ -48,7 +48,7 @@ function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
 
   ];
   return (
-    <Grid sx={{ flexGrow: 1 }} container spacing={2}>
+    <Grid sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
       <Grid item xs={12}>
         <Grid container justifyContent="center" spacing={2}>
           <Grid key={1} item>

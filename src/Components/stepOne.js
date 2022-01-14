@@ -13,8 +13,8 @@ import home from '../images/home.jpg';
 
 function StepOne({ update }) {
   return (
-    <Grid sx={{ flexGrow: 1 }} container spacing={2}>
-      <Grid item xs={12}>
+    <Grid sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
+      <Grid item xs={12} >
         <Grid container justifyContent="center" spacing={2}>
           <h2>
             Welcome to Dancero wizard, please select one of the following

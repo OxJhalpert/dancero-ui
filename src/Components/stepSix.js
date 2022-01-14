@@ -11,7 +11,7 @@ import DiamondIcon from "@mui/icons-material/Diamond";
 
 function StepSix({ update,goBackPage }) {
     return (
-      <Grid sx={{ flexGrow: 3 }} container spacing={2}>
+      <Grid sx={{ flexGrow: 3 }} container spacing={2} p={2.5}>
         <Grid item xs={12}>
           <Grid container justifyContent="center" spacing={2}>
           <Grid item xs={12}>
