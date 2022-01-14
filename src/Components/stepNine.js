@@ -1,4 +1,4 @@
-
+import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Table from "@mui/material/Table";
@@ -19,6 +19,8 @@ import UstToken from '../abis/UstToken.json';
 import UsdtToken from '../abis/UsdtToken.json';
 import UsdcToken from '../abis/UsdcToken.json';
 import getPriceAndCostCalculation from './utils';
+import dance from '../images/FIiy_CIVUAEmzBH.jpg';
+import Select from 'react-select';
 
 
 function createData(name, option, name2, option2) {
@@ -28,6 +30,18 @@ function createData(name, option, name2, option2) {
 
 
 function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
+
+  const choice = [
+    { value: '', label: '' },
+    { value: '', label: '' },
+    { value: '', label: '' }
+  ]
+
+    const MyComponent = () => (
+      <Select options= {choice} />
+  )
+
+
 
   var cost = getPriceAndCostCalculation(data.Service, data.Level, data.Hours,data.City,data.Venue,0); 
   var rest= cost[1]-cost[0];
@@ -51,6 +65,7 @@ function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
     <Grid sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
       <Grid item xs={12}>
         <Grid container justifyContent="center" spacing={2}>
+
           <Grid key={1} item>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 400 }} aria-label="simple table">
@@ -70,7 +85,27 @@ function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
                 </TableBody>
               </Table>
             </TableContainer>
+            <br></br>
+            <Card
+              sx={{ maxWidth: 500 }}
+            >
+              <CardMedia
+                component="img"
+                alt="Dance"
+                height="140"
+                image={dance}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  
+                </Typography>
+              </CardContent>
+              <CardActions>
+                    <MyComponent></MyComponent>
+              </CardActions>
+            </Card>
           </Grid>
+
           <Grid key={30} item>
             <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
               <ListItem>
@@ -89,6 +124,7 @@ function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
                   </Card>
                 </Grid>
               </ListItem>
+
               <ListItem>
                 <Grid key={31} item>
                   <Card sx={{ maxWidth: 500 }}>
@@ -167,6 +203,7 @@ function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
                   </Card>
                 </Grid>
               </ListItem>
+
               <ListItem>
                 <Grid key={32} item>
                   <Card sx={{ maxWidth: 345 }}>
@@ -182,6 +219,7 @@ function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
                   </Card>
                 </Grid>
               </ListItem>
+
               <ListItem>
                 <Grid key={33} item>
                   <Card sx={{ maxWidth: 80 }}>
