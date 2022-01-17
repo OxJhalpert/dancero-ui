@@ -21,8 +21,8 @@ function StepSix({ update,goBackPage }) {
             </Grid>
             <Grid key={12} item>
               <Card sx={{ maxWidth: 345 }} onClick={() => update("Service", "Basic ")}>
+                <DoneIcon sx={{ minWidth: 200, fontSize: 80 }} />
                 <CardContent>
-                  <DoneIcon sx={{ minWidth: 200, fontSize: 80 }} />
                   <Typography gutterBottom variant="h5" component="div">
                     Basic
                   </Typography>
