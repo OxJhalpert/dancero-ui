@@ -10,6 +10,8 @@ import bogota from "../images/bogota.jpg";
 import cartagena from "../images/cartagena.jpeg";
 import medellin from "../images/medellin.jpg";
 
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+
 
 function StepFour({ update, goBackPage }) {
     return (
@@ -26,7 +28,7 @@ function StepFour({ update, goBackPage }) {
                 <CardMedia
                   component="img"
                   alt="cartagena"
-                  height="140"
+                  height="300"
                   image={cartagena}
                 />
                 <CardContent>
@@ -37,11 +39,11 @@ function StepFour({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid key={9} item>
-              <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Bogota ")}>
+              <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Bogota")}>
                 <CardMedia
                   component="img"
                   alt="bogota"
-                  height="140"
+                  height="300"
                   image={bogota}
                 />
                 <CardContent>
@@ -52,11 +54,11 @@ function StepFour({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid key={10} item>
-              <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Medellin ")}>
+              <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Medellin")}>
                 <CardMedia
                   component="img"
                   alt="medellin"
-                  height="140"
+                  height="300"
                   image={medellin}
                 />
                 <CardContent>
@@ -68,7 +70,11 @@ function StepFour({ update, goBackPage }) {
             </Grid>
             <Grid key={11} item>
               <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Cali")}>
-                <CardMedia component="img" alt="cali" height="140" image={cali} />
+                <CardMedia 
+                  component="img" 
+                  alt="cali" 
+                  height="300" 
+                  image={cali} />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     Cali

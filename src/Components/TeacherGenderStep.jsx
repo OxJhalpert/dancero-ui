@@ -7,6 +7,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import hombre from "../images/Hombre.png";
 import mujer from "../images/mujer.png";
+import Fab from '@mui/material/Fab';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
 function StepTwo ({ update, goBackPage }) {
@@ -20,11 +22,11 @@ function StepTwo ({ update, goBackPage }) {
               </Grid>
             </Grid>
             <Grid key={3} item>
-              <Card sx={{ maxWidth: 345 }}  onClick={() => update("Gender", "Woman")}>
+              <Card sx={{ maxWidth: 300 }}  onClick={() => update("Gender", "Woman")}>
                 <CardMedia
                   component="img"
                   alt="Woman"
-                  height="140"
+                  height="300"
                   image={mujer}
                 />
                 <CardContent>
@@ -37,11 +39,11 @@ function StepTwo ({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid key={4} item>
-              <Card sx={{ maxWidth: 345 }}  onClick={() => update("Gender", "Man")}>
+              <Card sx={{ maxWidth: 300 }}  onClick={() => update("Gender", "Man")}>
                 <CardMedia
                   component="img"
                   alt="Man"
-                  height="140"
+                  height="300"
                   image={hombre}
                 />
                 <CardContent>
@@ -54,12 +56,9 @@ function StepTwo ({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid xs={12} item container justifyContent="center" >
-            <Button
-                  variant="contained"
-                  onClick={()=> goBackPage()}
-                  >                  
-                    back
-                  </Button>
+            <Fab variant="extended" size="medium" color="primary" onClick={()=> goBackPage()} >
+              <ArrowBackIcon/>
+            </Fab>
             </Grid>
           </Grid>
         </Grid>

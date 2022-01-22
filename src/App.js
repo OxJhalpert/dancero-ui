@@ -1,29 +1,32 @@
 import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import React, { useState } from "react";
 import Web3 from "web3";
 import Box from "@mui/material/Box";
-//import Button from "@mui/material/Button";
+import LinearProgress from '@mui/material/LinearProgress';
+import Button from "@mui/material/Button";
+import '@fontsource/roboto/300.css';
 
-import StepOne from './Components/stepOne.js';
-import StepTwo from './Components/stepTwo.js';
-import StepThree from './Components/stepThree.js';
-import StepFour from './Components/stepFour.js';
-import StepFive from './Components/stepFive.js';
-import StepSix from './Components/stepSix.js';
-import StepSeven from './Components/stepSeven.js';
-import StepEigth from './Components/stepEigth.js';
-import StepNine from './Components/stepNine.js';
+import LandingPage from './Components/LandingStep.jsx';
+import ClassTypeStep from './Components/ClassTypeStep.jsx';
+import TeacherGenderStep from './Components/TeacherGenderStep.jsx';
+import MusicGenreStep from './Components/MusicGenreStep.jsx';
+import LocationStep from './Components/LocationStep.jsx';
+import DatesStep from './Components/DatesStep.jsx';
+import MembershipStep from './Components/MembershipStep.jsx';
+import LevelStep from './Components/LevelStep.jsx';
+import HoursStep from './Components/HoursStep.jsx';
+import BoardStep from './Components/Board.jsx';
 
 import './css/cards.css';
-
+import HomeStudioStep from "./Components/HomeStudioStep.jsx";
 
 export default function App() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
     user: "",
-    
   });
+
+  const pages = ['Products', 'Pricing', 'Blog'];
   const [ exchangeRatio, setexchangeRatio] = useState(3800)
 
   async function connect() {
@@ -35,30 +38,15 @@ export default function App() {
     } else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider);
     } else {
- 
       window.alert(
         "Non-Ethereum browser detected. You should consider trying MetaMask!"
       );
     }
   }
 
-  function getExchangeRate(){
-    fetch('https://api.exchangerate-api.com/v4/latest/USD')
-    .then(res => {
-      return res.json();
-    })
-    .then(res => {
-      setexchangeRatio(res.rates.COP)
-    })
-  }
-
   function goNextPage() {
-    if (page === 9)  return; 
-    if(page === 8){
-      getExchangeRate()
-    }
+    if (page === 10) return;
     setPage((page) => page + 1);
-    
   }
 
   function goBackPage() {
@@ -104,39 +92,45 @@ export default function App() {
 
   return (
     <div className="App" >
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 2 }}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
               Dancero App
             </Typography>
+
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
           </Toolbar>
         </AppBar>
       </Box>
       <div>
-        <progress max="9" value={page} />
+        { page > 1 ? <LinearProgress variant="determinate" value={page * 10}  /> : null}
       </div>
        <div>
-        {page === 1 && <StepOne data={data} update={updateData} />}
-        {page === 2 && <StepTwo  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 3 && <StepThree  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 4 && <StepFour  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 5 && <StepFive  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 6 && <StepSix  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 7 && <StepSeven  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 8 && <StepEigth  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 9 && (<StepNine  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} exchangeRatio={exchangeRatio}/>
-        )}
-       </div>  
+        {page === 1 && <LandingPage update={updateData}/>}
+        {page === 2 && <ClassTypeStep data={data} update={updateData} />}
+        {page === 3 && data.Venue == "Offline" ? 
+            <HomeStudioStep data={data} update={updateData} /> 
+          : page === 3 && data.Venue !== "Offline" ? <TeacherGenderStep  data={data} update={updateData} goBackPage={goBackPage}/> : null }
+        {page === 4 && <MusicGenreStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 5 && <LocationStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 6 && <DatesStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 7 && <MembershipStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 8 && <LevelStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 9 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} exchangeRatio={exchangeRatio}/>}
+        {page === 11 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} exchangeRatio={exchangeRatio}/>}
+
+       </div> 
     </div>
   );
 }

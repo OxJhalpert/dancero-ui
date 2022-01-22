@@ -20,8 +20,8 @@ function StepSix({ update,goBackPage }) {
               </Grid>
             </Grid>
             <Grid key={12} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Service", "Basic ")}>
-                <DoneIcon sx={{ minWidth: 200, fontSize: 80 }} />
+              <Card sx={{ maxWidth: 200  }} onClick={() => update("Service", "Basic")}>
+                <DoneIcon sx={{ minHeight : 300, minWidth: 200, fontSize: 80 }} />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     Basic
@@ -30,8 +30,8 @@ function StepSix({ update,goBackPage }) {
               </Card>
             </Grid>
             <Grid key={13} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Service", "Standard ")}>
-                <StarIcon sx={{ minWidth: 200, fontSize: 80 }} />
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Service", "Standard")}>
+                <StarIcon sx={{ minHeight : 300, minWidth: 200, fontSize: 80 }} />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     Standard
@@ -40,8 +40,8 @@ function StepSix({ update,goBackPage }) {
               </Card>
             </Grid>
             <Grid key={14} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Service", "Premium ")}>
-                <DiamondIcon sx={{ minWidth: 200, fontSize: 80 }} />
+              <Card sx={{ maxWidth: 345 }} onClick={() => update("Service", "Premium")}>
+                <DiamondIcon sx={{ minHeight : 300, minWidth: 200, fontSize: 80 }} />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     Premium

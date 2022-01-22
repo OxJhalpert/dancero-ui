@@ -10,14 +10,14 @@ import Box from "@mui/material/Box";
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-
-
-
+import DatePicker from '@mui/lab/DatePicker';
 
 
 function StepFive({ update, goBackPage }) {
     
-    const [value, setValue] = useState([null, null]);
+    const [dateFrom, setDateFrom] = useState(null);
+    const [dateTo, setDateTo] = useState(null);
+
     const [error, setError] = useState(false);
     return (
       <div>
@@ -33,39 +33,42 @@ function StepFive({ update, goBackPage }) {
               <Grid container justifyContent="center" spacing={2}>
                 <Grid key={1} item>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DateRangePicker
-                      startText="Start"
-                      endText="End"
-                      value={value}
+                  <DatePicker
+                      label="Start of classes"
+                      value={dateFrom}
                       onChange={(newValue) => {
-                        setValue(newValue);
+                        setDateFrom(newValue);
+                        setDateTo(newValue);
                       }}
-                      renderInput={(startProps, endProps) => (
-                        <React.Fragment>
-                          <TextField {...startProps} />
-                          <Box sx={{ mx: 2 }}> to </Box>
-                          <TextField {...endProps} />
-                        </React.Fragment>
-                      )}
+                      renderInput={(params) => <TextField {...params} />}
                     />
-                  </LocalizationProvider>
+                  -
+                  <DatePicker
+                      label="End of classes"
+                      value={dateTo}
+                      onChange={(newValue) => {
+                        setDateTo(newValue);
+                      }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />                    
+
+                  </LocalizationProvider><br/>
                   <Button
                   variant="contained"
                   onClick={()=> goBackPage()}
                   >                  
-                    back
+                    Back
                   </Button>
                   <Button
                     variant="contained"
                     style={{ margin: "10px" }}
                     onClick={() =>{
-                      if(value[0] != null && value[1] != null){
-                        update("dates", {dateFrom : value[0], dateTo : value[1]})                        
+                      console.log(dateFrom);
+                      if(dateFrom !== null && dateTo !== null){
+                        update("dates", {dateFrom : dateFrom, dateTo : dateTo})                        
                       }else {
                         setError(true);
-                        
-                        //alert('choose the valid date')
-                      } 
+                      }
                     }                            
                     }
                   >

@@ -5,17 +5,16 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import online from "../images/online.jpg";
 import studio from '../images/studio.jpg';
 import home from '../images/home.jpg';
 
 
 
-function StepOne({ update }) {
+function HomeStudioStep({ update }) {
   return (
     <Grid sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
       <Grid item xs={12} >
-        <Grid container justifyContent="center" spacing={2}>
+        <Grid container justifyContent="center" spacing={2}  alignItems="center">
           <h2>
             Welcome to Dancero wizard, please select one of the following
             options :
@@ -23,54 +22,16 @@ function StepOne({ update }) {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Grid container justifyContent="center" spacing={2}>
+        <Grid container justifyContent="center" spacing={3}>
           <Grid key={1} item>
             <Card
-              sx={{ maxWidth: 200 }}
-              onClick={() => update("Venue", "Virtual")}
+              sx={{ maxWidth: 300 }}
+              onClick={() => update("place", "home")}
             >
               <CardMedia
                 component="img"
                 alt="Online"
-                height="140"
-                image={online}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Virtual
-                </Typography>
-              </CardContent>
-              <CardActions></CardActions>
-            </Card>
-          </Grid>
-          <Grid key={3} item>
-            <Card
-              sx={{ maxWidth: 200 }}
-              onClick={() => update("Venue", "Studio")}
-            >
-              <CardMedia
-                component="img"
-                alt="Studio"
-                height="140"
-                image={studio}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Studio
-                </Typography>
-              </CardContent>
-              <CardActions></CardActions>
-            </Card>
-          </Grid>
-          <Grid key={2} item>
-            <Card
-              sx={{ maxWidth: 200 }}
-              onClick={() => update("Venue", "Home")}
-            >
-              <CardMedia
-                component="img"
-                alt="Home"
-                height="140"
+                height="300"
                 image={home}
               />
               <CardContent>
@@ -81,10 +42,29 @@ function StepOne({ update }) {
               <CardActions></CardActions>
             </Card>
           </Grid>
+          <Grid key={3} item>
+            <Card
+              sx={{ maxWidth: 300 }}
+              onClick={() => update("place", "studio")}
+            >
+              <CardMedia
+                component="img"
+                alt="Studio"
+                height="300"
+                image={studio}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  studio
+                </Typography>
+              </CardContent>
+              <CardActions></CardActions>
+            </Card>
+          </Grid>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
   );
 }
 
-export default StepOne;
+export default HomeStudioStep;

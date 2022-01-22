@@ -14,7 +14,8 @@
 	level,
 	hours, 
 	location, 
-	venue, 
+	venue,
+  place,
   participantRatio)
 {
 	
@@ -30,7 +31,7 @@
   var serviceTypeTransformation = getServiceAmountTransformation(serviceType);
   [baseCost, basePrice] = applyAmountTransformation(baseCost, basePrice, serviceTypeTransformation);
 
-  var locationTransformation = getLocationTransformation(location, venue);
+  var locationTransformation = getLocationTransformation(location, venue, place);
   [baseCost, basePrice] = applyAmountTransformation(baseCost, basePrice, locationTransformation);
 
   return [baseCost * hours, basePrice * hours];
@@ -72,16 +73,20 @@ function getServiceAmountTransformation(service)
 	}
 }
 
-function getLocationTransformation(location, venue)
+function getLocationTransformation(location, venue, place)
 {
   location = location.toLowerCase();
   venue = venue.toLowerCase();
-  if(venue === "virtual") { location = "" }
-	switch (location + venue) 
+  place = place.toLowerCase();
+
+  var option = location + place;
+  if(venue === "online") { option = "virtual" }
+
+	switch (option)
   {
   	case "virtual" :        return { 'ipp' : 0, 'dpp' : 25, 'ipc' : 0, 'dpc' : 30, 'iap' : 0, 'iac' : 0 };
   	case "medellinhome" :   return { 'ipp' : 0, 'dpp' : 0, 'ipc' : 0, 'dpc' : 0, 'iap' : 0, 'iac' : 0 };
-  	case "medellinstudio" : return { 'ipp' : 0, 'dpp' : 0, 'ipc' : 0, 'dpc' : 0, 'iap' : 10000, 'iac' : 10000 };
+  	case "medellinstudio" : return { 'ipp' : 0, 'dpp' : 0, 'ipc' : 0, 'dpc' : 0, 'iap' : 15000, 'iac' : 15000 };
   	case "bogotahome" :     return { 'ipp' : 20, 'dpp' : 0, 'ipc' : 20, 'dpc' : 0, 'iap' : 0, 'iac' : 0 };
     case "bogotastudio" :   return { 'ipp' : 20, 'dpp' : 0, 'ipc' : 20, 'dpc' : 0, 'iap' : 20000, 'iac' : 20000 };
   	case "cartagenahome" :  return { 'ipp' : 10, 'dpp' : 0, 'ipc' : 10, 'dpc' : 0, 'iap' : 0, 'iac' : 0 };
