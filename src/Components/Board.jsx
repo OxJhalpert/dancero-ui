@@ -20,7 +20,6 @@ import UsdtToken from '../abis/UsdtToken.json';
 import UsdcToken from '../abis/UsdcToken.json';
 import getPriceAndCostCalculation from './utils';
 import dance from '../images/FIiy_CIVUAEmzBH.jpg';
-import Select from 'react-select';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -28,6 +27,10 @@ import CardHeader from '@mui/material/CardHeader';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import { useEffect, useState } from "react";
+import danceNFT from '../abis/danceNFT.json';
+import Select from '@mui/material/Select';
+
 
 
 function createData(name, option, name2, option2) {
@@ -36,7 +39,34 @@ function createData(name, option, name2, option2) {
 
 
 
-function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
+function StepNine({ data, connect, transferToken, goBackPage }) {
+
+  const [ exchangeRatio, setexchangeRatio] = useState()
+  const [imgNFT , setImgNFT] = useState("https://via.placeholder.com/150");
+  const [nftcodes, setNFTCodes] = useState([]);
+  const [nftSelected, SetNFTSelected] = useState(null);
+
+  function getExchangeRate(){
+    fetch('https://api.exchangerate-api.com/v4/latest/USD')
+    .then(res => {
+      return res.json();
+    })
+    .then(res => {
+      setexchangeRatio(res.rates.COP)
+    })
+  }
+  
+  useEffect(()=>{
+      getExchangeRate();
+  },[setexchangeRatio])
+
+  useEffect(() => {
+    if(data.user != ""){
+      loadNTFOfOwner();
+    }
+
+  }, [data.user]);
+
 
   var cost = getPriceAndCostCalculation(data.Service, data.Level, data.Hours, data.City, data.Venue, data.place, 0);
   var rest = cost[1] - cost[0];
@@ -56,6 +86,34 @@ function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
     createData(<b>Musical genre</b>, data.Musical_gender),
 
   ];
+
+  async function loadNTFOfOwner()
+  {
+    var danceNFTContract =  new window.web3.eth.Contract(danceNFT.abi, "0x3CAa1C35E5229EbbAEB70ea471F738a99c02381d");
+    var NFTCodes = await danceNFTContract.methods.getAllNFTCodesByAddress(data.user).call();
+    setNFTCodes(NFTCodes); 
+  }
+
+  async function loadNFTMetaData(nftId)
+  {
+    const danceNFTContract = new window.web3.eth.Contract(danceNFT.abi, "0xa7B7cC621163e3ac45c379c50580bff36D1310C5")
+    const balance = await danceNFTContract.methods
+    .balanceOf(data.user, nftId).call()
+    
+    if(balance >= 1){
+      var jsonData = await danceNFTContract.methods.uri(nftId).call();
+      jsonData = jsonData.replace("{id}", nftId);
+      fetch(jsonData)
+        .then((response) => response.json())
+        .then((data) => {
+          setImgNFT(data.image);
+        });      
+      alert('se ha aplicado un descuento')
+      
+    }else{
+      alert('usted no es propietario del token')
+    }
+  }
 
   let theme = createTheme({
     palette: {
@@ -87,7 +145,7 @@ function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
                   </CardHeader>
                   <CardContent>
                     <Typography variant="h5" component="div">
-                      <b>Price</b> : {rest} USD
+                      <b>Price</b> : {rest ? rest:"..."} USD
                     </Typography>
                   </CardContent>
                 </Card>
@@ -185,12 +243,11 @@ function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
             <Card sx={{ maxWidth: '100%' }}>
               <CardHeader
                 title="Load your NFT"
-                subheader="September 14, 2016"
               />
               <CardMedia
                 component="img"
-                height="194"
-                image="https://via.placeholder.com/150"
+                height="285"
+                image={imgNFT}
                 alt="Paella dish"
               />
               <CardContent>
@@ -202,13 +259,10 @@ function StepNine({ data, connect, transferToken, goBackPage, exchangeRatio }) {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value="10"
-                    label="Age"
-                    
+                    value={nftSelected}
+                    onChange={(evt) => {SetNFTSelected(evt.target.value); loadNFTMetaData(evt.target.value); }} 
                   >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
+                    { nftcodes.map( (nft) => <MenuItem value={nft}>{nft}</MenuItem>) }
                   </Select>
                 </FormControl>
               </CardActions>

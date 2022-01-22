@@ -77,7 +77,13 @@ function getLocationTransformation(location, venue, place)
 {
   location = location.toLowerCase();
   venue = venue.toLowerCase();
-  place = place.toLowerCase();
+  if(place != null){
+    place = place.toLowerCase();  
+  }
+  else
+  {
+    place = "";
+  }
 
   var option = location + place;
   if(venue === "online") { option = "virtual" }
