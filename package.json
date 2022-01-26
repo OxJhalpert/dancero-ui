@@ -25,6 +25,7 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "4.0.3",
     "react-select": "^5.2.2",
+    "truffle-flattener": "^1.5.0",
     "web-vitals": "^2.1.2",
     "web3": "^1.6.1"
   },

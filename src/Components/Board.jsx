@@ -91,7 +91,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
 
   async function loadNFTMetaData(nftId)
   {
-    const danceNFTContract = new window.web3.eth.Contract(danceNFT.abi, "0xa7B7cC621163e3ac45c379c50580bff36D1310C5")
+    const danceNFTContract = new window.web3.eth.Contract(danceNFT.abi, "0x3CAa1C35E5229EbbAEB70ea471F738a99c02381d")
     const balance = await danceNFTContract.methods
     .balanceOf(data.user, nftId).call()
     
@@ -109,22 +109,6 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
       alert('usted no es propietario del token')
     }
   }
-
-  // let theme = createTheme({
-  //   palette: {
-  //     background: {
-  //       default: '#DADADA',
-  //     },
-  //   },
-  // });
-
-
-  // const Item = styled(Paper)(({ theme }) => ({
-  //   ...theme.typography.body2,
-  //   padding: theme.spacing(1),
-  //   textAlign: 'center',
-  //   color: theme.palette.text.secondary,
-  // }));
 
   return (
     <Box sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>

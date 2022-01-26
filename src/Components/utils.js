@@ -39,11 +39,7 @@ export default function getPriceAndCostCalculation(
 
   var addedPriceFlatStudent = getAddedPriceFlatStudent(levelPercentageStudent,locationTransformation);
   var addedCostFlatTeacher = getAddedPriceFlatTeacher(levelPercentageTeacher,locationTransformation);
-  var resultS = addedPriceFlatStudent * hours;
-  var resultT = addedCostFlatTeacher * hours;
 
-  console.log('soy un resultado'+ resultS)
-  console.log('soy el otro resultado '+ resultT)
 
   return [ addedCostFlatTeacher * hours , addedPriceFlatStudent * hours];
   
@@ -179,7 +175,6 @@ function getLevelPercentageStudent(discount, transformationObject)
  {
   discount += calculatePercentageAmount(discount,transformationObject.ipp);
  }
- console.log('seria lo que debo multiplicar '+discount )
  return discount;
 }
 
@@ -189,7 +184,6 @@ function getLevelPercentageTeacher(discount,transformationObject)
   {
     discount += calculatePercentageAmount(discount,transformationObject.ipc)
   }
-  console.log('multiplicacion profesor '+discount)
   return discount;
 }
 
@@ -199,7 +193,6 @@ if(transformationObject.iap > 0 )
 {
   levelPercentageStudent += transformationObject.iap
 }
-console.log('soy el valor neto por hora s '+levelPercentageStudent)
 return levelPercentageStudent;
 
 }
@@ -211,7 +204,6 @@ function getAddedPriceFlatTeacher(levelPercentageTeacher,transformationObject)
   {
     levelPercentageTeacher += transformationObject.iac
   }
-  console.log('soy el valor neto por hora T ' + levelPercentageTeacher)
   return levelPercentageTeacher;
 }
 
