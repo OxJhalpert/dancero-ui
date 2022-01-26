@@ -69,7 +69,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
 
   rest = rest / exchangeRatio;
   rest = Math.round(rest);
-  console.log(total, rest, cost);
+  //console.log(total, rest, cost);
 
   var initialDate = moment(data.dates.dateFrom).format("MMM Do YY");
   var finalDate = moment(data.dates.dateTo).format("MMM Do YY");
@@ -174,7 +174,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                           if (ele[i].checked)
                             radiusValue = ele[i].value
                         }
-                        console.log(radiusValue)
+                        //console.log(radiusValue)
                         if (radiusValue !== '') {
                           if (radiusValue === 'payWithUst') {
                             amount = "15";
