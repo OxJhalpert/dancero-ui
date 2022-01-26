@@ -9,7 +9,7 @@
 */
 
 //getPriceAndCostCalculation("basic", "semi", 10, "medellin", "studio", 0);
- export default function getPriceAndCostCalculation(
+export default function getPriceAndCostCalculation(
 	serviceType, 
 	level,
 	hours, 
@@ -18,35 +18,48 @@
   place,
   participantRatio)
 {
-	
+
   var baseCost = 40000;
   var basePrice = 60000;
-  
+
   var discountHourPack = getTransformationHourPack(hours);
-  [baseCost, basePrice] = applyAmountTransformation(baseCost, basePrice, discountHourPack);
+  var discountStudent = getDiscountHourPackStudent(basePrice , discountHourPack);
+  var discountTeacher = getDiscountHourPackTeacher(baseCost ,discountHourPack);
+ 
+  var serviceTypeTransformation = getServiceAmountTransformation(serviceType);
+  var incrementMembershipStudent = getIncrementMembership(discountStudent,serviceTypeTransformation);
+ 
+  var locationTransformation = getLocationTransformation(location, venue, place);
+  var discountPercentageLocationStudent = getPercentageLocationStudent(incrementMembershipStudent, locationTransformation); 
+  var discountPercentageLocationTeacher = getPercentageLocationTeacher(discountTeacher, locationTransformation);
   
   var discountLevel = getLevelTransformation(level);
-  [baseCost, basePrice] = applyAmountTransformation(baseCost, basePrice, discountLevel);
+  var levelPercentageStudent = getLevelPercentageStudent(discountPercentageLocationStudent,discountLevel);
+  var levelPercentageTeacher = getLevelPercentageTeacher(discountPercentageLocationTeacher, discountLevel);
 
-  var serviceTypeTransformation = getServiceAmountTransformation(serviceType);
-  [baseCost, basePrice] = applyAmountTransformation(baseCost, basePrice, serviceTypeTransformation);
+  var addedPriceFlatStudent = getAddedPriceFlatStudent(levelPercentageStudent,locationTransformation);
+  var addedCostFlatTeacher = getAddedPriceFlatTeacher(levelPercentageTeacher,locationTransformation);
+  var resultS = addedPriceFlatStudent * hours;
+  var resultT = addedCostFlatTeacher * hours;
 
-  var locationTransformation = getLocationTransformation(location, venue, place);
-  [baseCost, basePrice] = applyAmountTransformation(baseCost, basePrice, locationTransformation);
+  console.log('soy un resultado'+ resultS)
+  console.log('soy el otro resultado '+ resultT)
 
-  return [baseCost * hours, basePrice * hours];
+  return [ addedCostFlatTeacher * hours , addedPriceFlatStudent * hours];
+  
 }
+
 
 function getTransformationHourPack(hours)
 {
   switch (hours) {
-    case 10: return { 'ipp' : 0, 'dpp' : 15, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
-    case 15: return { 'ipp' : 0, 'dpp' : 20, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
-    case 20: return { 'ipp' : 0, 'dpp' : 25, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
-    case 25: return { 'ipp' : 0, 'dpp' : 27.5, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
-	  case 30: return { 'ipp' : 0, 'dpp' : 30, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
-    case 40: return { 'ipp' : 0, 'dpp' : 32.5, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
-    case 50: return { 'ipp' : 0, 'dpp' : 35, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
+    case "10": return { 'ipp' : 0, 'dpp' : 15, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
+    case "15": return { 'ipp' : 0, 'dpp' : 20, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
+    case "20": return { 'ipp' : 0, 'dpp' : 25, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
+    case "25": return { 'ipp' : 0, 'dpp' : 27.5, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
+	  case "30": return { 'ipp' : 0, 'dpp' : 30, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
+    case "40": return { 'ipp' : 0, 'dpp' : 32.5, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
+    case "50": return { 'ipp' : 0, 'dpp' : 35, 'ipc' : 0, 'dpc' : 15, 'iap' : 0, 'iac' : 0 };
     default: return { 'ipp' : 0, 'dpp' : 0, 'ipc' : 0, 'dpc' : 0, 'iap' : 0, 'iac' : 0 };
   }
  }
@@ -104,52 +117,105 @@ function getLocationTransformation(location, venue, place)
   
 }
 
-// function getParticipantRatioDiscount()
-// {
-//     //TODO  
-// }
-
-
-// function getParticipantRatio(numberOfStudents, numberOfTeachers)
-// {
-// 	return numberOfStudents / numberOfTeachers;
-// }
-
-function applyAmountTransformation(baseCost, basePrice, transformationObject)
+//-------------------------------------------------------------------------------------------------
+function getDiscountHourPackStudent(base, transformationObject)
 {
-    //{ 'ipp' : 0, 'dpp' : 0, 'ipc' : 0, 'dpc' : 0, 'iap' : 0, 'iac' : 0 };
-    if(transformationObject.ipp > 0){
-      basePrice += calculatePercentageAmount(basePrice, transformationObject.ipp);
-    }
+ if(transformationObject.dpp > 0)
+ {
+   base -= calculatePercentageAmount(base,transformationObject.dpp);
+   
+ } 
 
-    if(transformationObject.ipc > 0){
-      baseCost += calculatePercentageAmount(baseCost, transformationObject.ipc);
-    }
+ return base;
+}
 
-    if(transformationObject.dpp > 0)
-    {
-      basePrice -= calculatePercentageAmount(basePrice, transformationObject.dpp);
-    }
+function getDiscountHourPackTeacher(base , transformationObject)
+{
+  if(transformationObject.dpc > 0)
+  {
+    base -= calculatePercentageAmount(base, transformationObject.dpc);
+  }
+  return base;
+}
 
-    if(transformationObject.dpc > 0)
-    {
-      baseCost -= calculatePercentageAmount(baseCost, transformationObject.dpc);
-    }
+function getPercentageLocationStudent(discount, transformationObject)
+{
+  if(transformationObject.ipp > 0 )
+  {
+    discount -= calculatePercentageAmount(discount, transformationObject.ipp)
+  }
+  return discount;
+}
 
-    //iap' : 0, 'iac'
-    if(transformationObject.iap > 0){
-      basePrice += transformationObject.iap;
-    } 
+function getPercentageLocationTeacher(discount, transformationObject)
+{
+  if(transformationObject.dpp > 0)
+  {
+    discount -= calculatePercentageAmount(discount ,transformationObject.dpp);
+  }
+  if(transformationObject.ipc > 0)
+  {
+    discount += calculatePercentageAmount(discount,transformationObject.ipc)
+  }
+  return discount;
+}
 
-    if(transformationObject.iac > 0){
-      baseCost +=  transformationObject.iac;
-    }
+function getIncrementMembership(discount, transformationObject)
+{
+  if(transformationObject.dpc)
+  {
+    discount -= calculatePercentageAmount(discount, transformationObject.dpc);
+  }
+  if(transformationObject.ipp > 0 )
+  {
+    discount += calculatePercentageAmount(discount,transformationObject.ipp)
+  }
+  return discount;
+}
 
-    return [baseCost, basePrice];
+function getLevelPercentageStudent(discount, transformationObject)
+{
+ if(transformationObject.ipp > 0)
+ {
+  discount += calculatePercentageAmount(discount,transformationObject.ipp);
+ }
+ console.log('seria lo que debo multiplicar '+discount )
+ return discount;
+}
+
+function getLevelPercentageTeacher(discount,transformationObject)
+{
+  if(transformationObject.ipc > 0)
+  {
+    discount += calculatePercentageAmount(discount,transformationObject.ipc)
+  }
+  console.log('multiplicacion profesor '+discount)
+  return discount;
+}
+
+function getAddedPriceFlatStudent(levelPercentageStudent,transformationObject)
+{
+if(transformationObject.iap > 0 )
+{
+  levelPercentageStudent += transformationObject.iap
+}
+console.log('soy el valor neto por hora s '+levelPercentageStudent)
+return levelPercentageStudent;
+
+}
+
+
+function getAddedPriceFlatTeacher(levelPercentageTeacher,transformationObject)
+{
+  if(transformationObject.iac > 0)
+  {
+    levelPercentageTeacher += transformationObject.iac
+  }
+  console.log('soy el valor neto por hora T ' + levelPercentageTeacher)
+  return levelPercentageTeacher;
 }
 
 function calculatePercentageAmount(amount, percentage)
 {
 	return (amount * percentage) / 100
 }
-

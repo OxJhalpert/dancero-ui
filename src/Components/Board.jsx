@@ -5,11 +5,8 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-//import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import { Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -19,12 +16,10 @@ import UstToken from '../abis/UstToken.json';
 import UsdtToken from '../abis/UsdtToken.json';
 import UsdcToken from '../abis/UsdcToken.json';
 import getPriceAndCostCalculation from './utils';
-import dance from '../images/FIiy_CIVUAEmzBH.jpg';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+//import { createTheme,  styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import CardHeader from '@mui/material/CardHeader';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import { useEffect, useState } from "react";
@@ -61,7 +56,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
   },[setexchangeRatio])
 
   useEffect(() => {
-    if(data.user != ""){
+    if(data.user !== ""){
       loadNTFOfOwner();
     }
 
@@ -115,21 +110,21 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
     }
   }
 
-  let theme = createTheme({
-    palette: {
-      background: {
-        default: '#DADADA',
-      },
-    },
-  });
+  // let theme = createTheme({
+  //   palette: {
+  //     background: {
+  //       default: '#DADADA',
+  //     },
+  //   },
+  // });
 
 
-  const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
+  // const Item = styled(Paper)(({ theme }) => ({
+  //   ...theme.typography.body2,
+  //   padding: theme.spacing(1),
+  //   textAlign: 'center',
+  //   color: theme.palette.text.secondary,
+  // }));
 
   return (
     <Box sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
@@ -232,7 +227,20 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button variant="contained" >pay with paypal</Button>
+                    <Button variant="contained">pay with paypal</Button>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_xclick"/>
+                    <input type="hidden" name="business" value="ivan9711@outlook.com"/>
+                    <input type="hidden" name="lc" value="US"/>
+                    <input type="hidden" name="amount" value={rest}/>
+                    <input type="hidden" name="currency_code" value="USD"/>
+                    <input type="hidden" name="button_subtype" value="services"/>
+                    <input type="hidden" name="no_note" value="0"/>
+                    <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynow_SM.gif:NonHostedGuest"/>
+                    <input type="image" src="https://www.paypalobjects.com/es_XC/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea."/>
+                    <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1"/>
+                    </form>
+
                     <Button variant="contained" >pay with stripe</Button>
                   </CardActions>
                 </Card>

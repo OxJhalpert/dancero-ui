@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
 import React, { useState } from "react";
 import Web3 from "web3";
 import Box from "@mui/material/Box";
@@ -27,7 +27,7 @@ export default function App() {
   });
 
   const pages = ['Products', 'Pricing', 'Blog'];
-  const [ exchangeRatio, setexchangeRatio] = useState(3800)
+  
 
   async function connect() {
     if (window.ethereum) {
@@ -118,7 +118,7 @@ export default function App() {
        <div>
         {page === 1 && <LandingPage update={updateData}/>}
         {page === 2 && <ClassTypeStep data={data} update={updateData} />}
-        {page === 3 && data.Venue == "Offline" ? 
+        {page === 3 && data.Venue === "Offline" ? 
             <HomeStudioStep data={data} update={updateData} /> 
           : page === 3 && data.Venue !== "Offline" ? <TeacherGenderStep  data={data} update={updateData} goBackPage={goBackPage}/> : null }
         {page === 4 && <MusicGenreStep  data={data} update={updateData} goBackPage={goBackPage}/>}

@@ -1,17 +1,16 @@
 
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
-import DateRangePicker from "@mui/lab/DateRangePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import Box from "@mui/material/Box";
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import DatePicker from '@mui/lab/DatePicker';
-
+import Fab from '@mui/material/Fab';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 function StepFive({ update, goBackPage }) {
     
@@ -53,28 +52,20 @@ function StepFive({ update, goBackPage }) {
                     />                    
 
                   </LocalizationProvider><br/>
-                  <Button
-                  variant="contained"
-                  onClick={()=> goBackPage()}
-                  >                  
-                    Back
-                  </Button>
-                  <Button
-                    variant="contained"
-                    style={{ margin: "10px" }}
+                  <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
+                  <ArrowBackIcon />
+                  </Fab>
+                  <Fab variant="extended" size="medium" color="primary" 
                     onClick={() =>{
-                      console.log(dateFrom);
                       if(dateFrom !== null && dateTo !== null){
                         update("dates", {dateFrom : dateFrom, dateTo : dateTo})                        
                       }else {
                         setError(true);
                       }
                     }                            
-                    }
-                  >
-                    next
-                  </Button>
-
+                    } >
+                  <ArrowForwardIcon />
+                  </Fab>
                   { error ?
                   <Alert variant="outlined" severity="warning"
                     action={

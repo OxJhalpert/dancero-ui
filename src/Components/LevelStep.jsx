@@ -1,8 +1,9 @@
 import { Typography } from "@mui/material";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Fab from '@mui/material/Fab';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function StepSeven({ update, goBackPage }) {
     return (
@@ -42,12 +43,9 @@ function StepSeven({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid xs={12} item container justifyContent="center" >
-            <Button
-                  variant="contained"
-                  onClick={()=> goBackPage()}
-                  >                  
-                    back
-                  </Button>
+            <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
+              <ArrowBackIcon />
+            </Fab>
             </Grid>
           </Grid>
         </Grid>
