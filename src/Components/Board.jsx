@@ -36,10 +36,13 @@ function createData(name, option, name2, option2) {
 
 function StepNine({ data, connect, transferToken, goBackPage }) {
 
-  const [ exchangeRatio, setexchangeRatio] = useState()
+  const [exchangeRatio, setexchangeRatio] = useState()
   const [imgNFT , setImgNFT] = useState("https://via.placeholder.com/150");
   const [nftcodes, setNFTCodes] = useState([]);
   const [nftSelected, SetNFTSelected] = useState(null);
+  const [priceToPay, setPriceToPay] = useState(0);
+  const [totalCop, setTotalCop] = useState(0);
+
 
   function getExchangeRate(){
     fetch('https://api.exchangerate-api.com/v4/latest/USD')
@@ -47,7 +50,8 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
       return res.json();
     })
     .then(res => {
-      setexchangeRatio(res.rates.COP)
+      setexchangeRatio(res.rates.COP);
+      calculatePrice(res.rates.COP);
     })
   }
   
@@ -62,15 +66,6 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
 
   }, [data.user]);
 
-
-  var cost = getPriceAndCostCalculation(data.Service, data.Level, data.Hours, data.City, data.Venue, data.place, 0);
-  var rest = cost[1] - cost[0];
-  var total = rest;
-
-  rest = rest / exchangeRatio;
-  rest = Math.round(rest);
-  //console.log(total, rest, cost);
-
   var initialDate = moment(data.dates.dateFrom).format("MMM Do YY");
   var finalDate = moment(data.dates.dateTo).format("MMM Do YY");
   const rows = [
@@ -81,6 +76,16 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
     createData(<b>Musical genre</b>, data.Musical_gender),
 
   ];
+
+  async function calculatePrice(er)
+  {
+    var cost = getPriceAndCostCalculation(data.Service, data.Level, data.Hours, data.City, data.Venue, data.place, 0);
+    var rest = cost[1] - cost[0];
+    setTotalCop(rest);
+    rest = rest / er;
+    rest = Math.round(rest);
+    setPriceToPay(rest);
+  }
 
   async function loadNTFOfOwner()
   {
@@ -120,11 +125,11 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                 <Card>
                   <CardHeader
                     title={"Pack Of " + data.Hours + " Hours"}
-                    subheader={"Exchange rate " + (total + " COP, ER " + exchangeRatio)}>
+                    subheader={"Exchange rate " + (totalCop + " COP, ER " + exchangeRatio)}>
                   </CardHeader>
                   <CardContent>
                     <Typography variant="h5" component="div">
-                      <b>Price</b> : {rest ? rest:"..."} USD
+                      <b>Price</b> : {priceToPay ? priceToPay : "..."} USD
                     </Typography>
                   </CardContent>
                 </Card>
@@ -157,14 +162,13 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                       Connect
                     </Button>
 
-
                     <Button
                       variant="contained"
                       style={{ margin: "10px" }}
                       disabled={!data.user}
                       id="btnPay"
                       onClick={async (event) => {
-                        var amount = rest.toString();
+                        var amount = priceToPay.toString();
                         var _contractAbi = '';
                         var _addressContract = "";
 
@@ -177,7 +181,6 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                         //console.log(radiusValue)
                         if (radiusValue !== '') {
                           if (radiusValue === 'payWithUst') {
-                            amount = "15";
                             _contractAbi = UstToken.abi;
                             _addressContract = "0x67862E5fD5DdCDAC1007786d8ce4469dDa847635";
 
@@ -216,7 +219,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                     <input type="hidden" name="cmd" value="_xclick"/>
                     <input type="hidden" name="business" value="ivan9711@outlook.com"/>
                     <input type="hidden" name="lc" value="US"/>
-                    <input type="hidden" name="amount" value={rest}/>
+                    <input type="hidden" name="amount" value={priceToPay}/>
                     <input type="hidden" name="currency_code" value="USD"/>
                     <input type="hidden" name="button_subtype" value="services"/>
                     <input type="hidden" name="no_note" value="0"/>
@@ -248,14 +251,18 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
               </CardContent>
               <CardActions disableSpacing>
                 <FormControl fullWidth>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={nftSelected}
-                    onChange={(evt) => {SetNFTSelected(evt.target.value); loadNFTMetaData(evt.target.value); }} 
-                  >
-                    { nftcodes.map( (nft) => <MenuItem value={nft}>{nft}</MenuItem>) }
-                  </Select>
+                  {
+                    nftcodes.length > 0 ?
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={nftSelected}
+                      onChange={(evt) => {SetNFTSelected(evt.target.value); loadNFTMetaData(evt.target.value); }} 
+                    >
+                      { nftcodes.map( (nft) => <MenuItem value={nft}>{nft}</MenuItem>) }
+                    </Select> :
+                      <b>Connect your wallet to load your NFTs</b>                  
+                }
                 </FormControl>
               </CardActions>
             </Card>
