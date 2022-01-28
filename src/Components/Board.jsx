@@ -15,7 +15,7 @@ import moment from 'moment'
 import UstToken from '../abis/UstToken.json';
 import UsdtToken from '../abis/UsdtToken.json';
 import UsdcToken from '../abis/UsdcToken.json';
-import getPriceAndCostCalculation from './utils';
+import getPriceAndCostCalculation from './utils_con_cociente';
 //import { createTheme,  styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -26,8 +26,58 @@ import { useEffect, useState } from "react";
 import danceNFT from '../abis/danceNFT.json';
 import Select from '@mui/material/Select';
 
+//---------------------------------------------
+//stripe
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import axios from "axios";
+//------------------
+const stripePromise = loadStripe(
+  "pk_test_51KH7SdLyE3w569dvyH2Va8GSPG42YBY5CCRsurEzhm5YmgA3Y6mYxgd4L1EVKtjEHOH4RcRRxsbS9AyHxU8aAJni00tiI35K4Q"
+);
+
+const CheckoutForm = () => {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: elements.getElement(CardElement),
+    });
+
+    if (!error) {
+      const { id } = paymentMethod;
+
+       const { data } = await axios.post("http://localhost:3001/api/checkout", {
+         id,
+         amount: {rest},
+       });
+      //console.log(paymentMethod);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <CardElement />
+      </div>
+      <button>Buy</button>
+    </form>
+  );
+};
 
 
+
+
+//---------------------------------------------------------------------------------
 function createData(name, option, name2, option2) {
   return { name, option, name2, option2 };
 }
@@ -214,7 +264,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button variant="contained">pay with paypal</Button>
+                    {/* <Button variant="contained">pay with paypal</Button> */}
                     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                     <input type="hidden" name="cmd" value="_xclick"/>
                     <input type="hidden" name="business" value="ivan9711@outlook.com"/>
@@ -227,8 +277,12 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                     <input type="image" src="https://www.paypalobjects.com/es_XC/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea."/>
                     <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1"/>
                     </form>
-
-                    <Button variant="contained" >pay with stripe</Button>
+{/* ---------------------------------------------------------------------------------------------*/}
+                      <Elements stripe={stripePromise}>
+                                  <CheckoutForm />
+                      </Elements>
+{/* -------------------------------------------------------------------------------------------------- */}
+                    {/* <Button variant="contained" >pay with stripe</Button> */}
                   </CardActions>
                 </Card>
               </Grid>

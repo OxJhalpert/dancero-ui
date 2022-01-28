@@ -11,6 +11,7 @@ import DatePicker from '@mui/lab/DatePicker';
 import Fab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+//import moment from 'moment';
 
 function StepFive({ update, goBackPage }) {
     
@@ -58,7 +59,7 @@ function StepFive({ update, goBackPage }) {
                   <Fab variant="extended" size="medium" color="primary" 
                     onClick={() =>{
                       if(dateFrom !== null && dateTo !== null){
-                        update("dates", {dateFrom : dateFrom, dateTo : dateTo})                        
+                        update("dates", {dateFrom : dateFrom, dateTo : dateTo})                           
                       }else {
                         setError(true);
                       }
