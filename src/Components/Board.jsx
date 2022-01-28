@@ -15,7 +15,7 @@ import moment from 'moment'
 import UstToken from '../abis/UstToken.json';
 import UsdtToken from '../abis/UsdtToken.json';
 import UsdcToken from '../abis/UsdcToken.json';
-import getPriceAndCostCalculation from './utils_con_cociente';
+import getPriceAndCostCalculation from './utils';
 //import { createTheme,  styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -58,7 +58,7 @@ const CheckoutForm = () => {
 
        const { data } = await axios.post("http://localhost:3001/api/checkout", {
          id,
-         amount: {rest},
+         amount: 20000,
        });
       //console.log(paymentMethod);
     }

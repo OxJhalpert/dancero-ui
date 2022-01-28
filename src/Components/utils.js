@@ -1,14 +1,3 @@
-/*
-	The price & cost per hour are determined by the following 6 variables
-	1- Service: Basic, Standard, Premium
-	2- Level: Semi, Pro, Master
-	3- Hours: 5, 10, 15, 20, 30, 40, 50
-	4- Location: Medellin, Cartagena, Cali, Bogota, Virtual
-	5- Venue: Studio, Home
-	6- Participant ratio: Number of students / number of instructors
-*/
-
-//getPriceAndCostCalculation("basic", "semi", 10, "medellin", "studio", 0);
 export default function getPriceAndCostCalculation(
 	serviceType, 
 	level,
@@ -25,23 +14,36 @@ export default function getPriceAndCostCalculation(
   var discountHourPack = getTransformationHourPack(hours);
   var discountStudent = getDiscountHourPackStudent(basePrice , discountHourPack);
   var discountTeacher = getDiscountHourPackTeacher(baseCost ,discountHourPack);
- 
-  var serviceTypeTransformation = getServiceAmountTransformation(serviceType);
-  var incrementMembershipStudent = getIncrementMembership(discountStudent,serviceTypeTransformation);
+
  
   var locationTransformation = getLocationTransformation(location, venue, place);
-  var discountPercentageLocationStudent = getPercentageLocationStudent(incrementMembershipStudent, locationTransformation); 
+  var discountPercentageLocationStudent = getPercentageLocationStudent(discountStudent, locationTransformation); 
   var discountPercentageLocationTeacher = getPercentageLocationTeacher(discountTeacher, locationTransformation);
+
   
-  var discountLevel = getLevelTransformation(level);
-  var levelPercentageStudent = getLevelPercentageStudent(discountPercentageLocationStudent,discountLevel);
-  var levelPercentageTeacher = getLevelPercentageTeacher(discountPercentageLocationTeacher, discountLevel);
+ var discountLevel = getLevelTransformation(level);
+ var levelPercentageStudent = getLevelPercentageStudent(discountPercentageLocationStudent,discountLevel);
+ var levelPercentageTeacher = getLevelPercentageTeacher(discountPercentageLocationTeacher, discountLevel);
 
-  var addedPriceFlatStudent = getAddedPriceFlatStudent(levelPercentageStudent,locationTransformation);
-  var addedCostFlatTeacher = getAddedPriceFlatTeacher(levelPercentageTeacher,locationTransformation);
+ var serviceTypeTransformation = getServiceAmountTransformation(serviceType);
+  levelPercentageStudent = getIncrementMembership(levelPercentageStudent,serviceTypeTransformation);
 
+  var division = getMultiplicationStudent(locationTransformation)
+    console.log(division)
+  
+  levelPercentageStudent = levelPercentageStudent*division;
+  levelPercentageTeacher = levelPercentageTeacher*division;
 
-  return [ addedCostFlatTeacher * hours , addedPriceFlatStudent * hours];
+ var addedPriceFlatStudent = getAddedPriceFlatStudent(levelPercentageStudent,locationTransformation);
+ var addedCostFlatTeacher = getAddedPriceFlatTeacher(levelPercentageTeacher,locationTransformation);
+
+  var resultS = addedPriceFlatStudent * hours;
+  var resultT = addedCostFlatTeacher * hours;
+    console.log(resultS)
+    console.log(resultT)
+     
+
+  return [ resultT , resultS];
   
 }
 
@@ -60,6 +62,8 @@ function getTransformationHourPack(hours)
   }
  }
 
+
+
 function getLevelTransformation(level)
 {
   level = level.toLowerCase();
@@ -71,6 +75,8 @@ function getLevelTransformation(level)
 	}
 }
 
+
+
 function getServiceAmountTransformation(service)
 {
   service = service.toLowerCase();
@@ -81,6 +87,8 @@ function getServiceAmountTransformation(service)
   	default : return { 'ipp' : 0, 'dpp' : 0, 'ipc' : 0, 'dpc' : 0, 'iap' : 0, 'iac' : 0 };
 	}
 }
+
+
 
 function getLocationTransformation(location, venue, place)
 {
@@ -121,9 +129,10 @@ function getDiscountHourPackStudent(base, transformationObject)
    base -= calculatePercentageAmount(base,transformationObject.dpp);
    
  } 
-
- return base;
+    return base;
 }
+
+
 
 function getDiscountHourPackTeacher(base , transformationObject)
 {
@@ -134,14 +143,23 @@ function getDiscountHourPackTeacher(base , transformationObject)
   return base;
 }
 
+
+
 function getPercentageLocationStudent(discount, transformationObject)
 {
   if(transformationObject.ipp > 0 )
   {
-    discount -= calculatePercentageAmount(discount, transformationObject.ipp)
+    discount += calculatePercentageAmount(discount, transformationObject.ipp)
+  }
+
+  if(transformationObject.dpp > 0)
+  {
+      discount -= calculatePercentageAmount(discount, transformationObject.dpp)
   }
   return discount;
 }
+
+
 
 function getPercentageLocationTeacher(discount, transformationObject)
 {
@@ -156,6 +174,8 @@ function getPercentageLocationTeacher(discount, transformationObject)
   return discount;
 }
 
+
+
 function getIncrementMembership(discount, transformationObject)
 {
   if(transformationObject.dpc)
@@ -169,14 +189,22 @@ function getIncrementMembership(discount, transformationObject)
   return discount;
 }
 
+
+
 function getLevelPercentageStudent(discount, transformationObject)
 {
  if(transformationObject.ipp > 0)
  {
   discount += calculatePercentageAmount(discount,transformationObject.ipp);
  }
+ if(transformationObject.dpp > 0 )
+ {
+     discount -= calculatePercentageAmount(discount, transformationObject.dpp)
+ }
  return discount;
 }
+
+
 
 function getLevelPercentageTeacher(discount,transformationObject)
 {
@@ -187,15 +215,18 @@ function getLevelPercentageTeacher(discount,transformationObject)
   return discount;
 }
 
-function getAddedPriceFlatStudent(levelPercentageStudent,transformationObject)
+
+
+function getAddedPriceFlatStudent(multiplication,transformationObject)
 {
 if(transformationObject.iap > 0 )
 {
-  levelPercentageStudent += transformationObject.iap
+  multiplication += transformationObject.iap
 }
-return levelPercentageStudent;
+return multiplication;
 
 }
+
 
 
 function getAddedPriceFlatTeacher(levelPercentageTeacher,transformationObject)
@@ -207,7 +238,31 @@ function getAddedPriceFlatTeacher(levelPercentageTeacher,transformationObject)
   return levelPercentageTeacher;
 }
 
+
+
+
 function calculatePercentageAmount(amount, percentage)
 {
-	return (amount * percentage) / 100
+    var discount = (amount * percentage)/100 
+	return discount
+}
+
+
+
+function getMultiplicationStudent(transformationObject)
+{
+    
+  if(transformationObject.ipp > 0)
+  {
+    var division = 100
+    division += transformationObject.opp
+    division = division/100
+  }else division = 1;
+  if(transformationObject.dpp > 0)
+  {
+      division =100;
+     division -=transformationObject.dpp
+    division = division/100
+  }else division = 1;
+  return division
 }
