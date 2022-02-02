@@ -99,8 +99,8 @@ export default function App() {
 
   return (
     <div className="App" >
-      <Box sx={{ flexGrow: 2 }}>
-        <AppBar position="static">
+      <Box sx={{ flexGrow: 2, bgcolor: "#2F348B" }}>
+        <AppBar position="static" sx={{ bgcolor: "#2F348B" }}>
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
               Dancero App

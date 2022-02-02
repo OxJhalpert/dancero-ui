@@ -167,128 +167,119 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
 
   return (
     <Box sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
-      <Grid item xs={12} justifyContent="center">
-        <Grid container spacing={2} >
-          <Grid item xs={4} >
-            <Grid item xs={12}>
-              <Grid item xs={12} paddingBottom={2}>
-                <Card>
-                  <CardHeader
-                    title={"Pack Of " + data.Hours + " Hours"}
-                    subheader={"Exchange rate " + (totalCop + " COP, ER " + exchangeRatio)}>
-                  </CardHeader>
-                  <CardContent>
-                    <Typography variant="h5" component="div">
-                      <b>Price</b> : {priceToPay ? priceToPay : "..."} USD
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item xs={12} paddingBottom={2}>
-                <Card>
-                  <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                      Pay with crypto
-                    </Typography>
+        <Grid container spacing={2} justifyContent="center">
+          <Grid item xs={12} md={4}>
+              <Card sx={{ my: "1rem"}}>
+                <CardHeader
+                  title={"Pack Of " + data.Hours + " Hours"}
+                  subheader={"Exchange rate " + (totalCop + " COP, ER " + exchangeRatio)}>
+                </CardHeader>
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    <b>Price</b> : {priceToPay ? priceToPay : "..."} USD
+                  </Typography>
+                </CardContent>
+              </Card>
+              <Card sx={{ my: "1rem"}}>
+                <CardContent>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    Pay with crypto
+                  </Typography>
 
 
-                    <input type="radio" id="payWithUsdc" name="val" value="payWithUsdc"></input>
-                    <label htmlFor="payWithUsdc">USDC</label>
-                    <input type="radio" id="payWithUsdt" name="val" value="payWithUsdt" defaultChecked ></input>
-                    <label htmlFor="payWithUsdt">USDT</label>
-                    <input type="radio" id="payWithUst" name="val" value="payWithUst"></input>
-                    <label htmlFor="payWithUsdc">UST</label>
-                  </CardContent>
-                  <CardActions>
+                  <input type="radio" id="payWithUsdc" name="val" value="payWithUsdc"></input>
+                  <label htmlFor="payWithUsdc">USDC</label>
+                  <input type="radio" id="payWithUsdt" name="val" value="payWithUsdt" defaultChecked ></input>
+                  <label htmlFor="payWithUsdt">USDT</label>
+                  <input type="radio" id="payWithUst" name="val" value="payWithUst"></input>
+                  <label htmlFor="payWithUsdc">UST</label>
+                </CardContent>
+                <CardActions>
 
-                    <Button
-                      disabled={data.user}
-                      endIcon={<AccountBalanceWalletIcon />}
-                      variant="contained"
-                      onClick={async (e) => {
-                        connect();
-                      }}
-                    >
-                      Connect
-                    </Button>
+                  <Button
+                    disabled={data.user}
+                    endIcon={<AccountBalanceWalletIcon />}
+                    variant="contained"
+                    onClick={async (e) => {
+                      connect();
+                    }}
+                  >
+                    Connect
+                  </Button>
 
-                    <Button
-                      variant="contained"
-                      style={{ margin: "10px" }}
-                      disabled={!data.user}
-                      id="btnPay"
-                      onClick={async (event) => {
-                        var amount = priceToPay.toString();
-                        var _contractAbi = '';
-                        var _addressContract = "";
+                  <Button
+                    variant="contained"
+                    style={{ margin: "10px" }}
+                    disabled={!data.user}
+                    id="btnPay"
+                    onClick={async (event) => {
+                      var amount = priceToPay.toString();
+                      var _contractAbi = '';
+                      var _addressContract = "";
 
-                        var ele = document.getElementsByName('val');
-                        var radiusValue = '';
-                        for (var i = 0; i < ele.length; i++) {
-                          if (ele[i].checked)
-                            radiusValue = ele[i].value
-                        }
-                        //console.log(radiusValue)
-                        if (radiusValue !== '') {
-                          if (radiusValue === 'payWithUst') {
-                            _contractAbi = UstToken.abi;
-                            _addressContract = "0x67862E5fD5DdCDAC1007786d8ce4469dDa847635";
-
-
-                          } else if (radiusValue === 'payWithUsdt') {
-                            _contractAbi = UsdtToken.abi;
-                            _addressContract = "0x649C680dF9a192d9eE1F4Ed368962914dc3EF8c4";
+                      var ele = document.getElementsByName('val');
+                      var radiusValue = '';
+                      for (var i = 0; i < ele.length; i++) {
+                        if (ele[i].checked)
+                          radiusValue = ele[i].value
+                      }
+                      //console.log(radiusValue)
+                      if (radiusValue !== '') {
+                        if (radiusValue === 'payWithUst') {
+                          _contractAbi = UstToken.abi;
+                          _addressContract = "0x67862E5fD5DdCDAC1007786d8ce4469dDa847635";
 
 
-                          } else if (radiusValue === 'payWithUsdc') {
-                            _contractAbi = UsdcToken.abi;
-                            _addressContract = "0x413e1A7a3702756588857259e4a55Bd2E272cE4b";
+                        } else if (radiusValue === 'payWithUsdt') {
+                          _contractAbi = UsdtToken.abi;
+                          _addressContract = "0x649C680dF9a192d9eE1F4Ed368962914dc3EF8c4";
 
-                          }
-                          transferToken(amount, _contractAbi, _addressContract);
+
+                        } else if (radiusValue === 'payWithUsdc') {
+                          _contractAbi = UsdcToken.abi;
+                          _addressContract = "0x413e1A7a3702756588857259e4a55Bd2E272cE4b";
 
                         }
+                        transferToken(amount, _contractAbi, _addressContract);
 
-                      }}
-                    >
-                      Pay
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-              <Grid item xs={12}>
-                <Card>
-                  <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                      Pay with FIAT
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    {/* <Button variant="contained">pay with paypal</Button> */}
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                    <input type="hidden" name="cmd" value="_xclick"/>
-                    <input type="hidden" name="business" value="ivan9711@outlook.com"/>
-                    <input type="hidden" name="lc" value="US"/>
-                    <input type="hidden" name="amount" value={priceToPay}/>
-                    <input type="hidden" name="currency_code" value="USD"/>
-                    <input type="hidden" name="button_subtype" value="services"/>
-                    <input type="hidden" name="no_note" value="0"/>
-                    <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynow_SM.gif:NonHostedGuest"/>
-                    <input type="image" src="https://www.paypalobjects.com/es_XC/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea."/>
-                    <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1"/>
-                    </form>
+                      }
+
+                    }}
+                  >
+                    Pay
+                  </Button>
+                </CardActions>
+              </Card>
+              <Card sx={{ my: "1rem"}}>
+                <CardContent>
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    Pay with FIAT
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  {/* <Button variant="contained">pay with paypal</Button> */}
+                  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                  <input type="hidden" name="cmd" value="_xclick"/>
+                  <input type="hidden" name="business" value="ivan9711@outlook.com"/>
+                  <input type="hidden" name="lc" value="US"/>
+                  <input type="hidden" name="amount" value={priceToPay}/>
+                  <input type="hidden" name="currency_code" value="USD"/>
+                  <input type="hidden" name="button_subtype" value="services"/>
+                  <input type="hidden" name="no_note" value="0"/>
+                  <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynow_SM.gif:NonHostedGuest"/>
+                  <input type="image" src="https://www.paypalobjects.com/es_XC/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea."/>
+                  <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1"/>
+                  </form>
 {/* ---------------------------------------------------------------------------------------------*/}
-                      <Elements stripe={stripePromise}>
-                                  <CheckoutForm />
-                      </Elements>
+                    <Elements stripe={stripePromise}>
+                                <CheckoutForm />
+                    </Elements>
 {/* -------------------------------------------------------------------------------------------------- */}
-                    {/* <Button variant="contained" >pay with stripe</Button> */}
-                  </CardActions>
-                </Card>
-              </Grid>
-            </Grid>
+                  {/* <Button variant="contained" >pay with stripe</Button> */}
+                </CardActions>
+              </Card>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Card sx={{ maxWidth: '100%' }}>
               <CardHeader
                 title="Load your NFT"
@@ -321,8 +312,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
               </CardActions>
             </Card>
           </Grid>
-          <Grid item xs={4}>
-            <Grid item xs={12}>
+          <Grid item xs={12} md={4}>
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 100 }} aria-label="simple table">
                   <TableBody>
@@ -347,10 +337,8 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                   </TableBody>
                 </Table>
               </TableContainer>
-            </Grid>
           </Grid>
         </Grid>
-      </Grid>
     </Box>
   )
 }

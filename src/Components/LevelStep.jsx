@@ -16,27 +16,27 @@ function StepSeven({ update, goBackPage }) {
               </Grid>
             </Grid>
             <Grid key={15} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Level", "Semi")}>
+              <Card sx={{ width: 250 }} onClick={() => update("Level", "Semi")}>
                 <CardContent>
-                  <Typography gutterBottom variant="h2" component="div">
+                  <Typography gutterBottom variant="h2" component="div" align="center">
                     Semi
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid key={16} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Level", "Pro")}>
+              <Card sx={{ width: 250}} onClick={() => update("Level", "Pro")}>
                 <CardContent>
-                  <Typography gutterBottom variant="h2" component="div">
+                  <Typography gutterBottom variant="h2" component="div" align="center">
                     Pro
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid key={17} item>
-              <Card sx={{ maxWidth: 345 }} onClick={() => update("Level", "Master")}>
+              <Card sx={{ width: 250 }} onClick={() => update("Level", "Master")}>
                 <CardContent>
-                  <Typography gutterBottom variant="h2" component="div">
+                  <Typography gutterBottom variant="h2" component="div" align="center">
                     Master
                   </Typography>
                 </CardContent>

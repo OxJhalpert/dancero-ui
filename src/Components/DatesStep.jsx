@@ -11,6 +11,8 @@ import DatePicker from '@mui/lab/DatePicker';
 import Fab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box } from '@mui/system';
+
 //import moment from 'moment';
 
 function StepFive({ update, goBackPage }) {
@@ -21,7 +23,6 @@ function StepFive({ update, goBackPage }) {
     const [error, setError] = useState(false);
     return (
       <div>
-        <br></br>
         <Grid sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
           <Grid item xs={12}>
             <Grid container justifyContent="center" spacing={2}>
@@ -29,63 +30,67 @@ function StepFive({ update, goBackPage }) {
             </Grid>
           </Grid>
           
-            <Grid item xs={12}>
-              <Grid container justifyContent="center" spacing={2}>
-                <Grid key={1} item>
-                  <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DatePicker
-                      label="Start of classes"
-                      value={dateFrom}
-                      onChange={(newValue) => {
-                        setDateFrom(newValue);
-                        setDateTo(newValue);
-                      }}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  -
-                  <DatePicker
+            <Grid container justifyContent="center">
+              <Grid key={1} item>
+                
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Grid container justifyContent= "center" spacing={2}>
+                  <Grid item>
+                    <DatePicker className="date-picker"
+                        label="Start of classes"
+                        value={dateFrom}
+                        onChange={(newValue) => {
+                          setDateFrom(newValue);
+                          setDateTo(newValue);
+                        }}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                  </Grid>
+                  <Grid item>
+                    <DatePicker
                       label="End of classes"
                       value={dateTo}
                       onChange={(newValue) => {
                         setDateTo(newValue);
                       }}
                       renderInput={(params) => <TextField {...params} />}
-                    />                    
-
-                  </LocalizationProvider><br/>
-                  <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
-                  <ArrowBackIcon />
-                  </Fab>
-                  <Fab variant="extended" size="medium" color="primary" 
-                    onClick={() =>{
-                      if(dateFrom !== null && dateTo !== null){
-                        update("dates", {dateFrom : dateFrom, dateTo : dateTo})                           
-                      }else {
-                        setError(true);
-                      }
-                    }                            
-                    } >
-                  <ArrowForwardIcon />
-                  </Fab>
-                  { error ?
-                  <Alert variant="outlined" severity="warning"
-                    action={
-                      <IconButton
-                        aria-label="close"
-                        color="inherit"
-                        size="small"
-                        onClick={() => {
-                          setError(false);
-                        }}
-                      
-                        >  
-                        <CloseIcon fontSize="inherit" />
-                        </IconButton>}
-                  >
-                    Please select valid dates to continue
-                  </Alert>  : null }
-                      
-                </Grid>
+                    /> 
+                  </Grid>
+                </Grid>                  
+                </LocalizationProvider>
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: "1rem", my: "1rem"}}>
+                <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
+                <ArrowBackIcon />
+                </Fab>
+                <Fab variant="extended" size="medium" color="primary" 
+                  onClick={() =>{
+                    if(dateFrom !== null && dateTo !== null){
+                      update("dates", {dateFrom : dateFrom, dateTo : dateTo})                           
+                    }else {
+                      setError(true);
+                    }
+                  }                            
+                  } >
+                <ArrowForwardIcon />
+                </Fab>
+                </Box>
+                { error ?
+                <Alert variant="outlined" severity="warning"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setError(false);
+                      }}
+                    
+                      >  
+                      <CloseIcon fontSize="inherit" />
+                      </IconButton>}
+                >
+                  Please select valid dates to continue
+                </Alert>  : null }
               </Grid>
             </Grid>
                
