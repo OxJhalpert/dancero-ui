@@ -7,10 +7,12 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import studio from '../images/studio.jpg';
 import home from '../images/home.jpg';
+import Fab from '@mui/material/Fab';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
 
-function HomeStudioStep({ update }) {
+function HomeStudioStep({ update, goBackPage }) {
   return (
     <Grid sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
       <Grid item xs={12} >
@@ -61,6 +63,11 @@ function HomeStudioStep({ update }) {
               <CardActions></CardActions>
             </Card>
           </Grid>
+            <Grid xs={12} item container justifyContent="center" >
+              <Fab variant="extended" size="medium" color="primary" onClick={()=> goBackPage()} >
+                <ArrowBackIcon/>
+              </Fab>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

@@ -11,7 +11,7 @@ import Fab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
-function StepFour({ update, goBackPage }) {
+function StepFour({ data,update, goBackPage,setPage }) {
     return (
       <Grid sx={{ flexGrow: 4 }} container spacing={2} p={2.5}>
         <Grid item xs={12}>
@@ -22,7 +22,11 @@ function StepFour({ update, goBackPage }) {
               </Grid>
             </Grid>
             <Grid key={8} item>
-              <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Cartagena")}>
+              <Card sx={{ maxWidth: 200 }} onClick={() => {
+                if(data.Venue === 'Online')
+                {
+                  setPage(4)
+                }update("City", "Cartagena")}}>
                 <CardMedia
                   component="img"
                   alt="cartagena"
@@ -37,7 +41,11 @@ function StepFour({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid key={9} item>
-              <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Bogota")}>
+              <Card sx={{ maxWidth: 200 }} onClick={() => {
+                if(data.Venue === 'Online')
+                {
+                  setPage(4)
+                }update("City", "Bogota")}}>
                 <CardMedia
                   component="img"
                   alt="bogota"
@@ -52,7 +60,12 @@ function StepFour({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid key={10} item>
-              <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Medellin")}>
+              <Card sx={{ maxWidth: 200 }} onClick={() => 
+                {
+                  if(data.Venue === 'Online')
+                {
+                  setPage(4)
+                }update("City", "Medellin")}}>
                 <CardMedia
                   component="img"
                   alt="medellin"
@@ -67,7 +80,12 @@ function StepFour({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid key={11} item>
-              <Card sx={{ maxWidth: 200 }} onClick={() => update("City", "Cali")}>
+              <Card sx={{ maxWidth: 200 }} onClick={() => 
+                {if(data.Venue === 'Online')
+                {
+                  setPage(4)
+                }
+                  update("City", "Cali")}}>
                 <CardMedia 
                   component="img" 
                   alt="cali" 

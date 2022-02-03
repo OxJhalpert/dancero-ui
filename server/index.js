@@ -15,7 +15,7 @@ app.post('/api/checkout', async (req,res)=>{
     const payment = await stripe.paymentIntents.create({
         amount, 
         currency: "USD",
-        description: "rata",
+        description: "package class",
         payment_method: id,
         confirm :true
     });

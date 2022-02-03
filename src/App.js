@@ -21,6 +21,7 @@ import './css/cards.css';
 import HomeStudioStep from "./Components/HomeStudioStep.jsx";
 
 export default function App() {
+  
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
     user: "",
@@ -45,7 +46,7 @@ export default function App() {
   }
 
   function goNextPage() {
-    if (page === 10) return;
+    if (page === 11) return;
     setPage((page) => page + 1);
   }
 
@@ -103,7 +104,7 @@ export default function App() {
         <AppBar position="static" sx={{ bgcolor: "#2F348B" }}>
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
-              Dancero App
+              Dancero 
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -120,21 +121,23 @@ export default function App() {
         </AppBar>
       </Box>
       <div>
-        { page > 1 ? <LinearProgress variant="determinate" value={page * 10}  /> : null}
+        { page > 1 ? <LinearProgress variant="determinate" value={(page -1)* 10}  /> : null}
       </div>
        <div>
         {page === 1 && <LandingPage update={updateData}/>}
-        {page === 2 && <ClassTypeStep data={data} update={updateData} />}
-        {page === 3 && data.Venue === "Offline" ? 
+        {page === 2 && <ClassTypeStep data={data} update={updateData} setPage={setPage}/>  }
+        {page === 3 &&  <LocationStep  data={data} update={updateData} goBackPage={goBackPage} setPage={setPage}/>  }
+        {page === 4 && <HomeStudioStep data={data} update={updateData} goBackPage={goBackPage} />}
+        {/* {page === 3 && data.Venue === "Offline" ? 
             <HomeStudioStep data={data} update={updateData} /> 
-          : page === 3 && data.Venue !== "Offline" ? <TeacherGenderStep  data={data} update={updateData} goBackPage={goBackPage}/> : null }
-        {page === 4 && <MusicGenreStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 5 && <LocationStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 6 && <DatesStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+          : page === 3 && data.Venue !== "Offline" ? <TeacherGenderStep  data={data} update={updateData} goBackPage={goBackPage}/> : null } */}
+        {page === 5 && <TeacherGenderStep data={data} update={updateData} goBackPage={goBackPage} setPage={setPage}/>}
+        {page === 6 && <MusicGenreStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 7 && <MembershipStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 8 && <LevelStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 9 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} />}
+        {page === 8 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 9 && <LevelStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 10 && <DatesStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 11 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} />}
        
        </div> 
     </div>

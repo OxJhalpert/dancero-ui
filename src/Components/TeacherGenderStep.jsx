@@ -10,7 +10,7 @@ import Fab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
-function StepTwo ({ update, goBackPage }) {
+function StepTwo ({ data,update, goBackPage,setPage }) {
     return (
       <Grid sx={{ flexGrow: 2 }} container spacing={2} p={2.5}>
         <Grid item xs={12}>
@@ -55,7 +55,12 @@ function StepTwo ({ update, goBackPage }) {
               </Card>
             </Grid>
             <Grid xs={12} item container justifyContent="center" >
-            <Fab variant="extended" size="medium" color="primary" onClick={()=> goBackPage()} >
+            <Fab variant="extended" size="medium" color="primary" onClick={()=> {
+              if(data.Venue === 'Online')
+            {
+              setPage(4);
+            }
+            goBackPage()}} >
               <ArrowBackIcon/>
             </Fab>
             </Grid>

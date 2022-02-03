@@ -9,7 +9,7 @@ import studio from '../images/studio.jpg';
 
 
 
-function StepOne({ update }) {
+function StepOne({ update, setPage  }) {
   return (
     <Grid sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
       <Grid item xs={12} >
@@ -25,7 +25,10 @@ function StepOne({ update }) {
           <Grid key={1} item>
             <Card
               sx={{ maxWidth: 300 }}
-              onClick={() => update("Venue", "Online")}
+              onClick={() => {
+                // setPage(3)
+                update("Venue", "Online")}
+              }
             >
               <CardMedia
                 component="img"
@@ -44,7 +47,9 @@ function StepOne({ update }) {
           <Grid key={3} item>
             <Card
               sx={{ maxWidth: 300 }}
-              onClick={() => update("Venue", "Offline")}
+              onClick={() =>   
+              update("Venue", "Offline")}
+              
             >
               <CardMedia
                 component="img"
