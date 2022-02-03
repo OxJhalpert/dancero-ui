@@ -12,6 +12,7 @@ import Fab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import moment from 'moment';
+import { Box } from '@mui/system';
 
 function StepFive({ update, goBackPage }) {
     
@@ -56,7 +57,7 @@ function StepFive({ update, goBackPage }) {
                   </Grid>
                 </Grid>
                   </LocalizationProvider>
-                  <br/>
+                  <Box sx={{ display: 'flex', justifyContent: 'center', gap: "1rem", my: "1rem"}}>
                   <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
                   <ArrowBackIcon />
                   </Fab>
@@ -77,6 +78,7 @@ function StepFive({ update, goBackPage }) {
                     } >
                   <ArrowForwardIcon />
                   </Fab>
+                  </Box>
                   { error ?
                   <Alert variant="outlined" severity="warning"
                     action={
