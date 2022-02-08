@@ -12,6 +12,8 @@
     "@mui/styles": "^5.3.0",
     "@mui/x-data-grid": "^5.2.1",
     "@openzeppelin/contracts": "^4.3.3",
+    "@paypal/paypal-js": "^5.0.2",
+    "@paypal/react-paypal-js": "^7.6.0",
     "@stripe/react-stripe-js": "^1.7.0",
     "@stripe/stripe-js": "^1.22.0",
     "@testing-library/jest-dom": "^5.16.1",
