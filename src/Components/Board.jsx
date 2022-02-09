@@ -23,22 +23,32 @@ import FormControl from '@mui/material/FormControl';
 import { useEffect, useState } from "react";
 import danceNFT from '../abis/danceNFT.json';
 import Select from '@mui/material/Select';
+import Backdrop from '@mui/material/Backdrop';
 import { Box } from '@mui/system';
 import React from 'react';
-import Modal from './Modal';
 import Fab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { initializeApp } from "firebase/app";
 import { collection, query, where, getDocs, setDoc, addDoc, doc, getFirestore } from "firebase/firestore";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-
-
-
+import Modal from './Modal';
+import Fade from '@mui/material/Fade';
 
 function createData(name, option, name2, option2) {
   return { name, option, name2, option2 };
 }
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 const firebaseConfig = {
   apiKey: "AIzaSyAu-4JfgSOo8mIjdhnQxs6EuEdaljcidAw",
@@ -53,15 +63,8 @@ const firebaseConfig = {
 
 function StepNine({ data, connect, transferToken, goBackPage }) {
 
-  // const [firestoreDB, setFirestoreDB] = useState();
   const app = initializeApp(firebaseConfig);
   var firestoreDB = getFirestore(app)
-
-
-
-
-  // setFirestoreDB({ firestoreDB : getFirestore(app) }) ;
-  const dataTransferQuery = query(collection(firestoreDB, "dateTransfer"));
 
   const [exchangeRatio, setexchangeRatio] = useState()
   const [imgNFT, setImgNFT] = useState("https://via.placeholder.com/150");
@@ -69,6 +72,11 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
   const [nftSelected, SetNFTSelected] = useState(null);
   const [priceToPay, setPriceToPay] = useState(0);
   const [totalCop, setTotalCop] = useState(0);
+  const [idDoc, setIdDoc] = useState(null);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false)
 
 
   function getExchangeRate() {
@@ -83,6 +91,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
   }
 
   useEffect(() => {
+    storeTransaction();
     getExchangeRate();
   }, [setexchangeRatio])
 
@@ -105,20 +114,20 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
   ];
 
   const createOrder = (data, actions) => {
+
     return actions.order.create({
       purchase_units: [
         {
-          id: "ID GENERADO POR FIREBASE",
-          summary : "Pack of hours",
+          description: idDoc.toString(),
           amount: {
-            value: "150",
-          },
+            value: priceToPay.toString(),
+          }
         },
       ],
     });
   };
   const onApprove = (data, actions) => {
-    alert("Sucessfull payment.");
+    setOpen(true);
     return actions.order.capture();
   };
 
@@ -143,20 +152,9 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
     setNFTCodes(NFTCodes);
   }
 
-  function storeTransaction() {
-    var idNewDoc = addDoc(collection(firestoreDB, "dateTransfer"),
-      {
-        Venue: data.Venue,
-        City: data.City,
-        Place: data.place,
-        Teacher_gender: data.Gender,
-        Musical_genre: data.Musical_gender,
-        Service_type: data.Service,
-        Hours_pack: data.Hours,
-        Initia_lDate: initialDate,
-        Final_Date: finalDate,
-        payment: true
-      });
+  async function storeTransaction() {
+    var newDoc = await addDoc(collection(firestoreDB, "dateTransfer"), data);
+    setIdDoc(newDoc.id);
   }
 
   async function loadNFTMetaData(nftId) {
@@ -187,7 +185,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
       },
       body: JSON.stringify({
         items: [
-          { id : "FIREBASE CODE", name: "Pack Of " + data.Hours + " Hours", quantity: 1, priceInCents: priceToPay * 100 },
+          { metadata : idDoc,name: "Pack Of " + data.Hours + " Hours", quantity: 1, priceInCents: priceToPay * 100 },
         ],
       }),
     })
@@ -277,11 +275,9 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                       _addressContract = "0x413e1A7a3702756588857259e4a55Bd2E272cE4b";
 
                     }
-                    transferToken(amount, _contractAbi, _addressContract);
+                    transferToken(amount, _contractAbi, _addressContract, () => { setOpen(true) });
 
                   }
-                  storeTransaction();
-
                 }}
               >
                 Pay
@@ -294,16 +290,19 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
                 Pay with FIAT
               </Typography>
             </CardContent>
-            <CardActions>
-              <PayPalScriptProvider options={{ 
-                "client-id": "AQ_Qiip-PYzDW2tacR6FO22P8DhfgIsvdBlANNwqCSQ-hTrVYCB7zrrZFocURXAS2d_S5CHqN9cRVaOK" }}>
+            {idDoc ? <CardActions>
+
+              <PayPalScriptProvider options={{
+                "client-id": "AQ_Qiip-PYzDW2tacR6FO22P8DhfgIsvdBlANNwqCSQ-hTrVYCB7zrrZFocURXAS2d_S5CHqN9cRVaOK"
+              }}>
                 <PayPalButtons style={{ layout: "horizontal" }}
-                      createOrder={(data, actions) => createOrder(data, actions)}
-                      onApprove={(data, actions) => onApprove(data, actions)}
-                 />
+                  createOrder={(data, actions) => createOrder(data, actions)}
+                  forceReRender={[idDoc]}
+                  onApprove={(data, actions) => onApprove(data, actions)}
+                />
               </PayPalScriptProvider>
-              <Button onClick={payWithStripe}>Pay with stripe</Button>
-            </CardActions>
+              <Button variant="contained" style={{ margin: 10 }} onClick={payWithStripe}>Pay with stripe</Button>
+            </CardActions> : <CardContent> Loading </CardContent>}
           </Card>
           <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
             <ArrowBackIcon />
@@ -364,6 +363,8 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
           </TableContainer>
         </Grid>
       </Grid>
+
+      <Modal idDoc={idDoc} show={open}></Modal>
     </Box>
   )
 }

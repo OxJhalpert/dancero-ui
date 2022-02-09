@@ -64,7 +64,7 @@ export default function App() {
   }
    
 
-  async function transferToken(amount, _contractAbi, _addressContract) {
+  async function transferToken(amount, _contractAbi, _addressContract, callback) {
     var chainId = await window.ethereum.request({  method: 'eth_chainId'  });
     const user = await window.web3.eth.getAccounts();
     if (chainId === '0x6357d2e0')
@@ -78,7 +78,7 @@ export default function App() {
             gasprice: gas,
             gaslimit: response.gasLimit,
           };
-          console.log(item);
+          
           amount = window.web3.utils.toWei(amount, "Ether");
           const contract = new window.web3.eth.Contract(
             _contractAbi,
@@ -88,7 +88,7 @@ export default function App() {
             .transfer("0x02a10A6182B60Ee989fd611cab17bd0512885205", amount)
             .send(item)
             .on("transactionHash", (hash) => {
-              alert("Successful payment");
+              callback(true);
             });
         });
       });
