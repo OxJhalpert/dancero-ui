@@ -34,6 +34,8 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Modal from './Modal';
 import Fade from '@mui/material/Fade';
 
+import config from '../config.json';
+
 function createData(name, option, name2, option2) {
   return { name, option, name2, option2 };
 }
@@ -50,19 +52,12 @@ const style = {
   p: 4,
 };
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAu-4JfgSOo8mIjdhnQxs6EuEdaljcidAw",
-  authDomain: "dancero-app.firebaseapp.com",
-  projectId: "dancero-app",
-  storageBucket: "dancero-app.appspot.com",
-  messagingSenderId: "863521077258",
-  appId: "1:863521077258:web:8a4b5f932d0217abf307f3",
-  measurementId: "G-G9ECPGJH3B"
-};
 
 
-function StepNine({ data, connect, transferToken, goBackPage }) {
 
+function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
+
+  var firebaseConfig = firebaseConfig;
   const app = initializeApp(firebaseConfig);
   var firestoreDB = getFirestore(app)
 
@@ -178,7 +173,7 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
   }
 
   const payWithStripe = () => {
-    fetch("http://localhost:3000/create-checkout-session", {
+    fetch(config.STRIPE_CHECKOUT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -292,9 +287,9 @@ function StepNine({ data, connect, transferToken, goBackPage }) {
             </CardContent>
             {idDoc ? <CardActions>
 
-              <PayPalScriptProvider options={{
-                "client-id": "AQ_Qiip-PYzDW2tacR6FO22P8DhfgIsvdBlANNwqCSQ-hTrVYCB7zrrZFocURXAS2d_S5CHqN9cRVaOK"
-              }}>
+              <PayPalScriptProvider options={
+                process.env.CLIENT_ID_PAYPAL
+              }>
                 <PayPalButtons style={{ layout: "horizontal" }}
                   createOrder={(data, actions) => createOrder(data, actions)}
                   forceReRender={[idDoc]}

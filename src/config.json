@@ -1,0 +1,4 @@
+{
+    "CLIENT_ID_PAYPAL":"AQ_Qiip-PYzDW2tacR6FO22P8DhfgIsvdBlANNwqCSQ-hTrVYCB7zrrZFocURXAS2d_S5CHqN9cRVaOK",
+    "STRIPE_CHECKOUT": "http://localhost:3000/create-checkout-session"
+}

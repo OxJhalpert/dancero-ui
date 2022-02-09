@@ -51,6 +51,15 @@ function StepEigth({ update, goBackPage }) {
                 </CardContent>
               </Card>
             </Grid>
+            <Grid key={21} item>
+              <Card sx={{ minWidth: 97.516 }} onClick={() => update("Hours", "25")}>
+                <CardContent>
+                  <Typography gutterBottom variant="h2" component="div">
+                    25
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
             <Grid key={22} item>
               <Card sx={{ minWidth: 97.516 }} onClick={() => update("Hours", "30")}>
                 <CardContent>

@@ -17,6 +17,8 @@ import LevelStep from './Components/LevelStep.jsx';
 import HoursStep from './Components/HoursStep.jsx';
 import BoardStep from './Components/Board.jsx';
 
+import { initializeApp } from "firebase/app";
+import { collection, query, where, getDocs, setDoc, addDoc, doc, getFirestore } from "firebase/firestore";
 import './css/cards.css';
 import HomeStudioStep from "./Components/HomeStudioStep.jsx";
 
@@ -26,6 +28,20 @@ export default function App() {
   const [data, setData] = useState({
     user: "",
   });
+
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAu-4JfgSOo8mIjdhnQxs6EuEdaljcidAw",
+    authDomain: "dancero-app.firebaseapp.com",
+    projectId: "dancero-app",
+    storageBucket: "dancero-app.appspot.com",
+    messagingSenderId: "863521077258",
+    appId: "1:863521077258:web:8a4b5f932d0217abf307f3",
+    measurementId: "G-G9ECPGJH3B"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  var firestoreDB = getFirestore(app)
 
   const pages = ['Products', 'Pricing', 'Blog'];
   
@@ -70,9 +86,9 @@ export default function App() {
     if (chainId === '0x6357d2e0')
     {
       window.web3.eth.getBlock("latest").then(async function (response) {
-        console.log(response.gasLimit);
+        //console.log(response.gasLimit);
         window.web3.eth.getGasPrice().then(function (gas) {
-          console.log(gas);
+          //console.log(gas);
           var item = {
             from: user[0],
             gasprice: gas,
@@ -88,6 +104,7 @@ export default function App() {
             .transfer("0x02a10A6182B60Ee989fd611cab17bd0512885205", amount)
             .send(item)
             .on("transactionHash", (hash) => {
+              var newDoc =  addDoc(collection(firestoreDB, "transactionweb3"), data)
               callback(true);
             });
         });
@@ -137,7 +154,7 @@ export default function App() {
         {page === 8 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 9 && <LevelStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 10 && <DatesStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 11 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} />}
+        {page === 11 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig} />}
        
        </div> 
     </div>
