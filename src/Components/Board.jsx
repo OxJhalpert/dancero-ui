@@ -68,6 +68,8 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
   const [priceToPay, setPriceToPay] = useState(0);
   const [totalCop, setTotalCop] = useState(0);
   const [idDoc, setIdDoc] = useState(null);
+  const [totalPaypal, setTotalPaypal] = useState(0);
+  const [totalStripe, setTotalStripe] = useState(0);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -115,7 +117,7 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
         {
           description: idDoc.toString(),
           amount: {
-            value: priceToPay.toString(),
+            value: totalPaypal.toString(),
           }
         },
       ],
@@ -132,9 +134,13 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
     var rest = cost[1] - cost[0];
     var totalCopRound = RoundTo(rest, roundTo)
     setTotalCop(totalCopRound);
+    
     rest = totalCopRound / exchangeRate;
     rest = Math.round(rest);
-
+    var restStripe = (rest*config.STRIPE_PERCENTAGE)/100
+    var restPaypal = (rest * config.PAYPAL_PERCENTAGE)/100
+    setTotalPaypal(restPaypal+rest) 
+    setTotalStripe(restStripe+rest)
     setPriceToPay(rest);
   }
   function RoundTo(number, roundTo) {
@@ -180,7 +186,7 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
       },
       body: JSON.stringify({
         items: [
-          { metadata : idDoc,name: "Pack Of " + data.Hours + " Hours", quantity: 1, priceInCents: priceToPay * 100 },
+          { metadata : idDoc,name: "Pack Of " + data.Hours + " Hours", quantity: 1, priceInCents: totalStripe * 100 },
         ],
       }),
     })
@@ -281,12 +287,22 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
           </Card>
           <Card sx={{ mb: "1rem" }}>
             <CardContent>
+            {/* <CardHeader
+              title={"Pay with Fiat"}
+              subheader={"Paypal Comission " + (totalPaypal + "% " )}
+              subheader={"Stripe Comission " + (totalStripe + "% " )}>
+            </CardHeader> */}
+            <Typography>
+              Pay with Fiat
+            </Typography>
               <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                Pay with FIAT
+                {/* Pay with FIAT <br/> */}
+                {"Paypal Comission " + (config.PAYPAL_PERCENTAGE + "% " )}<br/>
+                {"Stripe Comission " + (config.STRIPE_PERCENTAGE + "% " )}
               </Typography>
             </CardContent>
             {idDoc ? <CardActions>
-
+              {/* {"Paypal Comission " + config.PAYPAL_PERCENTAGE + " %"} */}
               <PayPalScriptProvider options={
                 process.env.CLIENT_ID_PAYPAL
               }>
@@ -296,7 +312,7 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
                   onApprove={(data, actions) => onApprove(data, actions)}
                 />
               </PayPalScriptProvider>
-              <Button variant="contained" style={{ margin: 10 }} onClick={payWithStripe}>Pay with stripe</Button>
+              <Button variant="contained" style={{ margin: 10 }} onClick={payWithStripe}>Pay with stripe </Button>
             </CardActions> : <CardContent> Loading </CardContent>}
           </Card>
           <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
