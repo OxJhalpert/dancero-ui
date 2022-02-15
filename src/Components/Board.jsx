@@ -205,31 +205,67 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
   return (
     <Box sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
       <Grid container spacing={2} justifyContent="center">
-        <Grid item xs={12} md={4}>
-          <Card sx={{ mb: "1rem" }}>
-            <CardHeader
-              title={"Pack Of " + data.Hours + " Hours"}
-              subheader={"Exchange rate " + (totalCop + " COP, ER " + exchangeRatio)}>
-            </CardHeader>
-            <CardContent>
-              <Typography variant="h5" component="div">
-                <b>Price</b> : {priceToPay ? priceToPay : "..."} USD
-              </Typography>
+        <Grid item xs={12} md={6} lg={5}>
+          <Card sx={{ mb: "1rem"}}>
+            <CardContent sx={{fontSize: "1.1rem" , fontWeight: "500"}}>
+              <Grid container spacing={2} alignItems="center" justifyContent="space-around">
+                <Grid item xs={3}>
+                  <div>City: {data.City}</div>
+                  <div>Service: {data.Service}</div>
+                  <div>Instructor: {data.Gender}</div>
+                  <div>Level: {data.Level}</div>
+                  <div>Dance: {data.Musical_gender}</div>
+                </Grid>
+                <Grid item xs={3}>
+                  <div>Number of hours: {data.Hours}</div>
+                  <div>From: {moment(data.dates.dateFrom).format("MMM Do YY")}</div>
+                  <div>To: {moment(data.dates.dateTo).format("MMM Do YY")}</div>
+                </Grid>
+              </Grid>
             </CardContent>
           </Card>
           <Card sx={{ mb: "1rem" }}>
-            <CardContent>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                Pay with crypto
+            
+            <CardContent sx={{ textAlign: 'center' , mt: "1rem" }}>
+              <Typography variant="h4" component="div" >
+                  <b>Price</b> : {priceToPay ? priceToPay : "..."} USD
               </Typography>
-
-
-              <input type="radio" id="payWithUsdc" name="val" value="payWithUsdc"></input>
-              <label htmlFor="payWithUsdc">USDC</label>
-              <input type="radio" id="payWithUsdt" name="val" value="payWithUsdt" defaultChecked ></input>
-              <label htmlFor="payWithUsdt">USDT</label>
-              <input type="radio" id="payWithUst" name="val" value="payWithUst"></input>
-              <label htmlFor="payWithUsdc">UST</label>
+              <Typography>
+                Exchange rate {totalCop + " COP, ER " + exchangeRatio}
+              </Typography>
+              <Typography>
+                Pack Of {data.Hours} Hours
+              </Typography>
+              {idDoc ? <CardActions sx={{display: "flex", justifyContent: "center", alignItems: "baseline"}}>
+              <Box>
+                <Button variant="contained" style={{ margin: 10 }} sx={{minWidth: "150px"}} >crypto</Button>
+                <Box sx={{fontSize: ".8rem", textAlign: "left"}}>
+                  <input type="radio" id="payWithUsdc" name="val" value="payWithUsdc"></input>
+                  <label htmlFor="payWithUsdc">USDC</label>
+                  <input type="radio" id="payWithUsdt" name="val" value="payWithUsdt" defaultChecked ></input>
+                  <label htmlFor="payWithUsdt">USDT</label>
+                  <input type="radio" id="payWithUst" name="val" value="payWithUst"></input>
+                  <label htmlFor="payWithUsdc">UST</label>
+                </Box>
+              </Box>
+              
+              {/* {"Paypal Comission " + config.PAYPAL_PERCENTAGE + " %"} */}
+              <PayPalScriptProvider  options={
+                process.env.CLIENT_ID_PAYPAL
+              }>
+                <PayPalButtons 
+                  style={{ layout: "horizontal" }}
+                  createOrder={(data, actions) => createOrder(data, actions)}
+                  forceReRender={[idDoc]}
+                  onApprove={(data, actions) => onApprove(data, actions)}
+                />
+              </PayPalScriptProvider>
+              <Button variant="contained" style={{ margin: 10 }} sx={{minWidth: "150px"}} onClick={payWithStripe}>Pay with stripe </Button>
+            </CardActions> : <CardContent> Loading </CardContent>}
+            
+              <Typography variant="body"  color="text.secondary" sx={{mt:"2rem" , mb: ".5rem" , display: "block"}}>
+                Upon completing your payment, please use the live chat feature in the bottom right corner to message your phone number (or Whatsapp) to our team, so we can share it with your instructor, who will usually message you the same day. Feel free to use that same live chat at any time before or after payment to communicate with us.
+              </Typography>
             </CardContent>
             <CardActions>
 
@@ -244,7 +280,7 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
                 Connect
               </Button> */}
 
-              <Button
+              {/*<Button
                 variant="contained"
                 style={{ margin: "10px" }}
                 disabled={!data.user}
@@ -282,99 +318,35 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
                 }}
               >
                 Pay
-              </Button>
+              </Button>*/}
             </CardActions>
           </Card>
-          <Card sx={{ mb: "1rem" }}>
-            <CardContent>
-            {/* <CardHeader
-              title={"Pay with Fiat"}
-              subheader={"Paypal Comission " + (totalPaypal + "% " )}
-              subheader={"Stripe Comission " + (totalStripe + "% " )}>
-            </CardHeader> */}
-            <Typography>
-              Pay with Fiat
-            </Typography>
-              <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                {/* Pay with FIAT <br/> */}
-                {"Paypal Comission " + (config.PAYPAL_PERCENTAGE + "% " )}<br/>
-                {"Stripe Comission " + (config.STRIPE_PERCENTAGE + "% " )}
-              </Typography>
-            </CardContent>
-            {idDoc ? <CardActions>
-              {/* {"Paypal Comission " + config.PAYPAL_PERCENTAGE + " %"} */}
-              <PayPalScriptProvider options={
-                process.env.CLIENT_ID_PAYPAL
-              }>
-                <PayPalButtons style={{ layout: "horizontal" }}
-                  createOrder={(data, actions) => createOrder(data, actions)}
-                  forceReRender={[idDoc]}
-                  onApprove={(data, actions) => onApprove(data, actions)}
-                />
-              </PayPalScriptProvider>
-              <Button variant="contained" style={{ margin: 10 }} onClick={payWithStripe}>Pay with stripe </Button>
-            </CardActions> : <CardContent> Loading </CardContent>}
-          </Card>
+          
           <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
             <ArrowBackIcon />
           </Fab>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Card sx={{ maxWidth: '100%' }}>
-            <CardHeader
-              title="Load your NFT"
-            />
-            <CardMedia
+
+
+        <Grid item xs={12} md={6} lg={3} sx={{alignSelf: "stretch"}}>
+          <Card sx={{ maxWidth: '100%' , minHeight: "530px" }}>
+          <CardContent>
+            <Typography variant="body" color="text.secondary" sx={{mb : "2rem"}}>
+             We have launched Dancero, a collection of hand-drawn NFTs trading on several blockchain ecosystems. The NFTs unlock a long list of exclusive benefits to their owners, including free access to classes and bootcamps, and can even be rented out for passive income. <a href="">Learn more.</a> 
+            </Typography>
+            <CardMedia sx={{my: "1rem"}}
               component="img"
               height="285"
               image={imgNFT}
               alt="Paella dish"
             />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-              </Typography>
+            <Typography variant="body" color="text.secondary">
+              You will soon be able to stake your NFT to apply an automatic discount. <a href="">Learn more.</a>
+            </Typography>
             </CardContent>
-            <CardActions disableSpacing>
-              <FormControl fullWidth>
-                {
-                  nftcodes.length > 0 ?
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={nftSelected}
-                      onChange={(evt) => { SetNFTSelected(evt.target.value); loadNFTMetaData(evt.target.value); }}
-                    >
-                      {nftcodes.map((nft) => <MenuItem value={nft}>{nft}</MenuItem>)}
-                    </Select> :
-                    <b>Connect your wallet to load your NFTs</b>
-                }
-              </FormControl>
-            </CardActions>
           </Card>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 100 }} aria-label="simple table">
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.option}</TableCell>
-                    <TableCell align="right">{row.name2}</TableCell>
-                    <TableCell align="right">{row.option2}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
         </Grid>
-      </Grid>
-
       <Modal idDoc={idDoc} show={open}></Modal>
     </Box>
   )
