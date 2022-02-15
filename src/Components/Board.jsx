@@ -233,7 +233,7 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
             </CardContent>
             <CardActions>
 
-              <Button
+              {/* <Button
                 disabled={data.user}
                 endIcon={<AccountBalanceWalletIcon />}
                 variant="contained"
@@ -242,7 +242,7 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
                 }}
               >
                 Connect
-              </Button>
+              </Button> */}
 
               <Button
                 variant="contained"

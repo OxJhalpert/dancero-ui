@@ -58,7 +58,7 @@ function StepTwo ({ data,update, goBackPage,setPage }) {
             <Fab variant="extended" size="medium" color="primary" onClick={()=> {
               if(data.Venue === 'Online')
             {
-              setPage(4);
+              setPage(3);
             }
             goBackPage()}} >
               <ArrowBackIcon/>

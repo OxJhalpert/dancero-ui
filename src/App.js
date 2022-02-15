@@ -21,6 +21,8 @@ import { initializeApp } from "firebase/app";
 import { collection, query, where, getDocs, setDoc, addDoc, doc, getFirestore } from "firebase/firestore";
 import './css/cards.css';
 import HomeStudioStep from "./Components/HomeStudioStep.jsx";
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+
 
 export default function App() {
   
@@ -62,7 +64,7 @@ export default function App() {
   }
 
   function goNextPage() {
-    if (page === 11) return;
+    if (page === 10) return;
     setPage((page) => page + 1);
   }
 
@@ -123,7 +125,7 @@ export default function App() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
               Dancero 
             </Typography>
-
+{/* 
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -133,28 +135,34 @@ export default function App() {
                 {page}
               </Button>
             ))}
-          </Box>
+          </Box> */}
+          <Button
+                disabled={data.user}
+                endIcon={<AccountBalanceWalletIcon />}
+                variant="contained"
+                onClick={async (e) => {
+                  connect();
+                }}
+              >
+                Connect
+          </Button>
           </Toolbar>
         </AppBar>
       </Box>
       <div>
-        { page > 1 ? <LinearProgress variant="determinate" value={(page -1)* 10}  /> : null}
+        { page > 1 ? <LinearProgress variant="determinate" value= {(page)*10}  /> : null}
       </div>
        <div>
-        {page === 1 && <LandingPage update={updateData}/>}
-        {page === 2 && <ClassTypeStep data={data} update={updateData} setPage={setPage}/>  }
-        {page === 3 &&  <LocationStep  data={data} update={updateData} goBackPage={goBackPage} setPage={setPage}/>  }
-        {page === 4 && <HomeStudioStep data={data} update={updateData} goBackPage={goBackPage} />}
-        {/* {page === 3 && data.Venue === "Offline" ? 
-            <HomeStudioStep data={data} update={updateData} /> 
-          : page === 3 && data.Venue !== "Offline" ? <TeacherGenderStep  data={data} update={updateData} goBackPage={goBackPage}/> : null } */}
-        {page === 5 && <TeacherGenderStep data={data} update={updateData} goBackPage={goBackPage} setPage={setPage}/>}
-        {page === 6 && <MusicGenreStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 7 && <MembershipStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 8 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 9 && <LevelStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 10 && <DatesStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 11 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig} />}
+        {page === 1 && <ClassTypeStep data={data} update={updateData} setPage={setPage}/>  }
+        {page === 2 &&  <LocationStep  data={data} update={updateData} goBackPage={goBackPage} setPage={setPage}/>  }
+        {page === 3 && <HomeStudioStep data={data} update={updateData} goBackPage={goBackPage} />}
+        {page === 4 && <TeacherGenderStep data={data} update={updateData} goBackPage={goBackPage} setPage={setPage}/>}
+        {page === 5 && <MusicGenreStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 6 && <MembershipStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 7 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 8 && <LevelStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 9 && <DatesStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig} />}
        
        </div> 
     </div>

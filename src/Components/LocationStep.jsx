@@ -25,7 +25,7 @@ function StepFour({ data,update, goBackPage,setPage }) {
               <Card sx={{ maxWidth: 200 }} onClick={() => {
                 if(data.Venue === 'Online')
                 {
-                  setPage(4)
+                  setPage(3)
                 }update("City", "Cartagena")}}>
                 <CardMedia
                   component="img"
@@ -44,7 +44,7 @@ function StepFour({ data,update, goBackPage,setPage }) {
               <Card sx={{ maxWidth: 200 }} onClick={() => {
                 if(data.Venue === 'Online')
                 {
-                  setPage(4)
+                  setPage(3)
                 }update("City", "Bogota")}}>
                 <CardMedia
                   component="img"
@@ -64,7 +64,7 @@ function StepFour({ data,update, goBackPage,setPage }) {
                 {
                   if(data.Venue === 'Online')
                 {
-                  setPage(4)
+                  setPage(3)
                 }update("City", "Medellin")}}>
                 <CardMedia
                   component="img"
@@ -83,7 +83,7 @@ function StepFour({ data,update, goBackPage,setPage }) {
               <Card sx={{ maxWidth: 200 }} onClick={() => 
                 {if(data.Venue === 'Online')
                 {
-                  setPage(4)
+                  setPage(3)
                 }
                   update("City", "Cali")}}>
                 <CardMedia 
