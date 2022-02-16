@@ -21,7 +21,7 @@ function StepFour({ data,update, goBackPage,setPage }) {
             </div>
 
             <div className="cards_container">
-              <div className="card location-card" onClick={() => {
+              <div className="card tall-card" onClick={() => {
                 if(data.Venue === 'Online')
                 {
                   setPage(3)
@@ -33,7 +33,7 @@ function StepFour({ data,update, goBackPage,setPage }) {
                     Cartagena
                 </div>
               </div>
-              <div className="card" onClick={() => {
+              <div className="card tall-card" onClick={() => {
                 if(data.Venue === 'Online')
                 {
                   setPage(3)
@@ -46,7 +46,7 @@ function StepFour({ data,update, goBackPage,setPage }) {
                     Bogota
                 </div>
               </div>
-              <div className="card" onClick={() => 
+              <div className="card tall-card" onClick={() => 
                 {
                   if(data.Venue === 'Online')
                 {
@@ -59,7 +59,7 @@ function StepFour({ data,update, goBackPage,setPage }) {
                     Medellin
                 </div>
               </div>
-              <div className="card" onClick={() => 
+              <div className="card tall-card" onClick={() => 
                 {if(data.Venue === 'Online')
                 {
                   setPage(3)

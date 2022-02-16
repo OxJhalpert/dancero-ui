@@ -17,19 +17,20 @@
     gap: 2rem;
     flex-wrap: wrap;
     justify-content: center;
-    height: 70vh;
+    align-items: center;
     
+
     .card{
         flex: 0 0 250px;
         height: 250px;
         background-color: #fff;
-        
-    .location-card{
-        height: 500px;
-    }
+
         .card_image{
+            box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+
+
             height: 80%;
-            background-color: #000;
+            background-color: #DDD;
             overflow: hidden;
             border-radius: 5px;
             border: 1px solid #e6e6e6;
@@ -52,5 +53,31 @@
             font-size: 1.5rem;
             text-align: center;
         }
+    }
+    .short-card{
+        flex: 0 0 auto;
+        min-width: 70px;
+    }
+
+    .only-text{
+        box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+        border-radius: 7px;
+        border: 1px solid #e6e6e6;
+        height: 100px;
+        transition: .2s ease;
+
+        
+        &:hover{
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+
+        .card_name{
+            margin: 2rem 1rem;
+        }
+    }
+
+    .tall-card{
+        height: 500px;
     }
 }

@@ -10,77 +10,49 @@ import reggaeton from "../images/reggaeton.jpg";
 import bachata from "../images/bachata.jpg";
 import Fab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import "../scss/cards.scss"
+import "../scss/layout.scss"
 
 function StepThree({ update, goBackPage }) {
   return (
-    <Grid sx={{ flexGrow: 3 }} container spacing={2} p={2.5}>
-      <Grid item xs={12}>
-        <Grid container justifyContent="center" spacing={2}>
-          <Grid item xs={12}>
-            <Grid container justifyContent="center" spacing={2}>
-              <h2>Please select the music genre :</h2>
-            </Grid>
-          </Grid>
-          <Grid key={5} item>
-            <Card sx={{ maxWidth: 300 }} onClick={() => update("Musical_gender", "Reggaeton")}>
-              <CardMedia
-                component="img"
-                alt="reggaeton"
-                height="300"
-                image={reggaeton}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Reggaeton
-                </Typography>
-              </CardContent>
-              <CardActions>
-              </CardActions>
-            </Card>
-          </Grid>
-          <Grid key={6} item>
-            <Card sx={{ maxWidth: 300 }} onClick={() => update("Musical_gender", "Salsa")}>
-              <CardMedia
-                component="img"
-                alt="salsa"
-                height="300"
-                image={salsa}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Salsa
-                </Typography>
-              </CardContent>
-              <CardActions>
-              </CardActions>
-            </Card>
-          </Grid>
-          <Grid key={7} item>
-            <Card sx={{ maxWidth: 300 }} onClick={() => update("Musical_gender", "Bachata")}>
-              <CardMedia
-                component="img"
-                alt="bachata"
-                height="300"
-                image={bachata}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+    <div className="container">
+          <div className="section-title">
+            <h2>Please select the music genre:</h2>
+          </div>
+          <div className="cards_container">
+            <div className="card" onClick={() => update("Musical_gender", "Reggaeton")}>
+              <div className="card_image">
+                <img src={reggaeton}/>
+              </div>
+              <div className="card_name">
+                Reggaeton
+              </div>
+            </div>
+
+            <div className="card" onClick={() => update("Musical_gender", "Salsa")}>
+              <div className="card_image">
+                <img src={salsa}/>
+              </div>
+              <div className="card_name">
+                Salsa
+              </div>
+            </div>
+            <div className="card" onClick={() => update("Musical_gender", "Bachata")}>
+              <div className="card_image">
+                <img src={bachata}/>
+              </div>
+              <div className="card_name">
                   Bachata
-                </Typography>
-              </CardContent>
-              <CardActions>
-              </CardActions>
-            </Card>
-          </Grid>
+              </div>
+            </div>
+          </div>
+
           <Grid xs={12} item container justifyContent="center" >
             <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
               <ArrowBackIcon />
             </Fab>
           </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
+    </div>
   );
 }
 export default StepThree;

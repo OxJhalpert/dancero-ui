@@ -7,49 +7,37 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function StepSeven({ update, goBackPage }) {
     return (
-      <Grid sx={{ flexGrow: 3 }} container spacing={2} p={2.5}>
-        <Grid item xs={12}>
-          <Grid container justifyContent="center" spacing={2}>
-          <Grid item xs={12}>
-              <Grid container justifyContent="center" spacing={2}>
-                <h2>Please select level you want :</h2>
-              </Grid>
-            </Grid>
-            <Grid key={15} item>
-              <Card sx={{ width: 250 }} onClick={() => update("Level", "Semi")}>
-                <CardContent>
-                  <Typography gutterBottom variant="h2" component="div" align="center">
+      <div className="container">
+            <div className="section-title">
+              <h2>Please select level you want :</h2>
+            </div>
+            
+            <div className="cards_container">
+
+              <div className="card only-text" onClick={() => update("Level", "Semi")}>
+                <div className="card_name">
                     Semi
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid key={16} item>
-              <Card sx={{ width: 250}} onClick={() => update("Level", "Pro")}>
-                <CardContent>
-                  <Typography gutterBottom variant="h2" component="div" align="center">
+                </div>
+              </div>
+            
+              <div className="card only-text" onClick={() => update("Level", "Pro")}>
+                <div className="card_name">
                     Pro
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid key={17} item>
-              <Card sx={{ width: 250 }} onClick={() => update("Level", "Master")}>
-                <CardContent>
-                  <Typography gutterBottom variant="h2" component="div" align="center">
+                </div>
+              </div>
+            
+              <div className="card only-text" onClick={() => update("Level", "Master")}>
+                <div className="card_name">
                     Master
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
+                </div>
+              </div>
+            </div>
             <Grid xs={12} item container justifyContent="center" >
             <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
               <ArrowBackIcon />
             </Fab>
             </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+      </div>
     );
   }
 

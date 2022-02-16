@@ -9,68 +9,49 @@ import studio from '../images/studio.jpg';
 import home from '../images/home.jpg';
 import Fab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-
+import "../scss/cards.scss"
+import "../scss/layout.scss"
 
 function HomeStudioStep({ update, goBackPage }) {
   return (
-    <Grid sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
-      <Grid item xs={12} >
-        <Grid container justifyContent="center" spacing={2}  alignItems="center">
-          <h2>
-            Welcome to Dancero wizard, please select one of the following
-            options :
-          </h2>
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <Grid container justifyContent="center" spacing={3}>
-          <Grid key={1} item>
-            <Card
+    <div className="container">
+      <div className="section-title">
+        <h2>
+          Welcome to Dancero wizard, please select one of the following
+          options :
+        </h2>
+      </div>
+      <div className="cards_container">
+            <div className="card"
               sx={{ maxWidth: 300 }}
               onClick={() => update("place", "home")}
             >
-              <CardMedia
-                component="img"
-                alt="Online"
-                height="300"
-                image={home}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+              <div className="card_image">
+                <img src={home}/>
+              </div>
+              <div className="card_name">
                   Home
-                </Typography>
-              </CardContent>
-              <CardActions></CardActions>
-            </Card>
-          </Grid>
-          <Grid key={3} item>
-            <Card
+              </div>
+            </div>
+          
+            <div className="card"
               sx={{ maxWidth: 300 }}
               onClick={() => update("place", "studio")}
             >
-              <CardMedia
-                component="img"
-                alt="Studio"
-                height="300"
-                image={studio}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+              <div className="card_image">
+                <img src={studio}/>
+              </div>
+              <div className="card_name">
                   studio
-                </Typography>
-              </CardContent>
-              <CardActions></CardActions>
-            </Card>
-          </Grid>
+              </div>
+            </div>
             <Grid xs={12} item container justifyContent="center" >
               <Fab variant="extended" size="medium" color="primary" onClick={()=> goBackPage()} >
                 <ArrowBackIcon/>
               </Fab>
             </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+        </div>
+      </div>
   );
 }
 
