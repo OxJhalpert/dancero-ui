@@ -11,8 +11,8 @@ function StepOne({ update, setPage  }) {
     <div className="container">
       <div className="section-title">
           <h2>
-            Welcome to Dancero wizard, please select one of the following
-            options :
+          Regular classes are done at home or at a studio location. Online classes via Zoom are a popular option for students that are not in Colombia yet, or have already left the country. Learn more here. 
+
           </h2>
       </div>
       <div className="cards_container">

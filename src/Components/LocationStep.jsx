@@ -17,7 +17,8 @@ function StepFour({ data,update, goBackPage,setPage }) {
     return (
       <div className="container">
             <div className="section-title">
-              <h2>Please select your city :</h2>
+            <h2>We have instructors in Medellin, Cali, Cartagena & Bogotá, so you can pick a location below. Note that if you’re planning to visit and take classes in multiple cities, you can use the live chat feature in the bottom right corner for a custom quote.</h2>
+
             </div>
 
             <div className="cards_container">
@@ -75,7 +76,8 @@ function StepFour({ data,update, goBackPage,setPage }) {
             </div>
             <Grid xs={12} item container justifyContent="center" >
             <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
-              <ArrowBackIcon />
+              {/* <ArrowBackIcon /> */}
+              Go Back
             </Fab>
             </Grid>
       </div>

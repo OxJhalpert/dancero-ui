@@ -9,7 +9,8 @@ function StepSeven({ update, goBackPage }) {
     return (
       <div className="container">
             <div className="section-title">
-              <h2>Please select level you want :</h2>
+            <h2>We can find instructors for pretty much any dance style, and even sub-styles specialists (for instance Salsa Cali-style, Cuban Salsa, Dominican Bachata etc.) If the dance style you’re looking for is not listed below or you’d like something more specific, just use the chat feature in the bottom right corner  to let us know</h2>
+
             </div>
             
             <div className="cards_container">
@@ -34,7 +35,8 @@ function StepSeven({ update, goBackPage }) {
             </div>
             <Grid xs={12} item container justifyContent="center" >
             <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
-              <ArrowBackIcon />
+              {/* <ArrowBackIcon /> */}
+              Go Back
             </Fab>
             </Grid>
       </div>

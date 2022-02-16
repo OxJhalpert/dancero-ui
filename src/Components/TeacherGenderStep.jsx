@@ -15,7 +15,8 @@ function StepTwo ({ data,update, goBackPage,setPage }) {
     return (
       <div className="container">
           <div className="section-title">
-            <h2>Please select gender of the teacher:</h2>
+          <h2>Would you prefer to learn from a man or a woman? An instructor from the opposite sex is typically better for couple dancing, while an instructor from the same sex is ideal for solo dancing.</h2>
+
           </div>
           <div className="cards_container">
             <div className="card tall-card" onClick={() => update("Gender", "Woman")}>
@@ -43,7 +44,8 @@ function StepTwo ({ data,update, goBackPage,setPage }) {
             setPage(3);
           }
           goBackPage()}} >
-            <ArrowBackIcon/>
+            {/* <ArrowBackIcon/> */}
+            Go Back
           </Fab>
           </Grid>
       </div>

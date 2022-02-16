@@ -17,8 +17,8 @@ function HomeStudioStep({ update, goBackPage }) {
     <div className="container">
       <div className="section-title">
         <h2>
-          Welcome to Dancero wizard, please select one of the following
-          options :
+        Your instructor(s) can come to your home (or any other place you may have available to you, including hotel, park, terrace, a flat ground is really all what’s needed) or we can book a studio close to your location.
+
         </h2>
       </div>
       <div className="cards_container">
@@ -47,7 +47,8 @@ function HomeStudioStep({ update, goBackPage }) {
             </div>
             <Grid xs={12} item container justifyContent="center" >
               <Fab variant="extended" size="medium" color="primary" onClick={()=> goBackPage()} >
-                <ArrowBackIcon/>
+                {/* <ArrowBackIcon/> */}
+                Go Back
               </Fab>
             </Grid>
         </div>

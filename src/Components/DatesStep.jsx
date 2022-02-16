@@ -25,7 +25,8 @@ function StepFive({ update, goBackPage }) {
         <Grid sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
           <Grid item xs={12}>
             <Grid container justifyContent="center" spacing={2}>
-              <h2>Choose dates for you classes :</h2>
+            <h2>What’s your approximate start and finish date to complete your classes? Your answer here will also give us an idea of your preferred the volume per day or per week, which is useful to find an instructor with the appropriate availability. Note that you can always change these dates later if you wish. </h2>
+
             </Grid>
           </Grid>
           
@@ -59,7 +60,8 @@ function StepFive({ update, goBackPage }) {
                   </LocalizationProvider>
                   <Box sx={{ display: 'flex', justifyContent: 'center', gap: "1rem", my: "1rem"}}>
                   <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
-                  <ArrowBackIcon />
+                  {/* <ArrowBackIcon /> */}
+                  Go Back
                   </Fab>
                   <Fab variant="extended" size="medium" color="primary" 
                     onClick={() =>{
@@ -76,7 +78,8 @@ function StepFive({ update, goBackPage }) {
                       }
                     }                            
                     } >
-                  <ArrowForwardIcon />
+                  {/* <ArrowForwardIcon /> */}
+                  Next
                   </Fab>
                   </Box>
                   { error ?

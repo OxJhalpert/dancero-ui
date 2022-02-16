@@ -8,6 +8,7 @@ import CardMedia from "@mui/material/CardMedia";
 import salsa from "../images/salsa.jpg";
 import reggaeton from "../images/reggaeton.jpg";
 import bachata from "../images/bachata.jpg";
+import  kizomba from '../images/Kizomba.jpg';
 import Fab from '@mui/material/Fab';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import "../scss/cards.scss"
@@ -20,15 +21,6 @@ function StepThree({ update, goBackPage }) {
             <h2>Please select the music genre:</h2>
           </div>
           <div className="cards_container">
-            <div className="card" onClick={() => update("Musical_gender", "Reggaeton")}>
-              <div className="card_image">
-                <img src={reggaeton}/>
-              </div>
-              <div className="card_name">
-                Reggaeton
-              </div>
-            </div>
-
             <div className="card" onClick={() => update("Musical_gender", "Salsa")}>
               <div className="card_image">
                 <img src={salsa}/>
@@ -45,11 +37,28 @@ function StepThree({ update, goBackPage }) {
                   Bachata
               </div>
             </div>
+            <div className="card" onClick={() => update("Musical_gender", "Kizomba")}>
+              <div className="card_image">
+                <img src={reggaeton}/>
+              </div>
+              <div className="card_name">
+                Kizomba
+              </div>
+            </div>
+            <div className="card" onClick={() => update("Musical_gender", "Something else")}>
+              <div className="card_image">
+                <img src={kizomba}/>
+              </div>
+              <div className="card_name">
+                Something else
+              </div>
+            </div>
           </div>
 
           <Grid xs={12} item container justifyContent="center" >
             <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
-              <ArrowBackIcon />
+              {/* <ArrowBackIcon /> */}
+              Go Back
             </Fab>
           </Grid>
     </div>

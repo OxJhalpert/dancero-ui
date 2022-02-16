@@ -12,7 +12,8 @@ function StepEigth({ update, goBackPage }) {
     return (
       <div className="container">
         <div className="section-title">
-          <h2>Please select the pack of hours :</h2>
+        <h2>How many hours would you like to book now? While you can always book more later, we’ve implemented a significant discount for bigger packs. If you’re sure you want to dance a lot, we recommend to book for more hours from the get-go to lower your price per hour. Note that we also have other formats available, such as <a href={"https://salsaclasses.co/holidays/"}>holidays</a>, <a href={"https://salsaclasses.co/night/"}>nights</a>, <a href={"https://salsaclasses.co/memberships/"}>memberships</a>, <a href={"https://salsaclasses.co/choreo/"}>choreo</a>. You can use the live chat feature in the bottom right corner if you’d like a custom quote.</h2>
+
         </div>
 
         <div className="cards_container">
@@ -66,7 +67,8 @@ function StepEigth({ update, goBackPage }) {
               </div>
             <Grid xs={12} item container justifyContent="center" >
             <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
-              <ArrowBackIcon />
+              {/* <ArrowBackIcon /> */}
+              Go Back
             </Fab>
             </Grid>
         </div>

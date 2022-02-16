@@ -323,7 +323,8 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
           </Card>
           
           <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
-            <ArrowBackIcon />
+            {/* <ArrowBackIcon /> */}
+            Go Back
           </Fab>
         </Grid>
 

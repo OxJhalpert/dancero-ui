@@ -158,9 +158,9 @@ export default function App() {
         {page === 3 && <HomeStudioStep data={data} update={updateData} goBackPage={goBackPage} />}
         {page === 4 && <TeacherGenderStep data={data} update={updateData} goBackPage={goBackPage} setPage={setPage}/>}
         {page === 5 && <MusicGenreStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 6 && <MembershipStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 7 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 8 && <LevelStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 6 && <LevelStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 7 && <MembershipStep  data={data} update={updateData} goBackPage={goBackPage}/>}
+        {page === 8 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 9 && <DatesStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig} />}
        
