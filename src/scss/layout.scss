@@ -1,4 +1,6 @@
-
+*{
+    box-sizing: border-box;
+}
 .container{
     margin: auto;
     max-width: 100%;
@@ -20,10 +22,9 @@
 }
 
 .btn-primary{
+    
     padding: .7rem 1.5rem;
     border: none;
     border-radius: 5px;
     color: #fff;
-}
-.btn-secondary{
 }

@@ -33,6 +33,9 @@ import { collection, query, where, getDocs, setDoc, addDoc, doc, getFirestore } 
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Modal from './Modal';
 import Fade from '@mui/material/Fade';
+import "../scss/layout.scss"
+import "../scss/board.scss"
+
 
 import config from '../config.json';
 
@@ -203,71 +206,65 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
-      <Grid container spacing={2} justifyContent="center">
-        <Grid item xs={12} md={6} lg={5}>
-          <Card sx={{ mb: "1rem"}}>
-            <CardContent sx={{fontSize: "1.1rem" , fontWeight: "500"}}>
-              <Grid container spacing={2} alignItems="center" justifyContent="space-around">
-                <Grid item xs={3}>
-                  <div>City: {data.City}</div>
-                  <div>Service: {data.Service}</div>
-                  <div>Instructor: {data.Gender}</div>
-                  <div>Level: {data.Level}</div>
-                  <div>Dance: {data.Musical_gender}</div>
-                </Grid>
-                <Grid item xs={3}>
-                  <div>Number of hours: {data.Hours}</div>
-                  <div>From: {moment(data.dates.dateFrom).format("MMM Do YY")}</div>
-                  <div>To: {moment(data.dates.dateTo).format("MMM Do YY")}</div>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-          <Card sx={{ mb: "1rem" }}>
-            
-            <CardContent sx={{ textAlign: 'center' , mt: "1rem" }}>
-              <Typography variant="h4" component="div" >
-                  <b>Price</b> : {priceToPay ? priceToPay : "..."} USD
-              </Typography>
-              <Typography>
+    <div className="container">
+      <div className="board_container">
+        <div>
+          <div className="board_header board_card">
+              <div>
+                <div>City: {data.City}</div>
+                <div>Service: {data.Service}</div>
+                <div>Instructor: {data.Gender}</div>
+                <div>Level: {data.Level}</div>
+                <div>Dance: {data.Musical_gender}</div>
+              </div>
+              <div>
+                <div>Number of hours: {data.Hours}</div>
+                <div>From: {moment(data.dates.dateFrom).format("MMM Do YY")}</div>
+                <div>To: {moment(data.dates.dateTo).format("MMM Do YY")}</div>
+              </div>
+          </div>
+
+
+          <div className="board_card price_pay">
+              <h1>
+                <span>Price</span> : {priceToPay ? priceToPay : "..."} USD
+              </h1>
+              <div className="price_info">
                 Exchange rate {totalCop + " COP, ER " + exchangeRatio}
-              </Typography>
-              <Typography>
+              </div>
+              <div className="price_info">
                 Pack Of {data.Hours} Hours
-              </Typography>
-              {idDoc ? <CardActions sx={{display: "flex", justifyContent: "center", alignItems: "baseline"}}>
-              <Box>
-                <Button variant="contained" style={{ margin: 10 }} sx={{minWidth: "150px"}} >crypto</Button>
-                <Box sx={{fontSize: ".8rem", textAlign: "left"}}>
+              </div>
+              {idDoc ? <div className="pay_methods">
+              <div>
+                <Button className="btn">crypto</Button>
+                <div className="pay-with">
                   <input type="radio" id="payWithUsdc" name="val" value="payWithUsdc"></input>
                   <label htmlFor="payWithUsdc">USDC</label>
                   <input type="radio" id="payWithUsdt" name="val" value="payWithUsdt" defaultChecked ></input>
                   <label htmlFor="payWithUsdt">USDT</label>
                   <input type="radio" id="payWithUst" name="val" value="payWithUst"></input>
                   <label htmlFor="payWithUsdc">UST</label>
-                </Box>
-              </Box>
+                </div>
+              </div>
               
               {/* {"Paypal Comission " + config.PAYPAL_PERCENTAGE + " %"} */}
               <PayPalScriptProvider  options={
                 process.env.CLIENT_ID_PAYPAL
               }>
-                <PayPalButtons 
+                <PayPalButtons className="paypal-btn"
                   style={{ layout: "horizontal" }}
                   createOrder={(data, actions) => createOrder(data, actions)}
                   forceReRender={[idDoc]}
                   onApprove={(data, actions) => onApprove(data, actions)}
                 />
               </PayPalScriptProvider>
-              <Button variant="contained" style={{ margin: 10 }} sx={{minWidth: "150px"}} onClick={payWithStripe}>Pay with stripe </Button>
-            </CardActions> : <CardContent> Loading </CardContent>}
+              <Button className="btn"  onClick={payWithStripe}>Pay with stripe</Button>
+              </div> : <CardContent> Loading </CardContent>}
             
-              <Typography variant="body"  color="text.secondary" sx={{mt:"2rem" , mb: ".5rem" , display: "block"}}>
+              <p>
                 Upon completing your payment, please use the live chat feature in the bottom right corner to message your phone number (or Whatsapp) to our team, so we can share it with your instructor, who will usually message you the same day. Feel free to use that same live chat at any time before or after payment to communicate with us.
-              </Typography>
-            </CardContent>
-            <CardActions>
+              </p>
 
               {/* <Button
                 disabled={data.user}
@@ -319,37 +316,30 @@ function StepNine({ data, connect, transferToken, goBackPage,firebaseConfig }) {
               >
                 Pay
               </Button>*/}
-            </CardActions>
-          </Card>
+          </div>
           
           <Fab variant="extended" size="medium" color="primary" onClick={() => goBackPage()} >
             {/* <ArrowBackIcon /> */}
             Go Back
           </Fab>
-        </Grid>
+        </div>
 
 
-        <Grid item xs={12} md={6} lg={3} sx={{alignSelf: "stretch"}}>
-          <Card sx={{ maxWidth: '100%' , minHeight: "530px" }}>
-          <CardContent>
-            <Typography variant="body" color="text.secondary" sx={{mb : "2rem"}}>
+        <div className="board_card">
+            <p>
              We have launched Dancero, a collection of hand-drawn NFTs trading on several blockchain ecosystems. The NFTs unlock a long list of exclusive benefits to their owners, including free access to classes and bootcamps, and can even be rented out for passive income. <a href="">Learn more.</a> 
-            </Typography>
-            <CardMedia sx={{my: "1rem"}}
-              component="img"
-              height="285"
-              image={imgNFT}
+            </p>
+            <img sx={{my: "1rem"}} className="nft-img"
+              src={imgNFT}
               alt="Paella dish"
             />
-            <Typography variant="body" color="text.secondary">
+            <p>
               You will soon be able to stake your NFT to apply an automatic discount. <a href="">Learn more.</a>
-            </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        </Grid>
+            </p>
+        </div>
       <Modal idDoc={idDoc} show={open}></Modal>
-    </Box>
+      </div>
+    </div>
   )
 }
 
