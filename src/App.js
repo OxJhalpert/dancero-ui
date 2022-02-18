@@ -28,8 +28,9 @@ export default function App() {
   
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
-    user: "",
+    // "user" : ''
   });
+  const [account, setAccount] = useState();
 
 
   const firebaseConfig = {
@@ -52,7 +53,8 @@ export default function App() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
       const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      updateData("user", account[0]);
+      const user = await window.web3.eth.getAccounts();
+      setData({ ...data, 'user': account[0] });
       
     } else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider);
@@ -80,7 +82,6 @@ export default function App() {
     goNextPage();
     
   }
-   
 
   async function transferToken(amount, _contractAbi, _addressContract, callback) {
     var chainId = await window.ethereum.request({  method: 'eth_chainId'  });
@@ -125,17 +126,7 @@ export default function App() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
               Dancero 
             </Typography>
-{/* 
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box> */}
+
           <Button
                 disabled={data.user}
                 endIcon={<AccountBalanceWalletIcon />}
@@ -162,7 +153,7 @@ export default function App() {
         {page === 7 && <MembershipStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 8 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 9 && <DatesStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig} />}
+        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig} account={account} />}
        
        </div> 
     </div>
