@@ -6,7 +6,6 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Button from "@mui/material/Button";
 import '@fontsource/roboto/300.css';
 
-import LandingPage from './Components/LandingStep.jsx';
 import ClassTypeStep from './Components/ClassTypeStep.jsx';
 import TeacherGenderStep from './Components/TeacherGenderStep.jsx';
 import MusicGenreStep from './Components/MusicGenreStep.jsx';
@@ -28,7 +27,7 @@ export default function App() {
   
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
-    // "user" : ''
+    "user" : ''
   });
   const [account, setAccount] = useState();
 
@@ -127,6 +126,8 @@ export default function App() {
               Dancero 
             </Typography>
 
+          {data.user ? data.user : "" }
+          &nbsp;
           <Button
                 disabled={data.user}
                 endIcon={<AccountBalanceWalletIcon />}

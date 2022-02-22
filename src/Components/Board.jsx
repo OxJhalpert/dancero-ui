@@ -1,47 +1,22 @@
-import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Typography } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import moment from "moment";
 import UstToken from "../abis/UstToken.json";
 import UsdtToken from "../abis/UsdtToken.json";
 import UsdcToken from "../abis/UsdcToken.json";
 import getPriceAndCostCalculation from "./utils";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import CardHeader from "@mui/material/CardHeader";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import { useEffect, useState } from "react";
 import danceNFT from "../abis/danceNFT.json";
-import Select from "@mui/material/Select";
-import Backdrop from "@mui/material/Backdrop";
-import { Box } from "@mui/system";
 import React from "react";
 import Fab from "@mui/material/Fab";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { initializeApp } from "firebase/app";
 import {
   collection,
-  query,
-  where,
-  getDocs,
-  setDoc,
   addDoc,
-  doc,
   getFirestore,
 } from "firebase/firestore";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Modal from "./Modal";
-import Fade from "@mui/material/Fade";
 import "../scss/layout.scss";
 import "../scss/board.scss";
 
@@ -50,18 +25,6 @@ import config from "../config.json";
 function createData(name, option, name2, option2) {
   return { name, option, name2, option2 };
 }
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 function StepNine({
   data,
@@ -139,6 +102,7 @@ function StepNine({
   };
   const onApprove = (data, actions) => {
     setOpen(true);
+    window.location = process.env.SUCCESS_PAGE;
     return actions.order.capture();
   };
 
