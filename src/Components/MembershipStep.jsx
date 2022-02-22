@@ -14,7 +14,7 @@ function StepSix({ update,goBackPage }) {
     return (
       <div className="container">
         <div className="section-title">
-        <h2>The basic service connects you to an instructor that matches the requirements. The standard service is a bit more expensive but you have the freedom to switch up your instructors. And with the premium option, you get a concierge service to help you book taxis, hotels, tours or anything else you need during your trip. <a href={"https://salsaclasses.co/packs/"}>Lear more here.</a></h2>
+          <p>The basic service connects you to an instructor that matches the requirements. The standard service is a bit more expensive but you have the freedom to switch up your instructors. And with the premium option, you get a concierge service to help you book taxis, hotels, tours or anything else you need during your trip. <a href={"https://salsaclasses.co/packs/"}>Lear more here.</a></p>
 
         </div>
         

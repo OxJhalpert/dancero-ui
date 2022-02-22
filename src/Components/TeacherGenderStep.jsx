@@ -15,8 +15,7 @@ function StepTwo ({ data,update, goBackPage,setPage }) {
     return (
       <div className="container">
           <div className="section-title">
-          <h2>Would you prefer to learn from a man or a woman? An instructor from the opposite sex is typically better for couple dancing, while an instructor from the same sex is ideal for solo dancing.</h2>
-
+            <p>Would you prefer to learn from a man or a woman? An instructor from the opposite sex is typically better for couple dancing, while an instructor from the same sex is ideal for solo dancing.</p>
           </div>
           <div className="cards_container">
             <div className="card tall-card" onClick={() => update("Gender", "Woman")}>

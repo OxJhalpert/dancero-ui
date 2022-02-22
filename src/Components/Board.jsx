@@ -218,6 +218,10 @@ function StepNine({
               <div>From: {moment(data.dates.dateFrom).format("MMM Do YY")}</div>
               <div>To: {moment(data.dates.dateTo).format("MMM Do YY")}</div>
             </div>
+            <div>
+              <div>Price per hour: 4000 COP</div>
+              <div>Total in pesos: 500.000 COP</div>
+            </div>
           </div>
 
           <div className="board_card price_pay">

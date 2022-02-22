@@ -16,10 +16,10 @@ function HomeStudioStep({ update, goBackPage }) {
   return (
     <div className="container">
       <div className="section-title">
-        <h2>
+        <p>
         Your instructor(s) can come to your home (or any other place you may have available to you, including hotel, park, terrace, a flat ground is really all what’s needed) or we can book a studio close to your location.
 
-        </h2>
+        </p>
       </div>
       <div className="cards_container">
             <div className="card"

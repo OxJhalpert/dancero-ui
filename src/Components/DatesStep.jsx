@@ -13,6 +13,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import moment from 'moment';
 import { Box } from '@mui/system';
+import "../scss/cards.scss"
 
 function StepFive({ update, goBackPage }) {
     
@@ -23,12 +24,10 @@ function StepFive({ update, goBackPage }) {
     return (
       <div>
         <Grid sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
-          <Grid item xs={12}>
-            <Grid container justifyContent="center" spacing={2}>
-            <h2>What’s your approximate start and finish date to complete your classes? Your answer here will also give us an idea of your preferred the volume per day or per week, which is useful to find an instructor with the appropriate availability. Note that you can always change these dates later if you wish. </h2>
+          <div className="section-title">
+            <p>What’s your approximate start and finish date to complete your classes? Your answer here will also give us an idea of your preferred the volume per day or per week, which is useful to find an instructor with the appropriate availability. Note that you can always change these dates later if you wish. </p>
 
-            </Grid>
-          </Grid>
+          </div>
           
             <Grid container justifyContent="center">
               <Grid key={1} item>

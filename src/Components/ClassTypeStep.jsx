@@ -10,10 +10,10 @@ function StepOne({ update, setPage  }) {
 
     <div className="container">
       <div className="section-title">
-          <h2>
+          <p>
           Regular classes are done at home or at a studio location. Online classes via Zoom are a popular option for students that are not in Colombia yet, or have already left the country. Learn more here. 
 
-          </h2>
+          </p>
       </div>
       <div className="cards_container">
           <div className="card" 

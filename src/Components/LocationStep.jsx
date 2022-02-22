@@ -17,8 +17,7 @@ function StepFour({ data,update, goBackPage,setPage }) {
     return (
       <div className="container">
             <div className="section-title">
-            <h2>We have instructors in Medellin, Cali, Cartagena & Bogotá, so you can pick a location below. Note that if you’re planning to visit and take classes in multiple cities, you can use the live chat feature in the bottom right corner for a custom quote.</h2>
-
+              <p>We have instructors in Medellin, Cali, Cartagena & Bogotá, so you can pick a location below. Note that if you’re planning to visit and take classes in multiple cities, you can use the live chat feature in the bottom right corner for a custom quote.</p>
             </div>
 
             <div className="cards_container">

@@ -9,7 +9,7 @@ function StepSeven({ update, goBackPage }) {
     return (
       <div className="container">
             <div className="section-title">
-            <h2>We can find instructors for pretty much any dance style, and even sub-styles specialists (for instance Salsa Cali-style, Cuban Salsa, Dominican Bachata etc.) If the dance style you’re looking for is not listed below or you’d like something more specific, just use the chat feature in the bottom right corner  to let us know</h2>
+              <p>We can find instructors for pretty much any dance style, and even sub-styles specialists (for instance Salsa Cali-style, Cuban Salsa, Dominican Bachata etc.) If the dance style you’re looking for is not listed below or you’d like something more specific, just use the chat feature in the bottom right corner  to let us know</p>
 
             </div>
             
