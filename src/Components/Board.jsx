@@ -32,20 +32,26 @@ function StepNine({
   transferToken,
   goBackPage,
   firebaseConfig,
+  account
 }) {
   var firebaseConfig = firebaseConfig;
   const app = initializeApp(firebaseConfig);
   var firestoreDB = getFirestore(app);
 
   const [exchangeRatio, setexchangeRatio] = useState();
-  const [imgNFT, setImgNFT] = useState("https://via.placeholder.com/150");
+  // const [imgNFT, setImgNFT] = useState("https://via.placeholder.com/150");
+  const [imgNFT, setImgNFT] = useState();
+
   const [nftcodes, setNFTCodes] = useState([]);
-  const [nftSelected, SetNFTSelected] = useState(null);
+  const [nftSelected, SetNFTSelected] = useState();
   const [priceToPay, setPriceToPay] = useState(0);
   const [totalCop, setTotalCop] = useState(0);
   const [idDoc, setIdDoc] = useState(null);
   const [totalPaypal, setTotalPaypal] = useState(0);
   const [totalStripe, setTotalStripe] = useState(0);
+  const [comission, setComission] = useState(0);
+  const [dollarfee, setDollarFee] = useState(0);
+  const [costTeacher,setCostTeacher] = useState(0);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -70,6 +76,13 @@ function StepNine({
   useEffect(() => {
     if (data.user !== "") {
       loadNTFOfOwner();
+    }
+  }, [data.user]);
+
+  
+  useEffect(() => {
+    if (data.user !== "") {
+      loadNFTMetaData(nftcodes[0])
     }
   }, [data.user]);
 
@@ -117,6 +130,14 @@ function StepNine({
       data.place,
       0
     );
+    var priceS = cost[1];
+    var costT = cost[0]; 
+    setCostTeacher(costT);
+    var comission = priceS - costT;
+    setComission(comission)
+    var dollarFee = comission/ exchangeRate;
+    dollarFee = Math.round(dollarFee)
+    setDollarFee(dollarFee);
     var rest = cost[1] - cost[0];
     var totalCopRound = RoundTo(rest, roundTo);
     setTotalCop(totalCopRound);
@@ -220,18 +241,22 @@ function StepNine({
             </div>
             <div>
               <div>Price per hour: 4000 COP</div>
-              <div>Total in pesos: 500.000 COP</div>
+              <div>Total in pesos: {totalCop} COP</div>
             </div>
           </div>
 
           <div className="board_card price_pay">
+            <p>
+            your total price is {totalCop} the booking fee to be paid is {comission} pesos o {dollarfee} usd at an exchange rate {exchangeRatio} COP per USD. We accept crypto stablecoins (no commission), stripe (5%) and pay pal (5%) 
+            the reminding {costTeacher} are paid directly in cash to your instructor please check out our  terms <a href={"https://salsaclasses.co/packs/"}>here.</a>
+            </p>
             <h1>
               <span>Price</span> : {priceToPay ? priceToPay : "..."} USD
             </h1>
-            <div className="price_info">
+            {/* <div className="price_info">
               Exchange rate {totalCop + " COP, ER " + exchangeRatio}
             </div>
-            <div className="price_info">Pack Of {data.Hours} Hours</div>
+            <div className="price_info">Pack Of {data.Hours} Hours</div> */}
             {idDoc ? (
               <div className="pay_methods">
                 <div>
@@ -397,12 +422,16 @@ function StepNine({
             and bootcamps, and can even be rented out for passive income.{" "}
             <a href="">Learn more.</a>
           </p>
-          <img
+
+          { imgNFT ?  imgNFT(imgNFT =>  <img sx={{ my: "1rem" }} className="nft-img" src={imgNFT} alt="DanceroNFT"/>):(<p>connect a web3 wallet to view your dancero nft.
+          you don't have any dancero nft in your wallet but you can purchase one <a href={"https://salsaclasses.co/packs/"}>here.</a></p>)}
+          
+          {/* <img
             sx={{ my: "1rem" }}
             className="nft-img"
             src={imgNFT}
-            alt="Paella dish"
-          />
+            alt="DanceroNFT"
+          /> */}
           <p>
             You will soon be able to stake your NFT to apply an automatic
             discount. <a href="">Learn more.</a>
