@@ -49,13 +49,14 @@ function StepNine({
   const [idDoc, setIdDoc] = useState(null);
   const [totalPaypal, setTotalPaypal] = useState(0);
   const [totalStripe, setTotalStripe] = useState(0);
-  const [comission, setComission] = useState(0);
+  // const [comission, setComission] = useState(0);
   const [dollarfee, setDollarFee] = useState(0);
   const [costTeacher,setCostTeacher] = useState(0);
+  const [priceS , setPriceS] = useState(0);
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const [open, setOpen] = React.useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
   function getExchangeRate() {
     fetch("https://api.exchangerate-api.com/v4/latest/USD")
@@ -79,12 +80,6 @@ function StepNine({
     }
   }, [data.user]);
 
-  
-  useEffect(() => {
-    if (data.user !== "") {
-      loadNFTMetaData(nftcodes[0])
-    }
-  }, [data.user]);
 
   var initialDate = moment(data.dates.dateFrom).format("MMM Do YY");
   var finalDate = moment(data.dates.dateTo).format("MMM Do YY");
@@ -113,9 +108,10 @@ function StepNine({
       ],
     });
   };
+
   const onApprove = (data, actions) => {
-    setOpen(true);
-    window.location = process.env.SUCCESS_PAGE;
+    // setOpen(true);
+    window.location = "http://localhost:3000/success";
     return actions.order.capture();
   };
 
@@ -131,10 +127,12 @@ function StepNine({
       0
     );
     var priceS = cost[1];
+    priceS = RoundTo(priceS,roundTo)
+    setPriceS(priceS);
     var costT = cost[0]; 
     setCostTeacher(costT);
     var comission = priceS - costT;
-    setComission(comission)
+    // setComission(comission)
     var dollarFee = comission/ exchangeRate;
     dollarFee = Math.round(dollarFee)
     setDollarFee(dollarFee);
@@ -159,10 +157,13 @@ function StepNine({
       danceNFT.abi,
       "0x3CAa1C35E5229EbbAEB70ea471F738a99c02381d"
     );
-    var NFTCodes = await danceNFTContract.methods
+    var nftCodesA = await danceNFTContract.methods
       .getAllNFTCodesByAddress(data.user)
       .call();
-    setNFTCodes(NFTCodes);
+    setNFTCodes(nftCodesA);
+    // var nftR = nftCodesA[0];
+    // SetNFTSelected(nftR);
+    // loadNFTMetaData(nftSelected)
   }
 
   async function storeTransaction() {
@@ -170,18 +171,18 @@ function StepNine({
     setIdDoc(newDoc.id);
   }
 
-  async function loadNFTMetaData(nftId) {
+  async function loadNFTMetaData(nftSelected) {
     const danceNFTContract = new window.web3.eth.Contract(
       danceNFT.abi,
       "0x3CAa1C35E5229EbbAEB70ea471F738a99c02381d"
     );
     const balance = await danceNFTContract.methods
-      .balanceOf(data.user, nftId)
+      .balanceOf(data.user, nftSelected)
       .call();
 
     if (balance >= 1) {
-      var jsonData = await danceNFTContract.methods.uri(nftId).call();
-      jsonData = jsonData.replace("{id}", nftId);
+      var jsonData = await danceNFTContract.methods.uri(nftSelected).call();
+      jsonData = jsonData.replace("{id}", nftSelected);
       fetch(jsonData)
         .then((response) => response.json())
         .then((data) => {
@@ -240,14 +241,14 @@ function StepNine({
               <div>To: {moment(data.dates.dateTo).format("MMM Do YY")}</div>
             </div>
             <div>
-              <div>Price per hour: 4000 COP</div>
+              <div>Price per hour: {priceS /data.Hours} COP</div>
               <div>Total in pesos: {totalCop} COP</div>
             </div>
           </div>
 
           <div className="board_card price_pay">
             <p>
-            your total price is {totalCop} the booking fee to be paid is {comission} pesos o {dollarfee} usd at an exchange rate {exchangeRatio} COP per USD. We accept crypto stablecoins (no commission), stripe (5%) and pay pal (5%) 
+            your total price is {priceS} the booking fee to be paid is {totalCop} pesos o {priceToPay} usd at an exchange rate {exchangeRatio} COP per USD. We accept crypto stablecoins (no commission), stripe ({config.STRIPE_PERCENTAGE}% )and pay pal ({config.PAYPAL_PERCENTAGE}%) 
             the reminding {costTeacher} are paid directly in cash to your instructor please check out our  terms <a href={"https://salsaclasses.co/packs/"}>here.</a>
             </p>
             <h1>
@@ -272,28 +273,33 @@ function StepNine({
                       for (var i = 0; i < ele.length; i++) {
                         if (ele[i].checked) radiusValue = ele[i].value;
                       }
-                      if (radiusValue !== "") {
-                        if (radiusValue === "payWithUst") {
-                          _contractAbi = UstToken.abi;
-                          _addressContract =
-                            "0x67862E5fD5DdCDAC1007786d8ce4469dDa847635";
-                        } else if (radiusValue === "payWithUsdt") {
-                          _contractAbi = UsdtToken.abi;
-                          _addressContract =
-                            "0x649C680dF9a192d9eE1F4Ed368962914dc3EF8c4";
-                        } else if (radiusValue === "payWithUsdc") {
-                          _contractAbi = UsdcToken.abi;
-                          _addressContract =
-                            "0x413e1A7a3702756588857259e4a55Bd2E272cE4b";
-                        }
-                        transferToken(
-                          amount,
-                          _contractAbi,
-                          _addressContract,
-                          () => {
-                            setOpen(true);
+                      if(data.user == ""){
+                        
+                        connect()
+                      }else{
+                        if (radiusValue !== "") {
+                          if (radiusValue === "payWithUst") {
+                            _contractAbi = UstToken.abi;
+                            _addressContract =
+                              "0x67862E5fD5DdCDAC1007786d8ce4469dDa847635";
+                          } else if (radiusValue === "payWithUsdt") {
+                            _contractAbi = UsdtToken.abi;
+                            _addressContract =
+                              "0x649C680dF9a192d9eE1F4Ed368962914dc3EF8c4";
+                          } else if (radiusValue === "payWithUsdc") {
+                            _contractAbi = UsdcToken.abi;
+                            _addressContract =
+                              "0x413e1A7a3702756588857259e4a55Bd2E272cE4b";
                           }
-                        );
+                          transferToken(
+                            amount,
+                            _contractAbi,
+                            _addressContract,
+                            // () => {
+                            //   setOpen(true);
+                            // }
+                          );
+                        }
                       }
                     }}
                   >
@@ -423,7 +429,7 @@ function StepNine({
             <a href="">Learn more.</a>
           </p>
 
-          { imgNFT ?  imgNFT(imgNFT =>  <img sx={{ my: "1rem" }} className="nft-img" src={imgNFT} alt="DanceroNFT"/>):(<p>connect a web3 wallet to view your dancero nft.
+          { imgNFT ? imgNFT(imgNFT =>  <img sx={{ my: "1rem" }} className="nft-img" src={imgNFT} alt="DanceroNFT"/>):(<p>connect a web3 wallet to view your dancero nft.
           you don't have any dancero nft in your wallet but you can purchase one <a href={"https://salsaclasses.co/packs/"}>here.</a></p>)}
           
           {/* <img
@@ -437,7 +443,7 @@ function StepNine({
             discount. <a href="">Learn more.</a>
           </p>
         </div>
-        <Modal idDoc={idDoc} show={open}></Modal>
+        {/* <Modal idDoc={idDoc} show={open}></Modal> */}
       </div>
     </div>
   );

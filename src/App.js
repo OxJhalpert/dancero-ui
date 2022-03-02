@@ -127,7 +127,6 @@ export default function App() {
             </Typography>
 
           {data.user ? data.user : "" }
-          &nbsp;
           <Button
                 disabled={data.user}
                 endIcon={<AccountBalanceWalletIcon />}
