@@ -52,7 +52,6 @@ export default function App() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
       const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      const user = await window.web3.eth.getAccounts();
       setData({ ...data, 'user': account[0] });
       
     } else if (window.web3) {
@@ -142,6 +141,7 @@ export default function App() {
       </Box>
       <div>
         { page > 1 ? <LinearProgress variant="determinate" value= {(page)*10}  /> : null}
+        
       </div>
        <div>
         {page === 1 && <ClassTypeStep data={data} update={updateData} setPage={setPage}/>  }
@@ -153,8 +153,7 @@ export default function App() {
         {page === 7 && <MembershipStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 8 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 9 && <DatesStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig} account={account} />}
-       
+        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig} account={account} />}   
        </div> 
     </div>
   );

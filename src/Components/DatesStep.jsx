@@ -35,7 +35,7 @@ function StepFive({ update, goBackPage }) {
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <Grid container justifyContent= "center" spacing={2}>
                   <Grid item>
-                    <DatePicker className="date-picker"
+                    <DatePicker className="date-picker" minDate={new Date()}
                         label="Start of classes"
                         value={dateFrom}
                         onChange={(newValue) => {
@@ -49,6 +49,7 @@ function StepFive({ update, goBackPage }) {
                     <DatePicker
                       label="End of classes"
                       value={dateTo}
+                      minDate={new Date()}
                       onChange={(newValue) => {
                         setDateTo(newValue);
                       }}

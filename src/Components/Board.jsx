@@ -43,7 +43,7 @@ function StepNine({
   const [imgNFT, setImgNFT] = useState();
 
   const [nftcodes, setNFTCodes] = useState([]);
-  const [nftSelected, SetNFTSelected] = useState();
+  const [nftSelected, SetNFTSelected] = useState([]);
   const [priceToPay, setPriceToPay] = useState(0);
   const [totalCop, setTotalCop] = useState(0);
   const [idDoc, setIdDoc] = useState(null);
@@ -53,6 +53,8 @@ function StepNine({
   const [dollarfee, setDollarFee] = useState(0);
   const [costTeacher,setCostTeacher] = useState(0);
   const [priceS , setPriceS] = useState(0);
+
+  const apikey = "2jGZArUpQi7ShuA7xONTt8THMikH6zZVoeL0Mp8nVW06Td4zWznTdU7IodyoNmV6";
 
   // const [open, setOpen] = React.useState(false);
   // const handleOpen = () => setOpen(true);
@@ -74,11 +76,59 @@ function StepNine({
     getExchangeRate();
   }, [setexchangeRatio]);
 
-  useEffect(() => {
-    if (data.user !== "") {
-      loadNTFOfOwner();
-    }
-  }, [data.user]);
+  // useEffect(() => {
+  //   if (data.user !== "") {
+  //     loadNTFOfOwner();
+  //   }
+  // }, [data.user]);
+
+
+
+  // useEffect(() => 
+  // {
+  //     if(data.user == ""){
+  //         return;
+  //     }
+
+  //     fetch('https://moralis.io/0xE100d224fe3767C8Be596Ce1eCFC4F9d323Fc398/nft/0x3CAa1C35E5229EbbAEB70ea471F738a99c02381d?chain=matic&format=decimal&offset=93353163&limit=93353163')
+  //     .then(response => response.json())
+  //     .then(data => { setNFTCodes(data) 
+  //       console.log(data); });
+
+  // }, [data.user]);
+
+  const header = {'X-API-Key':'2jGZArUpQi7ShuA7xONTt8THMikH6zZVoeL0Mp8nVW06Td4zWznTdU7IodyoNmV6'};
+
+    const inicio = { 
+               method: 'GET',
+               headers: header,
+               mode: 'cors',
+               cache: 'default' };
+    
+    
+    const peticion = config.URL_BASE + '/0x5603D86d741535da15C4b2c12BFcC59ef601E3b9/nft/0x40D966D7e51f15F830A57bC0D774DF5304EBc90D?chain=mumbai&format=decimal&limit=93353163';
+
+        useEffect(()=>{
+          
+      if(data.user == ""){
+        return
+      }
+          fetch(peticion,inicio)
+          .then (response => response.json())
+          .then (data => {
+          setNFTCodes(data.result);
+          var test = data.result[19]
+          console.log(test)
+          SetNFTSelected(data.result[19]);
+          test = JSON.parse(test.metadata)
+          console.log(test)
+          var test2 = test.image
+          console.log(test2);
+          setImgNFT("https://gateway.pinata.cloud/ipfs/QmQ591RaHieuveWyzMSHhNgzxGuZYgFm7ULRg21XCRCDnv/1.png")
+          // setImgNFT("https://gateway.pinata.cloud/"+test2)
+       })},[data.user]);
+        
+      
 
 
   var initialDate = moment(data.dates.dateFrom).format("MMM Do YY");
@@ -274,7 +324,6 @@ function StepNine({
                         if (ele[i].checked) radiusValue = ele[i].value;
                       }
                       if(data.user == ""){
-                        
                         connect()
                       }else{
                         if (radiusValue !== "") {
@@ -429,7 +478,7 @@ function StepNine({
             <a href="">Learn more.</a>
           </p>
 
-          { imgNFT ? imgNFT(imgNFT =>  <img sx={{ my: "1rem" }} className="nft-img" src={imgNFT} alt="DanceroNFT"/>):(<p>connect a web3 wallet to view your dancero nft.
+          { imgNFT ? imgNFT =>  (<img sx={{ my: "100rem" }} className="nft-img" src={imgNFT} alt="DanceroNFT"/>):(<p>connect a web3 wallet to view your dancero nft.
           you don't have any dancero nft in your wallet but you can purchase one <a href={"https://salsaclasses.co/packs/"}>here.</a></p>)}
           
           {/* <img
