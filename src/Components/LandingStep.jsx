@@ -1,27 +1,27 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Link from '@mui/material/Link';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
+      {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
   );
 }
@@ -35,9 +35,10 @@ export default function Album({ update }) {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main>
+        {/* Hero unit */}
         <Box
           sx={{
-            bgcolor: "background.paper",
+            bgcolor: 'background.paper',
             pt: 8,
             pb: 6,
           }}
@@ -52,16 +53,8 @@ export default function Album({ update }) {
             >
               Welcome to Dancero
             </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="text.secondary"
-              paragraph
-            >
-              A collection of NFTs, giving access to a real-life community of
-              dance instructors in Latin America. Each Dancero unlocks a
-              personalized dance experience across both the digital and the
-              physical world.
+            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+              A collection of NFTs, giving access to a real-life community of dance instructors in Latin America. Each Dancero unlocks a personalized dance experience across both the digital and the physical world.
             </Typography>
             <Stack
               sx={{ pt: 4 }}
@@ -69,20 +62,17 @@ export default function Album({ update }) {
               spacing={2}
               justifyContent="center"
             >
-              <Button
-                variant="contained"
-                onClick={() => update("started", "1")}
-              >
-                Get Started
-              </Button>
+              <Button variant="contained" onClick={() => update("started", "1")}>Get Started</Button>
             </Stack>
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
+          {/* End hero unit */}
           <Grid container spacing={4}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card>
+                <Card
+                >
                   <CardMedia
                     component="img"
                     sx={{}}
@@ -94,8 +84,8 @@ export default function Album({ update }) {
                       Heading
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
+                      This is a media card. You can use this section to describe the
+                      content.
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -108,7 +98,8 @@ export default function Album({ update }) {
           </Grid>
         </Container>
       </main>
-      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+      {/* Footer */}
+      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography variant="h6" align="center" gutterBottom>
           Footer
         </Typography>
@@ -122,6 +113,7 @@ export default function Album({ update }) {
         </Typography>
         <Copyright />
       </Box>
+      {/* End footer */}
     </ThemeProvider>
   );
 }

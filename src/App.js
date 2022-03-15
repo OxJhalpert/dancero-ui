@@ -1,5 +1,5 @@
 import { AppBar, Toolbar, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Web3 from "web3";
 import Box from "@mui/material/Box";
 import LinearProgress from '@mui/material/LinearProgress';
@@ -21,7 +21,6 @@ import { collection, query, where, getDocs, setDoc, addDoc, doc, getFirestore } 
 import './css/cards.css';
 import HomeStudioStep from "./Components/HomeStudioStep.jsx";
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import config from "./config.json";
 
 
 export default function App() {
@@ -53,6 +52,7 @@ export default function App() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
       const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const user = await window.web3.eth.getAccounts();
       setData({ ...data, 'user': account[0] });
       
     } else if (window.web3) {
@@ -85,11 +85,12 @@ export default function App() {
   async function transferToken(amount, _contractAbi, _addressContract, callback) {
     var chainId = await window.ethereum.request({  method: 'eth_chainId'  });
     const user = await window.web3.eth.getAccounts();
-    // if (chainId === '0x6357d2e0')
-    if (chainId === '0x38')
+    if (chainId === '0x6357d2e0')
     {
       window.web3.eth.getBlock("latest").then(async function (response) {
+        //console.log(response.gasLimit);
         window.web3.eth.getGasPrice().then(function (gas) {
+          //console.log(gas);
           var item = {
             from: user[0],
             gasprice: gas,
@@ -102,7 +103,7 @@ export default function App() {
             _addressContract
           );
           contract.methods
-            .transfer(config.PAYMENT_ACCOUNT, amount)
+            .transfer("0x02a10A6182B60Ee989fd611cab17bd0512885205", amount)
             .send(item)
             .on("transactionHash", (hash) => {
               var newDoc =  addDoc(collection(firestoreDB, "transactionweb3"), data)
@@ -115,18 +116,6 @@ export default function App() {
       window.alert('Please select Harmony Mainet')
     }
   }
-
-  useEffect(() => {
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/6207d7859bd1f31184dc4f45/1frna3p8k';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-  }, []);
 
   return (
     <div className="App" >
@@ -153,7 +142,6 @@ export default function App() {
       </Box>
       <div>
         { page > 1 ? <LinearProgress variant="determinate" value= {(page)*10}  /> : null}
-        
       </div>
        <div>
         {page === 1 && <ClassTypeStep data={data} update={updateData} setPage={setPage}/>  }
@@ -165,8 +153,9 @@ export default function App() {
         {page === 7 && <MembershipStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 8 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 9 && <DatesStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig} account={account} />}    
-       </div>    
+        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig} account={account} />}
+       
+       </div> 
     </div>
   );
 }
