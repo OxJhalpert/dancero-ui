@@ -10,17 +10,13 @@ import danceNFT from "../abis/danceNFT.json";
 import React from "react";
 import Fab from "@mui/material/Fab";
 import { initializeApp } from "firebase/app";
-import {
-  collection,
-  addDoc,
-  getFirestore,
-} from "firebase/firestore";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import Modal from "./Modal";
 import "../scss/layout.scss";
 import "../scss/board.scss";
 
 import config from "../config.json";
+import ImgNftCharge from "./ImgNftCharge";
 
 function createData(name, option, name2, option2) {
   return { name, option, name2, option2 };
@@ -32,7 +28,7 @@ function StepNine({
   transferToken,
   goBackPage,
   firebaseConfig,
-  account
+  account,
 }) {
   var firebaseConfig = firebaseConfig;
   const app = initializeApp(firebaseConfig);
@@ -40,23 +36,18 @@ function StepNine({
 
   const [exchangeRatio, setexchangeRatio] = useState();
   // const [imgNFT, setImgNFT] = useState("https://via.placeholder.com/150");
-  const [imgNFT, setImgNFT] = useState();
+  const [imgNFT, setImgNFT] = useState("");
 
   const [nftcodes, setNFTCodes] = useState([]);
-  const [nftSelected, SetNFTSelected] = useState();
+  const [nftSelected, SetNFTSelected] = useState([]);
   const [priceToPay, setPriceToPay] = useState(0);
   const [totalCop, setTotalCop] = useState(0);
   const [idDoc, setIdDoc] = useState(null);
   const [totalPaypal, setTotalPaypal] = useState(0);
   const [totalStripe, setTotalStripe] = useState(0);
-  // const [comission, setComission] = useState(0);
   const [dollarfee, setDollarFee] = useState(0);
-  const [costTeacher,setCostTeacher] = useState(0);
-  const [priceS , setPriceS] = useState(0);
-
-  // const [open, setOpen] = React.useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
+  const [costTeacher, setCostTeacher] = useState(0);
+  const [priceS, setPriceS] = useState(0);
 
   function getExchangeRate() {
     fetch("https://api.exchangerate-api.com/v4/latest/USD")
@@ -74,12 +65,47 @@ function StepNine({
     getExchangeRate();
   }, [setexchangeRatio]);
 
-  useEffect(() => {
-    if (data.user !== "") {
-      loadNTFOfOwner();
-    }
-  }, [data.user]);
+  const header = {
+    "X-API-Key":
+      "2jGZArUpQi7ShuA7xONTt8THMikH6zZVoeL0Mp8nVW06Td4zWznTdU7IodyoNmV6",
+  };
 
+  const inicio = {
+    method: "GET",
+    headers: header,
+    mode: "cors",
+    cache: "default",
+  };
+
+  var peticion =
+    config.URL_BASE +
+    "/0x5603D86d741535da15C4b2c12BFcC59ef601E3b9/nft/0x40D966D7e51f15F830A57bC0D774DF5304EBc90D?chain=mumbai&format=decimal&limit=93353163";
+    // "/0x5603D86d741535da15C4b2c12BFcC59ef601E3b9/nft/0x21777E1e13e0796524cA3F5Dd21a927E4E6fF8db?chain=mumbai&format=decimal&limit=93353163";
+  //  peticion = peticion.replace("0x5603D86d741535da15C4b2c12BFcC59ef601E3b9",data.user)
+  //  console.log(peticion)
+
+  useEffect(() => {
+    if (data.user == "") {
+      return;
+    }
+    fetch(peticion, inicio)
+      .then((response) => response.json())
+      .then((data) => {
+        setNFTCodes(data.result);
+        var test = data.result[19];
+        // console.log(test);
+        SetNFTSelected(data.result[19]);
+        test = JSON.parse(test.metadata);
+        console.log(test);
+        var test2 = test.image;
+        // var test2 = test.token_uri
+        test2=test2.substr(6,test2.length)
+        console.log(test2)
+        test2= "https://gateway.pinata.cloud/ipfs/"+ test2
+        // console.log("soy la url "+test2  )
+        setImgNFT(test2)
+      });
+  }, [data.user]);
 
   var initialDate = moment(data.dates.dateFrom).format("MMM Do YY");
   var finalDate = moment(data.dates.dateTo).format("MMM Do YY");
@@ -127,14 +153,14 @@ function StepNine({
       0
     );
     var priceS = cost[1];
-    priceS = RoundTo(priceS,roundTo)
+    priceS = RoundTo(priceS, roundTo);
     setPriceS(priceS);
-    var costT = cost[0]; 
+    var costT = cost[0];
     setCostTeacher(costT);
     var comission = priceS - costT;
     // setComission(comission)
-    var dollarFee = comission/ exchangeRate;
-    dollarFee = Math.round(dollarFee)
+    var dollarFee = comission / exchangeRate;
+    dollarFee = Math.round(dollarFee);
     setDollarFee(dollarFee);
     var rest = cost[1] - cost[0];
     var totalCopRound = RoundTo(rest, roundTo);
@@ -152,47 +178,12 @@ function StepNine({
     return roundTo * Math.ceil(number / roundTo);
   }
 
-  async function loadNTFOfOwner() {
-    var danceNFTContract = new window.web3.eth.Contract(
-      danceNFT.abi,
-      "0x3CAa1C35E5229EbbAEB70ea471F738a99c02381d"
-    );
-    var nftCodesA = await danceNFTContract.methods
-      .getAllNFTCodesByAddress(data.user)
-      .call();
-    setNFTCodes(nftCodesA);
-    // var nftR = nftCodesA[0];
-    // SetNFTSelected(nftR);
-    // loadNFTMetaData(nftSelected)
-  }
 
   async function storeTransaction() {
     var newDoc = await addDoc(collection(firestoreDB, "dateTransfer"), data);
     setIdDoc(newDoc.id);
   }
 
-  async function loadNFTMetaData(nftSelected) {
-    const danceNFTContract = new window.web3.eth.Contract(
-      danceNFT.abi,
-      "0x3CAa1C35E5229EbbAEB70ea471F738a99c02381d"
-    );
-    const balance = await danceNFTContract.methods
-      .balanceOf(data.user, nftSelected)
-      .call();
-
-    if (balance >= 1) {
-      var jsonData = await danceNFTContract.methods.uri(nftSelected).call();
-      jsonData = jsonData.replace("{id}", nftSelected);
-      fetch(jsonData)
-        .then((response) => response.json())
-        .then((data) => {
-          setImgNFT(data.image);
-        });
-      alert("se ha aplicado un descuento");
-    } else {
-      alert("usted no es propietario del token");
-    }
-  }
 
   const payWithStripe = () => {
     fetch(config.STRIPE_CHECKOUT, {
@@ -241,23 +232,24 @@ function StepNine({
               <div>To: {moment(data.dates.dateTo).format("MMM Do YY")}</div>
             </div>
             <div>
-              <div>Price per hour: {priceS /data.Hours} COP</div>
+              <div>Price per hour: {priceS / data.Hours} COP</div>
               <div>Total in pesos: {totalCop} COP</div>
             </div>
           </div>
 
           <div className="board_card price_pay">
             <p>
-            your total price is {priceS} the booking fee to be paid is {totalCop} pesos o {priceToPay} usd at an exchange rate {exchangeRatio} COP per USD. We accept crypto stablecoins (no commission), stripe ({config.STRIPE_PERCENTAGE}% )and pay pal ({config.PAYPAL_PERCENTAGE}%) 
-            the reminding {costTeacher} are paid directly in cash to your instructor please check out our  terms <a href={"https://salsaclasses.co/packs/"}>here.</a>
+              your total price is {priceS} the booking fee to be paid is{" "}
+              {totalCop} pesos o {priceToPay} usd at an exchange rate{" "}
+              {exchangeRatio} COP per USD. We accept crypto stablecoins (no
+              commission), stripe ({config.STRIPE_PERCENTAGE}% )and pay pal (
+              {config.PAYPAL_PERCENTAGE}%) the reminding {costTeacher} are paid
+              directly in cash to your instructor please check out our terms{" "}
+              <a href={"https://salsaclasses.co/packs/"}>here.</a>
             </p>
             <h1>
               <span>Price</span> : {priceToPay ? priceToPay : "..."} USD
             </h1>
-            {/* <div className="price_info">
-              Exchange rate {totalCop + " COP, ER " + exchangeRatio}
-            </div>
-            <div className="price_info">Pack Of {data.Hours} Hours</div> */}
             {idDoc ? (
               <div className="pay_methods">
                 <div>
@@ -273,32 +265,24 @@ function StepNine({
                       for (var i = 0; i < ele.length; i++) {
                         if (ele[i].checked) radiusValue = ele[i].value;
                       }
-                      if(data.user == ""){
-                        
-                        connect()
-                      }else{
+                      if (data.user == "") {
+                        connect();
+                      } else {
                         if (radiusValue !== "") {
                           if (radiusValue === "payWithUst") {
                             _contractAbi = UstToken.abi;
                             _addressContract =
-                              "0x67862E5fD5DdCDAC1007786d8ce4469dDa847635";
+                              config.UST_TOKEN;
                           } else if (radiusValue === "payWithUsdt") {
                             _contractAbi = UsdtToken.abi;
                             _addressContract =
-                              "0x649C680dF9a192d9eE1F4Ed368962914dc3EF8c4";
+                              config.USDT_TOKEN;
                           } else if (radiusValue === "payWithUsdc") {
                             _contractAbi = UsdcToken.abi;
                             _addressContract =
-                              "0x413e1A7a3702756588857259e4a55Bd2E272cE4b";
+                              config.USDC_TOKEN;
                           }
-                          transferToken(
-                            amount,
-                            _contractAbi,
-                            _addressContract,
-                            // () => {
-                            //   setOpen(true);
-                            // }
-                          );
+                          transferToken(amount, _contractAbi, _addressContract);
                         }
                       }
                     }}
@@ -331,7 +315,6 @@ function StepNine({
                   </div>
                 </div>
 
-                {/* {"Paypal Comission " + config.PAYPAL_PERCENTAGE + " %"} */}
                 <PayPalScriptProvider options={process.env.CLIENT_ID_PAYPAL}>
                   <PayPalButtons
                     className="paypal-btn"
@@ -356,57 +339,6 @@ function StepNine({
               usually message you the same day. Feel free to use that same live
               chat at any time before or after payment to communicate with us.
             </p>
-
-            {/* <Button
-                disabled={data.user}
-                endIcon={<AccountBalanceWalletIcon />}
-                variant="contained"
-                onClick={async (e) => {
-                  connect();
-                }}
-              >
-                Connect
-              </Button> */}
-
-            {/*<Button
-                variant="contained"
-                style={{ margin: "10px" }}
-                disabled={!account}
-                id="btnPay"
-                onClick={async (event) => {
-                  var amount = priceToPay.toString();
-                  var _contractAbi = '';
-                  var _addressContract = "";
-
-                  var ele = document.getElementsByName('val');
-                  var radiusValue = '';
-                  for (var i = 0; i < ele.length; i++) {
-                    if (ele[i].checked)
-                      radiusValue = ele[i].value
-                  }
-                  if (radiusValue !== '') {
-                    if (radiusValue === 'payWithUst') {
-                      _contractAbi = UstToken.abi;
-                      _addressContract = "0x67862E5fD5DdCDAC1007786d8ce4469dDa847635";
-
-
-                    } else if (radiusValue === 'payWithUsdt') {
-                      _contractAbi = UsdtToken.abi;
-                      _addressContract = "0x649C680dF9a192d9eE1F4Ed368962914dc3EF8c4";
-
-
-                    } else if (radiusValue === 'payWithUsdc') {
-                      _contractAbi = UsdcToken.abi;
-                      _addressContract = "0x413e1A7a3702756588857259e4a55Bd2E272cE4b";
-
-                    }
-                    transferToken(amount, _contractAbi, _addressContract, () => { setOpen(true) });
-
-                  }
-                }}
-              >
-                Pay
-              </Button>*/}
           </div>
 
           <Fab
@@ -415,7 +347,6 @@ function StepNine({
             color="primary"
             onClick={() => goBackPage()}
           >
-            {/* <ArrowBackIcon /> */}
             Go Back
           </Fab>
         </div>
@@ -429,21 +360,29 @@ function StepNine({
             <a href="">Learn more.</a>
           </p>
 
-          { imgNFT ? imgNFT(imgNFT =>  <img sx={{ my: "1rem" }} className="nft-img" src={imgNFT} alt="DanceroNFT"/>):(<p>connect a web3 wallet to view your dancero nft.
-          you don't have any dancero nft in your wallet but you can purchase one <a href={"https://salsaclasses.co/packs/"}>here.</a></p>)}
-          
-          {/* <img
-            sx={{ my: "1rem" }}
+          {imgNFT ? (
+            <img
+            sx={{ my: "100rem" }}
             className="nft-img"
             src={imgNFT}
+            width="300"
+            heigth="300"
             alt="DanceroNFT"
-          /> */}
+          />
+          ) : (
+            <p>
+              connect a web3 wallet to view your dancero nft. you don't have any
+              dancero nft in your wallet but you can purchase one{" "}
+              <a href={"https://salsaclasses.co/packs/"}>here.</a>
+            </p>
+          )
+          }
+
           <p>
             You will soon be able to stake your NFT to apply an automatic
             discount. <a href="">Learn more.</a>
           </p>
         </div>
-        {/* <Modal idDoc={idDoc} show={open}></Modal> */}
       </div>
     </div>
   );
