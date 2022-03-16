@@ -85,8 +85,8 @@ export default function App() {
   async function transferToken(amount, _contractAbi, _addressContract, callback) {
     var chainId = await window.ethereum.request({  method: 'eth_chainId'  });
     const user = await window.web3.eth.getAccounts();
-    // if (chainId === '0x6357d2e0')
-    if (chainId === '0x38')
+    if (chainId === '0x6357d2e0')
+    //if (chainId === '0x38')
     {
       window.web3.eth.getBlock("latest").then(async function (response) {
         window.web3.eth.getGasPrice().then(function (gas) {
@@ -105,7 +105,28 @@ export default function App() {
             .transfer(config.PAYMENT_ACCOUNT, amount)
             .send(item)
             .on("transactionHash", (hash) => {
-              var newDoc =  addDoc(collection(firestoreDB, "transactionweb3"), data)
+              //var newDoc =  addDoc(collection(firestoreDB, "transactionweb3"), data);
+
+              fetch(config.SAVEDATA_ENDPOINT, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  data : data,
+                }),
+              });
+              
+              fetch(config.SEND_MAIL_ENDPOINT, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  data : data,
+                }),
+              });
+
               callback(true);
             });
         });

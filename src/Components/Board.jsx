@@ -136,7 +136,17 @@ function StepNine({
   };
 
   const onApprove = (data, actions) => {
-    // setOpen(true);
+    
+    fetch(config.SEND_MAIL_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data : data,
+      }),
+    })
+
     window.location = "http://localhost:3000/success";
     return actions.order.capture();
   };
@@ -192,6 +202,7 @@ function StepNine({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        data : data,
         items: [
           {
             metadata: idDoc,
