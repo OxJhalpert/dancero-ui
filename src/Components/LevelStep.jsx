@@ -1,9 +1,7 @@
-import { Typography } from "@mui/material";
+
 import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Fab from "@mui/material/Fab";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 
 function StepSeven({ update, goBackPage }) {
   return (

@@ -82,7 +82,7 @@ function StepFive({ update, goBackPage }) {
                 color="primary"
                 onClick={() => {
                   var now = moment();
-                  var today = moment(now, "DD.MM.YYYY"); //Date format
+                  var today = moment(now, "DD.MM.YYYY"); 
                   var finalDate = moment(dateFrom, "DD.MM.YYYY");
                   var isAfter = moment(today).isAfter(finalDate);
                   var dateFinal = moment(dateTo, "DD.MM.YYYY");

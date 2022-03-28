@@ -9,5 +9,7 @@
     "USDC_TOKEN" :"0xDDb0B4FD529267d7f894C4E1552445dE94c643F8",
     "PAYMENT_ACCOUNT" : "0x02a10A6182B60Ee989fd611cab17bd0512885205",
     "SEND_MAIL_ENDPOINT" : "http://localhost:3000/sendmail",
-    "SAVEDATA_ENDPOINT" : "http://localhost:3000/savedata"
+    "SAVEDATA_ENDPOINT" : "http://localhost:3000/savedata",
+    "BLOCKHAIN_VALIDATION" : "0x13881",
+    "MESSAGE_BLOCKCHAIN" : "Please select polygon Mumbai testnet"
 }

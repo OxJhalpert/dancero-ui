@@ -21,14 +21,14 @@ function StepTwo({ data, update, goBackPage, setPage }) {
           onClick={() => update("Gender", "Woman")}
         >
           <div className="card_image">
-            <img src={mujer} />
+            <img src={mujer} alt="Woman" />
           </div>
           <div className="card_name">Woman</div>
         </div>
 
         <div className="card tall-card" onClick={() => update("Gender", "Man")}>
           <div className="card_image">
-            <img src={hombre} />
+            <img src={hombre} alt="Man" />
           </div>
           <div className="card_name">Man</div>
         </div>

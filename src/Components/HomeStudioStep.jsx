@@ -23,7 +23,7 @@ function HomeStudioStep({ update, goBackPage }) {
           onClick={() => update("place", "home")}
         >
           <div className="card_image">
-            <img src={home} />
+            <img src={home} alt="home"  />
           </div>
           <div className="card_name">Home</div>
         </div>
@@ -34,7 +34,7 @@ function HomeStudioStep({ update, goBackPage }) {
           onClick={() => update("place", "studio")}
         >
           <div className="card_image">
-            <img src={studio} />
+            <img src={studio} alt="studio" />
           </div>
           <div className="card_name">studio</div>
         </div>

@@ -18,10 +18,9 @@ function StepOne({ update, setPage  }) {
       <div className="cards_container">
           <div className="card" 
             onClick={() => {
-              // setPage(3) 
               update("Venue", "Online")}}> 
             <div className="card_image">
-              <img src={online}/>
+              <img src={online} alt="online"/>
             </div>
             <div className="card_name">
                 Online
@@ -34,7 +33,7 @@ function StepOne({ update, setPage  }) {
             
           >
             <div className="card_image">
-              <img src={studio}/>
+              <img src={studio} alt="studio" />
             </div>
             <div className="card_name">
                 Studio
