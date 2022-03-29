@@ -265,7 +265,7 @@ function StepNine({
         <div>
           <div className="board_header board_card">
             <div>
-              <div>City: {data.City} ({data.place})</div>
+              <div>City: {data.City} ({data.place ? (data.place) : ( data.Venue )})</div>
               <div>Service: {data.Service}</div>
               <div>Instructor: {data.Gender}</div>
               <div>Level: {data.Level}</div>
@@ -278,14 +278,14 @@ function StepNine({
             </div>
             <div>
               <div>Price per hour: {priceSend} COP</div>
-              <div>Total in pesos: {totalCop} COP</div>
+              <div>Total in pesos: {priceS} COP</div>
             </div>
           </div>
 
           <div className="board_card price_pay">
             <p>
-              your total price is {priceS} the booking fee to be paid is{" "}
-              {totalCop} pesos o {priceToPay} usd at an exchange rate{" "}
+              your total price is {priceS} COP the booking fee to be paid is
+              {totalCop} COP o {priceToPay} USD at an exchange rate
               {exchangeRatio} COP per USD. We accept crypto stablecoins (no
               commission), stripe ({config.STRIPE_PERCENTAGE}% )and pay pal (
               {config.PAYPAL_PERCENTAGE}%) the reminding {costTeacher} are paid
