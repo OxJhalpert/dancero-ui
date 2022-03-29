@@ -265,7 +265,7 @@ function StepNine({
         <div>
           <div className="board_header board_card">
             <div>
-              <div>City: {data.City}</div>
+              <div>City: {data.City} ({data.place})</div>
               <div>Service: {data.Service}</div>
               <div>Instructor: {data.Gender}</div>
               <div>Level: {data.Level}</div>
