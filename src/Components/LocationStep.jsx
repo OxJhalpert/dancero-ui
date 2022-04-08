@@ -32,7 +32,7 @@ function StepFour({ data, update, goBackPage, setPage }) {
           }}
         >
           <div className="card_image">
-            <img src={cartagena} />
+            <img src={cartagena} alt="Cartagena" />
           </div>
           <div className="card_name">Cartagena</div>
         </div>
@@ -46,7 +46,7 @@ function StepFour({ data, update, goBackPage, setPage }) {
           }}
         >
           <div className="card_image">
-            <img src={bogota} />
+            <img src={bogota} alt="Bogota" />
           </div>
           <div className="card_name">Bogotá</div>
         </div>
@@ -60,7 +60,7 @@ function StepFour({ data, update, goBackPage, setPage }) {
           }}
         >
           <div className="card_image">
-            <img src={medellin} />
+            <img src={medellin} alt="Medellin" />
           </div>
           <div className="card_name">Medellín</div>
         </div>
@@ -74,7 +74,7 @@ function StepFour({ data, update, goBackPage, setPage }) {
           }}
         >
           <div className="card_image">
-            <img src={cali} />
+            <img src={cali} alt="Cali" />
           </div>
           <div className="card_name">Cali</div>
         </div>

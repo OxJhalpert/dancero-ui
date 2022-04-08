@@ -20,7 +20,7 @@ function StepThree({ update, goBackPage }) {
       <div className="cards_container">
         <div className="card" onClick={() => update("Musical_gender", "Salsa")}>
           <div className="card_image">
-            <img src={salsa} />
+            <img src={salsa} alt="Salsa" />
           </div>
           <div className="card_name">Salsa</div>
         </div>
@@ -29,7 +29,7 @@ function StepThree({ update, goBackPage }) {
           onClick={() => update("Musical_gender", "Bachata")}
         >
           <div className="card_image">
-            <img src={bachata} />
+            <img src={bachata} alt="Bachata" />
           </div>
           <div className="card_name">Bachata</div>
         </div>

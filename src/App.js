@@ -15,8 +15,6 @@ import LevelStep from './Components/LevelStep.jsx';
 import HoursStep from './Components/HoursStep.jsx';
 import BoardStep from './Components/Board.jsx';
 
-import { initializeApp } from "firebase/app";
-import { collection, query, where, getDocs, setDoc, addDoc, doc, getFirestore } from "firebase/firestore";
 import './css/cards.css';
 import HomeStudioStep from "./Components/HomeStudioStep.jsx";
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -32,7 +30,6 @@ export default function App() {
   const [data, setData] = useState({
     "user" : ''
   });
-  const [account, setAccount] = useState();
 
 
   const firebaseConfig = {
@@ -45,10 +42,6 @@ export default function App() {
     measurementId: "G-G9ECPGJH3B"
   };
 
-  const app = initializeApp(firebaseConfig);
-  var firestoreDB = getFirestore(app)
-
-  const pages = ['Products', 'Pricing', 'Blog'];
   
 
   async function connect() {
@@ -80,15 +73,15 @@ export default function App() {
     setData((data) => {
       return { ...data, [type]: newData };
     });
-    goNextPage();
-    
+    goNextPage();    
   }
 
-  async function transferToken(amount, _contractAbi, _addressContract, callback) {
+  async function transferToken(amount, _contractAbi, _addressContract, exchangeRatio,comission,priceS,priceSend,dollarfee,costHour,costTeacher,costUSD) {
     var chainId = await window.ethereum.request({  method: 'eth_chainId'  });
     const user = await window.web3.eth.getAccounts();
-    // if (chainId === '0x6357d2e0')
-    if (chainId === '0x38')
+    // console.log(exchangeRatio)
+    // console.log(chainId)
+    if (chainId === config.BLOCKHAIN_VALIDATION)
     {
       window.web3.eth.getBlock("latest").then(async function (response) {
         window.web3.eth.getGasPrice().then(function (gas) {
@@ -107,19 +100,59 @@ export default function App() {
             .transfer(config.PAYMENT_ACCOUNT, amount)
             .send(item)
             .on("transactionHash", (hash) => {
-              var newDoc =  addDoc(collection(firestoreDB, "transactionweb3"), data)
-              callback(true);
+              fetch(config.SAVEDATA_ENDPOINT, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  data : data,
+                  costUsd: costUSD,
+                  priceSendHour: priceSend,
+                  costHour: costHour,
+                  costTeacher: costTeacher,
+                  totalDollar:dollarfee,
+                  exchangeRatio : exchangeRatio,
+                  comission : comission,
+                  paymentMethod : "crypto",
+                  paymentFee : comission,
+                  totalCop: priceS,
+                  paymentStatus : "received"
+                }),
+              });
+              
+              fetch(config.SEND_MAIL_ENDPOINT, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  data : data,
+                  costUsd: costUSD,
+                  priceSendHour: priceSend,
+                  costHour: costHour,
+                  costTeacher: costTeacher,
+                  totalDollar:dollarfee,
+                  exchangeRatio : exchangeRatio,
+                  comission : comission,
+                  paymentMethod : "crypto",
+                  paymentFee : comission,
+                  total: priceS,
+                  paymentStatus : "received"
+                }),
+              });
             });
         });
       });
     }else
     {
-      window.alert('Please select Harmony Mainet')
+      window.alert(config.MESSAGE_BLOCKCHAIN)
     }
   }
 
   useEffect(() => {
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    var Tawk_API=Tawk_API||{},
+     Tawk_LoadStart=new Date();
     (function(){
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
     s1.async=true;
@@ -165,7 +198,7 @@ export default function App() {
         {page === 7 && <MembershipStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 8 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 9 && <DatesStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig} account={account} />}    
+        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig}  />}    
        </div>    
     </div>
   );

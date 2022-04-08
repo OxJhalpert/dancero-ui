@@ -6,7 +6,6 @@ import UsdtToken from "../abis/UsdtToken.json";
 import UsdcToken from "../abis/UsdcToken.json";
 import getPriceAndCostCalculation from "./utils";
 import { useEffect, useState } from "react";
-import danceNFT from "../abis/danceNFT.json";
 import React from "react";
 import Fab from "@mui/material/Fab";
 import { initializeApp } from "firebase/app";
@@ -38,18 +37,15 @@ function createData(name, option, name2, option2) {
 
 function StepNine({
   data,
+  update,
   connect,
   transferToken,
   goBackPage,
   firebaseConfig,
-  account,
 }) {
-  var firebaseConfig = firebaseConfig;
   const app = initializeApp(firebaseConfig);
   var firestoreDB = getFirestore(app);
-
   const [exchangeRatio, setexchangeRatio] = useState();
-  // const [imgNFT, setImgNFT] = useState("https://via.placeholder.com/150");
   const [imgNFT, setImgNFT] = useState("");
 
   const [nftcodes, setNFTCodes] = useState([]);
@@ -62,6 +58,13 @@ function StepNine({
   const [dollarfee, setDollarFee] = useState(0);
   const [costTeacher, setCostTeacher] = useState(0);
   const [priceS, setPriceS] = useState(0);
+  const [priceSend, setPriceSend] = useState(0);
+  const [costHour, setCostHour] = useState(0);
+  const [costUsd, setCostUsd] = useState(0);
+  const [pricePerHour, setPricePerHour] = useState(0);
+
+
+  
 
   function getExchangeRate() {
     fetch("https://api.exchangerate-api.com/v4/latest/USD")
@@ -79,6 +82,7 @@ function StepNine({
     getExchangeRate();
   }, [setexchangeRatio]);
 
+
   const header = {
     "X-API-Key":
       "2jGZArUpQi7ShuA7xONTt8THMikH6zZVoeL0Mp8nVW06Td4zWznTdU7IodyoNmV6",
@@ -91,33 +95,33 @@ function StepNine({
     cache: "default",
   };
 
-  var peticion =
-    config.URL_BASE +
-    "/0x5603D86d741535da15C4b2c12BFcC59ef601E3b9/nft/0x40D966D7e51f15F830A57bC0D774DF5304EBc90D?chain=mumbai&format=decimal&limit=93353163";
-    // "/0x5603D86d741535da15C4b2c12BFcC59ef601E3b9/nft/0x21777E1e13e0796524cA3F5Dd21a927E4E6fF8db?chain=mumbai&format=decimal&limit=93353163";
-  //  peticion = peticion.replace("0x5603D86d741535da15C4b2c12BFcC59ef601E3b9",data.user)
-  //  console.log(peticion)
+  function peticionUrl (){
+    var peticion =
+     config.URL_BASE + 
+     "/"+data.user+"/nft/0x40D966D7e51f15F830A57bC0D774DF5304EBc90D?chain=mumbai&format=decimal&limit=93353163";
+    return peticion
+  }
 
   useEffect(() => {
     if (data.user == "") {
       return;
     }
+    var peticion = peticionUrl();
     fetch(peticion, inicio)
       .then((response) => response.json())
       .then((data) => {
-        setNFTCodes(data.result);
-        var test = data.result[19];
-        // console.log(test);
-        SetNFTSelected(data.result[19]);
-        test = JSON.parse(test.metadata);
-        console.log(test);
-        var test2 = test.image;
-        // var test2 = test.token_uri
-        test2=test2.substr(6,test2.length)
-        console.log(test2)
-        test2= "https://gateway.pinata.cloud/ipfs/"+ test2
-        // console.log("soy la url "+test2  )
-        setImgNFT(test2)
+        if(data.result.length === 0){
+          return
+        }else {
+          setNFTCodes(data.result);
+          var test = data.result[19];
+          SetNFTSelected(data.result[19]);
+          test = JSON.parse(test.metadata);
+          var test2 = test.image;
+          test2=test2.substr(6,test2.length)
+          test2= "https://gateway.pinata.cloud/ipfs/"+ test2
+          setImgNFT(test2)
+        }
       });
   }, [data.user]);
 
@@ -150,13 +154,47 @@ function StepNine({
   };
 
   const onApprove = (data, actions) => {
-    // setOpen(true);
+
+    fetch(config.SEND_MAIL_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data : data,
+        exchangeRatio : exchangeRatio,
+        comission : totalCop,
+        paymentMethod : "crypto",
+        paymentFee : totalCop,
+        total: priceS,
+        paymentStatus : "received" 
+      }),
+
+
+    })
+    fetch(config.SAVEDATA_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data : data,
+        exchangeRatio : exchangeRatio,
+        comission : totalCop,
+        paymentMethod : "crypto",
+        paymentFee : totalCop,
+        total: priceS,
+        paymentStatus : "received" 
+      }),
+    })
+
     window.location = "http://localhost:3000/success";
     return actions.order.capture();
   };
 
   async function calculatePrice(exchangeRate) {
     const roundTo = 5000;
+    const roundToHours =1000;
     var cost = getPriceAndCostCalculation(
       data.Service,
       data.Level,
@@ -166,17 +204,23 @@ function StepNine({
       data.place,
       0
     );
+    console.log(cost)
     var priceS = cost[1];
     priceS = RoundTo(priceS, roundTo);
     setPriceS(priceS);
     var costT = cost[0];
     setCostTeacher(costT);
-    var comission = priceS - costT;
-    // setComission(comission)
-    var dollarFee = comission / exchangeRate;
+    var roundToHour = priceS / data.Hours
+    roundToHour= RoundTo(roundToHour, roundToHours)
+    setPriceSend(roundToHour);
+    Math.round(priceSend)
+    setCostHour(costT/data.hours)
+    var dollarFee = priceS / exchangeRate;
     dollarFee = Math.round(dollarFee);
     setDollarFee(dollarFee);
     var rest = cost[1] - cost[0];
+    var restUSD = rest / exchangeRatio;
+    setCostUsd(restUSD);
     var totalCopRound = RoundTo(rest, roundTo);
     setTotalCop(totalCopRound);
 
@@ -206,6 +250,7 @@ function StepNine({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        data : data,
         items: [
           {
             metadata: idDoc,
@@ -380,25 +425,22 @@ function StepNine({
                       for (var i = 0; i < ele.length; i++) {
                         if (ele[i].checked) radiusValue = ele[i].value;
                       }
-                      if (data.user == "") {
-                        connect();
-                      } else {
-                        if (radiusValue !== "") {
-                          if (radiusValue === "payWithUst") {
-                            _contractAbi = UstToken.abi;
-                            _addressContract =
-                              config.UST_TOKEN;
-                          } else if (radiusValue === "payWithUsdt") {
-                            _contractAbi = UsdtToken.abi;
-                            _addressContract =
-                              config.USDT_TOKEN;
-                          } else if (radiusValue === "payWithUsdc") {
-                            _contractAbi = UsdcToken.abi;
-                            _addressContract =
-                              config.USDC_TOKEN;
-                          }
-                          transferToken(amount, _contractAbi, _addressContract);
+                      connect();
+                      if (radiusValue !== "") {
+                        if (radiusValue === "payWithUst") {
+                          _contractAbi = UstToken.abi;
+                          _addressContract =
+                            config.UST_TOKEN;
+                        } else if (radiusValue === "payWithUsdt") {
+                          _contractAbi = UsdtToken.abi;
+                          _addressContract =
+                            config.USDT_TOKEN;
+                        } else if (radiusValue === "payWithUsdc") {
+                          _contractAbi = UsdcToken.abi;
+                          _addressContract =
+                            config.USDC_TOKEN;
                         }
+                        transferToken(amount, _contractAbi, _addressContract, exchangeRatio,totalCop,priceS,priceSend,dollarfee.toExponential,costHour,costTeacher,costUsd);
                       }
                     }}
                   >
