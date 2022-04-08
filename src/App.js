@@ -4,7 +4,6 @@ import Web3 from "web3";
 import Box from "@mui/material/Box";
 import LinearProgress from '@mui/material/LinearProgress';
 import Button from "@mui/material/Button";
-import '@fontsource/roboto/300.css';
 
 import ClassTypeStep from './Components/ClassTypeStep.jsx';
 import TeacherGenderStep from './Components/TeacherGenderStep.jsx';
@@ -22,6 +21,9 @@ import './css/cards.css';
 import HomeStudioStep from "./Components/HomeStudioStep.jsx";
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import config from "./config.json";
+import "./scss/cards.scss";
+import "./scss/layout.scss";
+import danceroLogo from "./images/dancero-logo.png"
 
 
 export default function App() {
@@ -131,14 +133,12 @@ export default function App() {
   return (
     <div className="App" >
       <Box sx={{ flexGrow: 2, bgcolor: "#2F348B" }}>
-        <AppBar position="static" sx={{ bgcolor: "#2F348B" }}>
+        <AppBar className="container navbar" position="static" sx={{ bgcolor: "#2F348B", boxShadow: "none" }}>
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 2 }}>
-              Dancero 
-            </Typography>
-
+            <img src={danceroLogo}/>
           {data.user ? data.user : "" }
           <Button
+                className="wallet-button"
                 disabled={data.user}
                 endIcon={<AccountBalanceWalletIcon />}
                 variant="contained"
@@ -146,14 +146,14 @@ export default function App() {
                   connect();
                 }}
               >
-                Connect
+                Connect Wallet 
           </Button>
           </Toolbar>
         </AppBar>
       </Box>
-      <div>
-        { page > 1 ? <LinearProgress variant="determinate" value= {(page)*10}  /> : null}
-        
+      <div className="progress-bar">
+        <span>{page} / 9</span>
+        <LinearProgress variant="determinate" value= {(page) * 10}  />
       </div>
        <div>
         {page === 1 && <ClassTypeStep data={data} update={updateData} setPage={setPage}/>  }

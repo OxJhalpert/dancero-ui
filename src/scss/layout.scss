@@ -1,23 +1,71 @@
+@import "fonts";
+
 *{
     box-sizing: border-box;
+}
+
+body{
+    font-family: "mali";
+}
+
+.navbar{
+    img{
+        width: 120px;
+    }
+    .wallet-button{
+        margin-left: auto;
+        text-transform: none;
+        font-family: "mali";
+        font-weight: bold;
+    }
+}
+.progress-bar{
+    padding: .5rem 1rem;
+    background-color: #2c2d93;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    span {
+        flex-shrink: 0;
+        padding: .01rem 1.5rem;
+        background-color: #f2cf00;
+        border-radius: 5px;
+        font-weight: 700;
+        font-size: 0.875rem;
+    }
+    .css-eglki6-MuiLinearProgress-root{
+        padding: .2rem;
+        width:80%;
+        flex-shrink: 1;
+        background-color: transparent;
+    }
+}
+.App{
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    height: 100vh;
 }
 .container{
     margin: auto;
     max-width: 100%;
     @media screen and (min-width: 576px) {
         max-width: 	540px;
+        padding: .5rem;
     }
     @media screen and (min-width: 768px){
         max-width: 720px;
+        padding: .5rem;
     }
     @media screen and (min-width: 992px){
         max-width: 960px;
+        padding: 0;
     }
     @media screen and (min-width: 1200px){
-        max-width: 1140px;
+        max-width: 1707px;
     }
     @media screen and (min-width: 1400px){
-        max-width: 1320px;
+        max-width: 1707px;
     }
 }
 

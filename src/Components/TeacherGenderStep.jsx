@@ -1,13 +1,14 @@
 import Grid from "@mui/material/Grid";
-import hombre from "../images/Hombre.png";
-import mujer from "../images/mujer.png";
+import man from "../images/man.png";
+import woman from "../images/woman.png";
 import Fab from "@mui/material/Fab";
+import goBackIcon from "../images/go-back.png"
 import "../scss/cards.scss";
 import "../scss/layout.scss";
 
 function StepTwo({ data, update, goBackPage, setPage }) {
   return (
-    <div className="container">
+    <div className="container flex-container">
       <div className="section-title">
         <p>
           Would you prefer to learn from a man or a woman? An instructor from
@@ -21,19 +22,19 @@ function StepTwo({ data, update, goBackPage, setPage }) {
           onClick={() => update("Gender", "Woman")}
         >
           <div className="card_image">
-            <img src={mujer} />
+            <img src={woman} />
           </div>
           <div className="card_name">Woman</div>
         </div>
 
         <div className="card tall-card" onClick={() => update("Gender", "Man")}>
           <div className="card_image">
-            <img src={hombre} />
+            <img src={man} />
           </div>
           <div className="card_name">Man</div>
         </div>
       </div>
-      <Grid xs={12} item container justifyContent="center">
+      <div className="go-back">
         <Fab
           variant="extended"
           size="medium"
@@ -45,9 +46,10 @@ function StepTwo({ data, update, goBackPage, setPage }) {
             goBackPage();
           }}
         >
-          Go Back
+          <img src={goBackIcon} alt="" /> 
+          Back 
         </Fab>
-      </Grid>
+      </div>
     </div>
   );
 }

@@ -6,11 +6,13 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import goBackIcon from "../images/go-back.png"
 import DatePicker from "@mui/lab/DatePicker";
 import Fab from "@mui/material/Fab";
 import moment from "moment";
 import { Box } from "@mui/system";
 import "../scss/cards.scss";
+import "../scss/dates-step.scss";
 
 function StepFive({ update, goBackPage }) {
   const [dateFrom, setDateFrom] = useState(null);
@@ -18,8 +20,7 @@ function StepFive({ update, goBackPage }) {
 
   const [error, setError] = useState(false);
   return (
-    <div>
-      <Grid sx={{ flexGrow: 1 }} container spacing={2} p={2.5}>
+    <div className="container flex-container">
         <div className="section-title">
           <p>
             What’s your approximate start and finish date to complete your
@@ -30,53 +31,35 @@ function StepFive({ update, goBackPage }) {
           </p>
         </div>
 
-        <Grid container justifyContent="center">
-          <Grid key={1} item>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <Grid container justifyContent="center" spacing={2}>
-                <Grid item>
-                  <DatePicker
-                    className="date-picker"
-                    minDate={new Date()}
-                    label="Start of classes"
-                    value={dateFrom}
-                    onChange={(newValue) => {
-                      setDateFrom(newValue);
-                      setDateTo(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </Grid>
-                <Grid item>
-                  <DatePicker
-                    label="End of classes"
-                    value={dateTo}
-                    minDate={new Date()}
-                    onChange={(newValue) => {
-                      setDateTo(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </Grid>
-              </Grid>
+        <div>
+            <LocalizationProvider dateAdapter={AdapterDateFns} >
+              <div className="dates-form"> 
+                <DatePicker 
+                  className="date-picker"
+                  label="Start date"
+                  minDate={new Date()}
+                  value={dateFrom}
+                  onChange={(newValue) => {
+                    setDateFrom(newValue);
+                    setDateTo(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+                <DatePicker
+                  className="date-picker"
+                  label="Finish date"
+                  value={dateTo}
+                  minDate={new Date()}
+                  onChange={(newValue) => {
+                    setDateTo(newValue);
+                  }}
+                  placeholder="End of the classes"
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </div>
             </LocalizationProvider>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                gap: "1rem",
-                my: "1rem",
-              }}
-            >
-              <Fab
-                variant="extended"
-                size="medium"
-                color="primary"
-                onClick={() => goBackPage()}
-              >
-                Go Back
-              </Fab>
-              <Fab
+            
+            <Fab
                 variant="extended"
                 size="medium"
                 color="primary"
@@ -101,7 +84,6 @@ function StepFive({ update, goBackPage }) {
               >
                 Next
               </Fab>
-            </Box>
             {error ? (
               <Alert
                 variant="outlined"
@@ -122,9 +104,18 @@ function StepFive({ update, goBackPage }) {
                 Please select valid dates to continue
               </Alert>
             ) : null}
-          </Grid>
-        </Grid>
-      </Grid>
+        </div>
+        <div className="go-back">
+          <Fab
+            variant="extended"
+            size="medium"
+            color="primary"
+            onClick={() => goBackPage()}
+          >
+            <img src={goBackIcon} alt="" />
+            Back
+          </Fab>
+        </div>
     </div>
   );
 }

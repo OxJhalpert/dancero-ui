@@ -1,49 +1,52 @@
-import { Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Fab from "@mui/material/Fab";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import semi from "../images/semi.png";
+import pro from "../images/pro.png";
+import master from "../images/master.png";
+import goBackIcon from "../images/go-back.png"
 
 function StepSeven({ update, goBackPage }) {
   return (
-    <div className="container">
+    <div className="container flex-container">
       <div className="section-title">
         <p>
-          We can find instructors for pretty much any dance style, and even
-          sub-styles specialists (for instance Salsa Cali-style, Cuban Salsa,
-          Dominican Bachata etc.) If the dance style you’re looking for is not
-          listed below or you’d like something more specific, just use the chat
-          feature in the bottom right corner to let us know
+          Our pricing takes into account the experience of your instructor.<b>Pro </b> instructors earn a living from dancing: teaching, performing in shows or participating in local competitions.<b> Semi-pros </b> practice and compete, but don't earn a living from dancing.<a>Master </a> are actual champions, and often choreographers as well. The pricing is the lowest with semi-pros and highest with masters.  
         </p>
       </div>
 
       <div className="cards_container">
-        <div className="card only-text" onClick={() => update("Level", "Semi")}>
+        <div className="card" onClick={() => update("Level", "Semi")}>
+          <div className="card_image">
+            <img src={semi} />
+          </div>
           <div className="card_name">Semi</div>
         </div>
 
-        <div className="card only-text" onClick={() => update("Level", "Pro")}>
+        <div className="card" onClick={() => update("Level", "Pro")}>
+          <div className="card_image">
+            <img src={pro} />
+          </div>
           <div className="card_name">Pro</div>
         </div>
 
-        <div
-          className="card only-text"
-          onClick={() => update("Level", "Master")}
-        >
+        <div className="card" onClick={() => update("Level", "Master")}>
+          <div className="card_image">
+            <img src={master} />
+          </div>
           <div className="card_name">Master</div>
         </div>
       </div>
-      <Grid xs={12} item container justifyContent="center">
+      <div className="go-back">
         <Fab
           variant="extended"
           size="medium"
           color="primary"
           onClick={() => goBackPage()}
         >
-          Go Back
+          <img src={goBackIcon} alt="" /> 
+          Back 
         </Fab>
-      </Grid>
+      </div>
     </div>
   );
 }

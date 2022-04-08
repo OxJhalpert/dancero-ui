@@ -17,6 +17,20 @@ import "../scss/board.scss";
 
 import config from "../config.json";
 import ImgNftCharge from "./ImgNftCharge";
+import nftImg from "../images/NFT-img.png"
+import questionMark from "../images/question-mark.png"
+
+
+import cityIcon from "../images/city.png"
+import serviceIcon from "../images/service.png"
+import levelIcon from "../images/level.png"
+import genderIcon from "../images/gender.png"
+import hoursNumberIcon from "../images/hours-number.png"
+import danceIcon from "../images/dance.png"
+import dateFromIcon from "../images/date-from.png"
+import dateToIcon from "../images/date-to.png"
+import pricePerHourIcon from "../images/price-per-hour.png"
+import totalInPesosIcon from "../images/total-in-pesos.png"
 
 function createData(name, option, name2, option2) {
   return { name, option, name2, option2 };
@@ -215,46 +229,147 @@ function StepNine({
   };
 
   return (
-    <div className="container">
       <div className="board_container">
-        <div>
-          <div className="board_header board_card">
-            <div>
-              <div>City: {data.City}</div>
-              <div>Service: {data.Service}</div>
-              <div>Instructor: {data.Gender}</div>
-              <div>Level: {data.Level}</div>
-              <div>Dance: {data.Musical_gender}</div>
+        <div className="board-body">
+          <div className="board_header">
+
+            <div className="board_header-col">
+              <div className="board_header-item">
+                <div className="board_header-item_content">
+                  <div className="board_header-item_name">
+                    City: 
+                  </div>
+                  <div className="board_header-item_res">{data.City}</div>
+                </div>
+                <img src={cityIcon} className="board_header-item_icon"/>
+              </div>
+            
+              <div className="board_header-item">
+                <div className="board_header-item_content">
+                  <div className="board_header-item_name">Service: </div>
+                  <div className="board_header-item_res">{data.Service}</div>
+                </div>
+                <img src={serviceIcon} className="board_header-item_icon"/>
+              </div>
+              
+              <div className="board_header-item">
+                <div className="board_header-item_content">
+                  <div className="board_header-item_name">
+                    Level: 
+                  </div>
+                  <div className="board_header-item_res">{data.Level}</div>
+                </div>
+                <img src={levelIcon} className="board_header-item_icon"/>
+              </div>
+
+              <div className="board_header-item">
+                <div className="board_header-item_content">
+                  <div className="board_header-item_name">
+                    Instructor: 
+                  </div>
+                  <div className="board_header-item_res">{data.Gender}</div>
+                </div>
+                <img src={genderIcon} className="board_header-item_icon"/>
+              </div>
             </div>
-            <div>
-              <div>Number of hours: {data.Hours}</div>
-              <div>From: {moment(data.dates.dateFrom).format("MMM Do YY")}</div>
-              <div>To: {moment(data.dates.dateTo).format("MMM Do YY")}</div>
+
+            <div className="board_header-col">
+
+              <div className="board_header-item">
+                <div className="board_header-item_content">
+                  <div className="board_header-item_name">
+                    Number of hours: 
+                  </div>
+                  <div className="board_header-item_res">{data.Hours}</div>
+                </div>
+                <img src={hoursNumberIcon} className="board_header-item_icon"/>
+              </div>
+
+              <div className="board_header-item">
+                <div className="board_header-item_content">
+                  <div className="board_header-item_name">
+                    Dance:
+                  </div>
+                  <div className="board_header-item_res">
+                    {data.Musical_gender}
+                  </div>
+                </div>
+                <img src={danceIcon} className="board_header-item_icon"/>
+              </div>
+              
+              <div className="board_header-item">
+                <div className="board_header-item_content">
+                  <div className="board_header-item_name">
+                    From:
+                  </div>
+                  <div className="board_header-item_res">{moment(data.dates.dateFrom).format("MMM Do YY")}</div>
+                </div>
+                <img src={dateFromIcon} className="board_header-item_icon"/>
+              </div>
+
+              <div className="board_header-item">
+                <div className="board_header-item_content">
+                  <div  className="board_header-item_name"> To: </div>
+                  <div className="board_header-item_res"> {moment(data.dates.dateTo).format("MMM Do YY")}</div>
+                </div>
+                <img src={dateToIcon} className="board_header-item_icon"/>
+              </div>
+              
             </div>
-            <div>
-              <div>Price per hour: {priceS / data.Hours} COP</div>
-              <div>Total in pesos: {totalCop} COP</div>
+
+            <div className="board_header-col last-col">
+
+            <div className="board_header-item item-8">
+                <div className="board_header-item_content">
+                  <div className="board_header-item_name">
+                    Price per hour:
+                  </div>
+                  <div className="board_header-item_res">{priceS / data.Hours} COP</div>
+                </div>
+
+                <img src={pricePerHourIcon} className="board_header-item_icon last-icons"/>
+              </div>
+              <div className="board_header-item">
+                <div className="board_header-item_content">
+                  <div className="board_header-item_name">
+                    Total in pesos:
+                  </div>
+                  <div className="board_header-item_res"> {totalCop} COP</div>
+                </div>
+                <img src={totalInPesosIcon} className="board_header-item_icon last-icons"/>
+              </div>
             </div>
           </div>
+          
+            <div className="price">
+                Pay: {priceToPay ? priceToPay : "..."} USD
+            </div>
 
-          <div className="board_card price_pay">
             <p>
-              your total price is {priceS} the booking fee to be paid is{" "}
-              {totalCop} pesos o {priceToPay} usd at an exchange rate{" "}
-              {exchangeRatio} COP per USD. We accept crypto stablecoins (no
+              Your total price is <span>{priceS}</span> the booking fee to be paid is 
+               <span>{totalCop}</span> pesos o <span>{priceToPay}</span> usd at an exchange rate{" "}
+              <span>{exchangeRatio}</span> COP per USD. We accept <span>crypto stablecoins (no
               commission), stripe ({config.STRIPE_PERCENTAGE}% )and pay pal (
-              {config.PAYPAL_PERCENTAGE}%) the reminding {costTeacher} are paid
+              {config.PAYPAL_PERCENTAGE}%)</span>. The reminding <span>{costTeacher}</span> are paid
               directly in cash to your instructor please check out our terms{" "}
               <a href={"https://salsaclasses.co/packs/"}>here.</a>
             </p>
-            <h1>
-              <span>Price</span> : {priceToPay ? priceToPay : "..."} USD
-            </h1>
+            
             {idDoc ? (
+              <div>
               <div className="pay_methods">
-                <div>
+                <div className="pay_method">
+                    <div className="pay_method-info">
+                      <div>
+                        <div className="pay_method-info_bubble">
+                          We charge 5% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
+                        </div>
+                      </div>
+                    </div>
+
+                  <div className="pay_method-info_button"><img src={questionMark} /></div>
                   <Button
-                    className="btn"
+                    className="btn pay_method-button"
                     onClick={async (event) => {
                       var amount = priceToPay.toString();
                       var _contractAbi = "";
@@ -287,104 +402,120 @@ function StepNine({
                       }
                     }}
                   >
-                    crypto
+                    
+                    Crypto
                   </Button>
-                  <div className="pay-with">
-                    <input
-                      type="radio"
-                      id="payWithUsdc"
-                      name="val"
-                      value="payWithUsdc"
-                    ></input>
-                    <label htmlFor="payWithUsdc">USDC</label>
-                    <input
-                      type="radio"
-                      id="payWithUsdt"
-                      name="val"
-                      value="payWithUsdt"
-                      defaultChecked
-                    ></input>
-                    <label htmlFor="payWithUsdt">USDT</label>
-                    <input
-                      type="radio"
-                      id="payWithUst"
-                      name="val"
-                      value="payWithUst"
-                    ></input>
-                    <label htmlFor="payWithUsdc">UST</label>
                   </div>
-                </div>
-
+                  
                 <PayPalScriptProvider options={process.env.CLIENT_ID_PAYPAL}>
                   <PayPalButtons
-                    className="paypal-btn"
+                    className="paypal-btn pay_method-button"
                     style={{ layout: "horizontal" }}
                     createOrder={(data, actions) => createOrder(data, actions)}
                     forceReRender={[idDoc]}
                     onApprove={(data, actions) => onApprove(data, actions)}
                   />
                 </PayPalScriptProvider>
-                <Button className="btn" onClick={payWithStripe}>
-                  Pay with stripe
-                </Button>
+                <div className="pay_method">
+                  <div className="pay_method-info">
+                    <div>
+                      <div className="pay_method-info_bubble">
+                        We charge 5% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pay_method-info_button"><img src={questionMark} /></div>
+                  <Button className="btn pay_method-button" onClick={payWithStripe}>
+                    Stripe
+                  </Button>
+                </div>
+              </div>
+
+
+              <div className="pay-with">
+
+                <div>
+                  <input
+                    type="radio"
+                    id="payWithUsdc"
+                    name="val"
+                    value="payWithUsdc"
+                  ></input>
+                  <label htmlFor="payWithUsdc">USDC</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="payWithUsdt"
+                    name="val"
+                    value="payWithUsdt"
+                    defaultChecked
+                  ></input>
+                  <label htmlFor="payWithUsdt">USDT</label>
+                </div>
+                <div>
+
+                <input
+                  type="radio"
+                  id="payWithUst"
+                  name="val"
+                  value="payWithUst"
+                ></input>
+                <label htmlFor="payWithUsdc">UST</label>
+                </div>
+
+                </div>
+                
               </div>
             ) : (
               <CardContent> Loading </CardContent>
             )}
 
             <p>
-              Upon completing your payment, please use the live chat feature in
-              the bottom right corner to message your phone number (or Whatsapp)
-              to our team, so we can share it with your instructor, who will
-              usually message you the same day. Feel free to use that same live
-              chat at any time before or after payment to communicate with us.
+              Upon completing your payment, please use the live chat feature in the bottom right comer to message your phone number (or Whatsapp) to our team, so we can share it with your instructor, who will usually message you the same day. Feel free to use the live chat any time before or after payment to communicate with us.
             </p>
+        </div>
+        <aside>
+          <div className="aside">
+            <div>
+              <p>
+                We have launched Dancero, a collection of hand-drawn NFTs trading on several blockchain ecosystems. 
+              </p>
+              <p>
+                The NFTs unlock a long list of exclusive benefits to their owners, including free access to classes and bootcamps, and can even be rented out for passive income. 
+                <a href="">Learn more.</a>
+              </p>
+            </div>
+            
+            
+            {nftImg ? (
+              <div  className="nft-img">
+                <img
+                src={nftImg}
+                alt="DanceroNFT"
+                />
+            </div>
+            ) : (
+              <div>
+                  <p>
+                    connect a web3 wallet to view your dancero nft. you don't have any
+                    dancero nft in your wallet but you can purchase one{" "}
+                    <a href={"https://salsaclasses.co/packs/"}>here.</a>
+                  </p>
+              </div>
+              
+            )
+            }
+            <div>
+              <h2>Dancero # 57</h2>
+              <p>
+                You will soon be able to stake your NFT to apply an automatic
+                discount. <a href="">Learn more.</a>
+              </p>
+            </div>
           </div>
-
-          <Fab
-            variant="extended"
-            size="medium"
-            color="primary"
-            onClick={() => goBackPage()}
-          >
-            Go Back
-          </Fab>
-        </div>
-
-        <div className="board_card">
-          <p>
-            We have launched Dancero, a collection of hand-drawn NFTs trading on
-            several blockchain ecosystems. The NFTs unlock a long list of
-            exclusive benefits to their owners, including free access to classes
-            and bootcamps, and can even be rented out for passive income.{" "}
-            <a href="">Learn more.</a>
-          </p>
-
-          {imgNFT ? (
-            <img
-            sx={{ my: "100rem" }}
-            className="nft-img"
-            src={imgNFT}
-            width="300"
-            heigth="300"
-            alt="DanceroNFT"
-          />
-          ) : (
-            <p>
-              connect a web3 wallet to view your dancero nft. you don't have any
-              dancero nft in your wallet but you can purchase one{" "}
-              <a href={"https://salsaclasses.co/packs/"}>here.</a>
-            </p>
-          )
-          }
-
-          <p>
-            You will soon be able to stake your NFT to apply an automatic
-            discount. <a href="">Learn more.</a>
-          </p>
-        </div>
+        </aside>
       </div>
-    </div>
   );
 }
 

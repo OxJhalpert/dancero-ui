@@ -1,27 +1,29 @@
 import Grid from "@mui/material/Grid";
-import cali from "../images/cali.jpg";
-import bogota from "../images/bogota.jpg";
-import cartagena from "../images/cartagena.jpeg";
-import medellin from "../images/medellin.jpg";
+import cali from "../images/cali.png";
+import bogota from "../images/bogota.png";
+import cartagena from "../images/cartagena.png";
+import medellin from "../images/medellin.png";
+
+import goBackIcon from "../images/go-back.png"
 import Fab from "@mui/material/Fab";
 import "../scss/cards.scss";
 import "../scss/layout.scss";
 
 function StepFour({ data, update, goBackPage, setPage }) {
   return (
-    <div className="container">
+    <div className="container flex-container">
       <div className="section-title">
         <p>
-          We have instructors in Medellin, Cali, Cartagena & Bogotá, so you can
+          We have instructors in <b> Medellin, Cali, Cartagena & Bogotá, </b> so you can
           pick a location below. Note that if you’re planning to visit and take
           classes in multiple cities, you can use the live chat feature in the
-          bottom right corner for a custom quote.
+          bottom right corner for a <b>custom quote.</b>
         </p>
       </div>
 
       <div className="cards_container">
         <div
-          className="card tall-card"
+          className="card"
           onClick={() => {
             if (data.Venue === "Online") {
               setPage(3);
@@ -35,7 +37,7 @@ function StepFour({ data, update, goBackPage, setPage }) {
           <div className="card_name">Cartagena</div>
         </div>
         <div
-          className="card tall-card"
+          className="card"
           onClick={() => {
             if (data.Venue === "Online") {
               setPage(3);
@@ -46,10 +48,10 @@ function StepFour({ data, update, goBackPage, setPage }) {
           <div className="card_image">
             <img src={bogota} />
           </div>
-          <div className="card_name">Bogota</div>
+          <div className="card_name">Bogotá</div>
         </div>
         <div
-          className="card tall-card"
+          className="card"
           onClick={() => {
             if (data.Venue === "Online") {
               setPage(3);
@@ -60,7 +62,7 @@ function StepFour({ data, update, goBackPage, setPage }) {
           <div className="card_image">
             <img src={medellin} />
           </div>
-          <div className="card_name">Medellin</div>
+          <div className="card_name">Medellín</div>
         </div>
         <div
           className="card tall-card"
@@ -77,16 +79,17 @@ function StepFour({ data, update, goBackPage, setPage }) {
           <div className="card_name">Cali</div>
         </div>
       </div>
-      <Grid xs={12} item container justifyContent="center">
+      <div className="go-back">
         <Fab
           variant="extended"
           size="medium"
           color="primary"
           onClick={() => goBackPage()}
         >
-          Go Back
+          <img src={goBackIcon} alt="" /> 
+          Back 
         </Fab>
-      </Grid>
+      </div>
     </div>
   );
 }

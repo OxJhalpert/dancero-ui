@@ -1,0 +1,110 @@
+.hours_list{
+
+    display: flex;
+    max-width: 1500px;
+    width: 100%;
+    justify-content: center;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 2rem;
+        .hours_list-item{
+            .list-item_line{
+                display: none;
+            }
+        }
+        
+    }
+
+    .hours_list-item{
+        margin-top: auto;
+        width: 100%;
+
+        &::before{
+            content: url("../images/selected-hour.png");
+            display: block;
+            display: none;
+            margin: auto;
+            width: 66px;
+            margin-bottom: 1rem;
+        }
+
+        .list-item_hours-number{
+            position: relative;
+            display: flex;
+            justify-content: center;
+            width: 90%;
+            max-width: 95px;
+            margin: auto;
+            color: #2e3290;
+            cursor: pointer;
+            user-select: none;
+            border-radius: 100px;
+            
+            img{
+                position: relative;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
+            
+
+            div{
+                position: absolute;
+                bottom: calc(50% - 1rem);
+                font-size: 1.5rem;
+                font-weight: 700;    
+            }
+            &:hover ~ & div{
+                color: aqua;
+            }
+        }
+
+        .list-item_bar:hover ~ .hours_list-item::before{
+                display: block;
+            }
+        .list-item_line{
+            position: relative;
+            margin: 2rem 0;
+            width: 100%;
+            height: 8px;
+            background-color: #2e3290;
+
+            &::before{
+                content: "";
+                display: block;
+                position: absolute;
+                width: 7px;
+                height: 7px;
+                background-color: #fff;
+                border: .6rem solid #2e3290;
+                border-radius: 100%;
+                margin: auto;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                top: 0;
+            }
+        }
+        .list-item_line-firts{
+            width: 50%;
+            margin-left: auto;
+            &:before{
+                left: -10px;
+                right: auto;
+            }
+        }
+        .list-item_line-last{
+            width: 50%;
+            margin-right: auto;
+            &:before{
+                left: auto;
+                right: -10px;
+            }
+        }
+
+        
+    }
+    
+}

@@ -1,0 +1,44 @@
+.dates-form{
+    display: flex;
+    align-items: center;
+    max-height: 500px;
+    gap: 1rem;
+    
+    place-content: center;
+    justify-content: center;
+
+
+    .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+        font-family: "mali";
+        color: #615bf9;
+    }
+    .css-1kty9di-MuiFormLabel-root-MuiInputLabel-root.Mui-focused{
+        font-family: "mali";
+    }
+    .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+        border-color: #2e3290;
+    }
+
+    
+    
+
+    .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root{
+        background-color: #fff;
+        margin-bottom: 5rem;
+        
+        input{
+            font-family: 'mali';
+        }
+
+        .css-i4bv87-MuiSvgIcon-root{
+            fill: #615bf9;
+        }
+        .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+            border-color: #615bf9;
+        }
+        .css-1z7n62 span{
+            font-family: "mali";
+        }
+        
+    }
+}
