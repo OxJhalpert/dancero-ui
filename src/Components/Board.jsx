@@ -15,7 +15,7 @@ import "../scss/layout.scss";
 import "../scss/board.scss";
 
 import config from "../config.json";
-import ImgNftCharge from "./ImgNftCharge";
+
 import nftImg from "../images/NFT-img.png"
 import questionMark from "../images/question-mark.png"
 
