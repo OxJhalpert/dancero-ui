@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { AppBar, Toolbar,} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Web3 from "web3";
 import Box from "@mui/material/Box";
@@ -30,17 +30,6 @@ export default function App() {
   const [data, setData] = useState({
     "user" : ''
   });
-
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAu-4JfgSOo8mIjdhnQxs6EuEdaljcidAw",
-    authDomain: "dancero-app.firebaseapp.com",
-    projectId: "dancero-app",
-    storageBucket: "dancero-app.appspot.com",
-    messagingSenderId: "863521077258",
-    appId: "1:863521077258:web:8a4b5f932d0217abf307f3",
-    measurementId: "G-G9ECPGJH3B"
-  };
 
   
 
@@ -76,7 +65,7 @@ export default function App() {
     goNextPage();    
   }
 
-  async function transferToken(amount, _contractAbi, _addressContract, exchangeRatio,comission,priceS,priceSend,dollarfee,costHour,costTeacher,costUSD) {
+  async function transferToken(amount, _contractAbi, _addressContract, exchangeRatio,totalCop,priceS,priceSend,dollarfee,costHour,costTeacher,costUsd) {
     var chainId = await window.ethereum.request({  method: 'eth_chainId'  });
     const user = await window.web3.eth.getAccounts();
     // console.log(exchangeRatio)
@@ -107,16 +96,16 @@ export default function App() {
                 },
                 body: JSON.stringify({
                   data : data,
-                  costUsd: costUSD,
+                  costUsd: costUsd,
                   priceSendHour: priceSend,
                   costHour: costHour,
                   costTeacher: costTeacher,
                   totalDollar:dollarfee,
                   exchangeRatio : exchangeRatio,
-                  comission : comission,
+                  comission : totalCop,
                   paymentMethod : "crypto",
-                  paymentFee : comission,
-                  totalCop: priceS,
+                  paymentFee : totalCop,
+                  total: priceS,
                   paymentStatus : "received"
                 }),
               });
@@ -128,15 +117,15 @@ export default function App() {
                 },
                 body: JSON.stringify({
                   data : data,
-                  costUsd: costUSD,
+                  costUsd: costUsd,
                   priceSendHour: priceSend,
                   costHour: costHour,
                   costTeacher: costTeacher,
                   totalDollar:dollarfee,
                   exchangeRatio : exchangeRatio,
-                  comission : comission,
+                  comission : totalCop,
                   paymentMethod : "crypto",
-                  paymentFee : comission,
+                  paymentFee : totalCop,
                   total: priceS,
                   paymentStatus : "received"
                 }),
@@ -198,7 +187,7 @@ export default function App() {
         {page === 7 && <MembershipStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 8 && <HoursStep  data={data} update={updateData} goBackPage={goBackPage}/>}
         {page === 9 && <DatesStep  data={data} update={updateData} goBackPage={goBackPage}/>}
-        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} firebaseConfig={firebaseConfig}  />}    
+        {page === 10 && <BoardStep  data={data} update={updateData} connect={connect} transferToken={transferToken} goBackPage={goBackPage} />}    
        </div>    
     </div>
   );

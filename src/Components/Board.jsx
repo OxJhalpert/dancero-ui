@@ -7,9 +7,6 @@ import UsdcToken from "../abis/UsdcToken.json";
 import getPriceAndCostCalculation from "./utils";
 import { useEffect, useState } from "react";
 import React from "react";
-import Fab from "@mui/material/Fab";
-import { initializeApp } from "firebase/app";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import "../scss/layout.scss";
 import "../scss/board.scss";
@@ -41,18 +38,14 @@ function StepNine({
   connect,
   transferToken,
   goBackPage,
-  firebaseConfig,
 }) {
-  const app = initializeApp(firebaseConfig);
-  var firestoreDB = getFirestore(app);
+
   const [exchangeRatio, setexchangeRatio] = useState();
   const [imgNFT, setImgNFT] = useState("");
-
   const [nftcodes, setNFTCodes] = useState([]);
   const [nftSelected, SetNFTSelected] = useState([]);
   const [priceToPay, setPriceToPay] = useState(0);
   const [totalCop, setTotalCop] = useState(0);
-  const [idDoc, setIdDoc] = useState(null);
   const [totalPaypal, setTotalPaypal] = useState(0);
   const [totalStripe, setTotalStripe] = useState(0);
   const [dollarfee, setDollarFee] = useState(0);
@@ -60,8 +53,10 @@ function StepNine({
   const [priceS, setPriceS] = useState(0);
   const [priceSend, setPriceSend] = useState(0);
   const [costHour, setCostHour] = useState(0);
-  const [costUsd, setCostUsd] = useState(0);
+  // const [costUsd, setCostUsd] = useState(0);
   const [pricePerHour, setPricePerHour] = useState(0);
+  var dataSend = data;
+  var costUsd = "";
 
 
   
@@ -78,7 +73,6 @@ function StepNine({
   }
 
   useEffect(() => {
-    storeTransaction();
     getExchangeRate();
   }, [setexchangeRatio]);
 
@@ -144,7 +138,6 @@ function StepNine({
     return actions.order.create({
       purchase_units: [
         {
-          description: idDoc.toString(),
           amount: {
             value: totalPaypal.toString(),
           },
@@ -154,7 +147,9 @@ function StepNine({
   };
 
   const onApprove = (data, actions) => {
-
+    var total = priceS;
+    var comission = costUsd;
+    var ch = costHour;
     fetch(config.SEND_MAIL_ENDPOINT, {
       method: "POST",
       headers: {
@@ -162,12 +157,17 @@ function StepNine({
       },
       body: JSON.stringify({
         data : data,
+        costUsd: costTeacher,
+        priceSendHour: priceSend,
+        costHour: ch,
+        costTeacher: costTeacher,
+        totalDollar:dollarfee,
         exchangeRatio : exchangeRatio,
-        comission : totalCop,
-        paymentMethod : "crypto",
+        comission : comission,
+        paymentMethod : "paypal",
         paymentFee : totalCop,
-        total: priceS,
-        paymentStatus : "received" 
+        total: total,
+        paymentStatus : "received"
       }),
 
 
@@ -179,16 +179,21 @@ function StepNine({
       },
       body: JSON.stringify({
         data : data,
+        costUsd: costTeacher,
+        priceSendHour: priceSend,
+        costHour: costHour,
+        costTeacher: costTeacher,
+        totalDollar:dollarfee,
         exchangeRatio : exchangeRatio,
-        comission : totalCop,
-        paymentMethod : "crypto",
+        comission : costUsd,
+        paymentMethod : "paypal",
         paymentFee : totalCop,
         total: priceS,
-        paymentStatus : "received" 
+        paymentStatus : "received"
       }),
     })
 
-    window.location = "http://localhost:3000/success";
+    window.location =  config.SUCCESS_PAGE;
     return actions.order.capture();
   };
 
@@ -204,7 +209,6 @@ function StepNine({
       data.place,
       0
     );
-    console.log(cost)
     var priceS = cost[1];
     priceS = RoundTo(priceS, roundTo);
     setPriceS(priceS);
@@ -214,15 +218,16 @@ function StepNine({
     roundToHour= RoundTo(roundToHour, roundToHours)
     setPriceSend(roundToHour);
     Math.round(priceSend)
-    setCostHour(costT/data.hours)
+    var dif = costT/data.Hours
+    setCostHour(dif)
     var dollarFee = priceS / exchangeRate;
     dollarFee = Math.round(dollarFee);
     setDollarFee(dollarFee);
     var rest = cost[1] - cost[0];
-    var restUSD = rest / exchangeRatio;
-    setCostUsd(restUSD);
+    var restUSD = rest / exchangeRate;
     var totalCopRound = RoundTo(rest, roundTo);
     setTotalCop(totalCopRound);
+    costUsd=restUSD
 
     rest = totalCopRound / exchangeRate;
     rest = Math.round(rest);
@@ -236,14 +241,10 @@ function StepNine({
     return roundTo * Math.ceil(number / roundTo);
   }
 
-
-  async function storeTransaction() {
-    var newDoc = await addDoc(collection(firestoreDB, "dateTransfer"), data);
-    setIdDoc(newDoc.id);
-  }
-
-
   const payWithStripe = () => {
+    var total = priceS;
+    var comission = costUsd;
+    var ch = costHour;
     fetch(config.STRIPE_CHECKOUT, {
       method: "POST",
       headers: {
@@ -253,7 +254,6 @@ function StepNine({
         data : data,
         items: [
           {
-            metadata: idDoc,
             name: "Pack Of " + data.Hours + " Hours",
             quantity: 1,
             priceInCents: totalStripe * 100,
@@ -262,8 +262,52 @@ function StepNine({
       }),
     })
       .then((res) => {
-        if (res.ok) return res.json();
+        if (res.ok){
+          fetch(config.SEND_MAIL_ENDPOINT, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              data : dataSend,
+              costUsd: costTeacher,
+              priceSendHour: priceSend,
+              costHour: ch,
+              costTeacher: costTeacher,
+              totalDollar:dollarfee,
+              exchangeRatio : exchangeRatio,
+              comission : comission,
+              paymentMethod : "stripe",
+              paymentFee : totalCop,
+              total: total,
+              paymentStatus : "received"
+            }),
+          });
+          fetch(config.SAVEDATA_ENDPOINT, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              data : dataSend,
+              costUsd: costTeacher,
+              priceSendHour: priceSend,
+              costHour: costHour,
+              costTeacher: costTeacher,
+              totalDollar:dollarfee,
+              exchangeRatio : exchangeRatio,
+              comission : costUsd,
+              paymentMethod : "stripe",
+              paymentFee : totalCop,
+              total: priceS,
+              paymentStatus : "received"
+            }),
+          });
+          return res.json();
+        }
+         
         return res.json().then((json) => Promise.reject(json));
+        
       })
       .then(({ url }) => {
         window.location = url;
@@ -369,7 +413,7 @@ function StepNine({
                   <div className="board_header-item_name">
                     Price per hour:
                   </div>
-                  <div className="board_header-item_res">{priceS / data.Hours} COP</div>
+                  <div className="board_header-item_res">{priceSend} COP</div>
                 </div>
 
                 <img src={pricePerHourIcon} className="board_header-item_icon last-icons"/>
@@ -379,7 +423,7 @@ function StepNine({
                   <div className="board_header-item_name">
                     Total in pesos:
                   </div>
-                  <div className="board_header-item_res"> {totalCop} COP</div>
+                  <div className="board_header-item_res"> {priceS} COP</div>
                 </div>
                 <img src={totalInPesosIcon} className="board_header-item_icon last-icons"/>
               </div>
@@ -400,7 +444,6 @@ function StepNine({
               <a href={"https://salsaclasses.co/packs/"}>here.</a>
             </p>
             
-            {idDoc ? (
               <div>
               <div className="pay_methods">
                 <div className="pay_method">
@@ -440,7 +483,8 @@ function StepNine({
                           _addressContract =
                             config.USDC_TOKEN;
                         }
-                        transferToken(amount, _contractAbi, _addressContract, exchangeRatio,totalCop,priceS,priceSend,dollarfee.toExponential,costHour,costTeacher,costUsd);
+                        transferToken(amount, _contractAbi, _addressContract, exchangeRatio,totalCop,priceS,priceSend,dollarfee,costHour,costTeacher,costUsd);
+
                       }
                     }}
                   >
@@ -453,9 +497,8 @@ function StepNine({
                   <PayPalButtons
                     className="paypal-btn pay_method-button"
                     style={{ layout: "horizontal" }}
-                    createOrder={(data, actions) => createOrder(data, actions)}
-                    forceReRender={[idDoc]}
-                    onApprove={(data, actions) => onApprove(data, actions)}
+                    createOrder={(data, actions) => createOrder(dataSend, actions)}
+                    onApprove={(data, actions) => onApprove(dataSend, actions)}
                   />
                 </PayPalScriptProvider>
                 <div className="pay_method">
@@ -509,9 +552,6 @@ function StepNine({
                 </div>
                 
               </div>
-            ) : (
-              <CardContent> Loading </CardContent>
-            )}
 
             <p>
               Upon completing your payment, please use the live chat feature in the bottom right comer to message your phone number (or Whatsapp) to our team, so we can share it with your instructor, who will usually message you the same day. Feel free to use the live chat any time before or after payment to communicate with us.
