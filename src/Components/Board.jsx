@@ -391,28 +391,20 @@ function StepNine({
             </div>
 
             <p>
-              Your total price is <span>{priceS}</span> the booking fee to be paid is 
-               <span>{totalCop}</span> pesos o <span>{priceToPay}</span> usd at an exchange rate{" "}
-              <span>{exchangeRatio}</span> COP per USD. We accept <span>crypto stablecoins (no
+              Your total price is <span> {priceS} </span> the booking fee to be paid is 
+              <span> {totalCop} </span> pesos o <span> {priceToPay} </span> USD at an exchange rate
+              <span> {exchangeRatio} </span> COP per USD. We accept <span>crypto stablecoins (no
               commission), stripe ({config.STRIPE_PERCENTAGE}% )and pay pal (
-              {config.PAYPAL_PERCENTAGE}%)</span>. The reminding <span>{costTeacher}</span> are paid
-              directly in cash to your instructor please check out our terms{" "}
-              <a href={"https://salsaclasses.co/packs/"}>here.</a>
+              {config.PAYPAL_PERCENTAGE}%)</span>. The reminding <span> {costTeacher} </span> are paid
+              directly in cash to your instructor please check out our terms
+              <a href={"https://salsaclasses.co/packs/"}> here.</a>
             </p>
             
             {idDoc ? (
               <div>
               <div className="pay_methods">
                 <div className="pay_method">
-                    <div className="pay_method-info">
-                      <div>
-                        <div className="pay_method-info_bubble">
-                          We charge 5% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
-                        </div>
-                      </div>
-                    </div>
-
-                  <div className="pay_method-info_button"><img src={questionMark} /></div>
+                    
                   <Button
                     className="btn pay_method-button"
                     onClick={async (event) => {
@@ -447,29 +439,51 @@ function StepNine({
                     
                     Crypto
                   </Button>
-                  </div>
-                  
-                <PayPalScriptProvider options={process.env.CLIENT_ID_PAYPAL}>
-                  <PayPalButtons
-                    className="paypal-btn pay_method-button"
-                    style={{ layout: "horizontal" }}
-                    createOrder={(data, actions) => createOrder(data, actions)}
-                    forceReRender={[idDoc]}
-                    onApprove={(data, actions) => onApprove(data, actions)}
-                  />
-                </PayPalScriptProvider>
-                <div className="pay_method">
                   <div className="pay_method-info">
-                    <div>
+                      <div className="pay_method-info_bubble-floor">
+                        <div className="pay_method-info_bubble">
+                          We charge 5% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
+                        </div>
+                      </div>
+                      <div className="pay_method-info_button"><img src={questionMark} /></div>
+                    </div>
+                </div>
+                <div className="pay_method">  
+                  <PayPalScriptProvider options={process.env.CLIENT_ID_PAYPAL}>
+                    <PayPalButtons
+                      className="paypal-btn"
+                      style={{ layout: "horizontal",
+                                tagline: false,
+                                height: 55
+                      }}
+                      createOrder={(data, actions) => createOrder(data, actions)}
+                      forceReRender={[idDoc]}
+                      onApprove={(data, actions) => onApprove(data, actions)}
+                    />
+                  </PayPalScriptProvider>
+                  <div className="pay_method-info">
+                      <div className="pay_method-info_bubble-floor">
+                        <div className="pay_method-info_bubble">
+                          We charge 5% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
+                        </div>
+                      </div>
+                      <div className="pay_method-info_button"><img src={questionMark} /></div>
+                    </div>
+                </div>
+                <div className="pay_method">
+                  
+                  <Button className="btn pay_method-button" onClick={payWithStripe}>
+                    Stripe
+                  </Button>
+                  
+                  <div className="pay_method-info">
+                    <div className="pay_method-info_bubble-floor">
                       <div className="pay_method-info_bubble">
                         We charge 5% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
                       </div>
                     </div>
+                    <div className="pay_method-info_button"><img src={questionMark} /></div>
                   </div>
-                  <div className="pay_method-info_button"><img src={questionMark} /></div>
-                  <Button className="btn pay_method-button" onClick={payWithStripe}>
-                    Stripe
-                  </Button>
                 </div>
               </div>
 
