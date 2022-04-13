@@ -13,42 +13,42 @@ export default function getPriceAndCostCalculation(
   var discountHourPack = getTransformationHourPack(hours);
   var discountStudent = getDiscountHourPackStudent(basePrice, discountHourPack);
   var discountTeacher = getDiscountHourPackTeacher(baseCost, discountHourPack);
-  console.log("soy el descuento de horas par aestudiante"+discountStudent)
-  console.log("soy el descuento de horas par profesor"+discountTeacher)
+  // console.log("soy el descuento de horas par aestudiante"+discountStudent)
+  // console.log("soy el descuento de horas par profesor"+discountTeacher)
 
   var locationTransformation = getLocationTransformation(location, venue, place);
 
   var discountLevel = getLevelTransformation(level);
   var levelPercentageStudent = getLevelPercentageStudent(discountStudent, discountLevel);
   var levelPercentageTeacher = getLevelPercentageTeacher(discountTeacher, discountLevel);
-  console.log("soy el descuento de level para estudiante"+levelPercentageStudent)
-  console.log("soy el descuento de level para profesor"+levelPercentageTeacher)
+  // console.log("soy el descuento de level para estudiante"+levelPercentageStudent)
+  // console.log("soy el descuento de level para profesor"+levelPercentageTeacher)
 
 
   var serviceTypeTransformation = getServiceAmountTransformation(serviceType);
   levelPercentageStudent = getIncrementMembership(levelPercentageStudent, serviceTypeTransformation);
-  console.log("soy el incremento para estudante por servicio"+levelPercentageStudent)
+  // console.log("soy el incremento para estudante por servicio"+levelPercentageStudent)
 
 
   var division = 1.0;
   var divisionStudent = getMultiplicationStudent(division, locationTransformation)
   var divisionTeacher = getMultiplicationTeacher(division, locationTransformation)
-  console.log("soy el coheficiente para estudiante"+divisionStudent)
-  console.log("soy el coheficiente para profesor"+divisionTeacher)
+  // console.log("soy el coheficiente para estudiante"+divisionStudent)
+  // console.log("soy el coheficiente para profesor"+divisionTeacher)
 
 
 
   levelPercentageStudent = levelPercentageStudent * divisionStudent;
   levelPercentageTeacher = levelPercentageTeacher * divisionTeacher;
-  console.log("soy la multiplicacion por coheficiente para estudiante"+levelPercentageStudent)
-  console.log("soy la multiplicacion por coheficiente para profesor"+levelPercentageTeacher)
+  // console.log("soy la multiplicacion por coheficiente para estudiante"+levelPercentageStudent)
+  // console.log("soy la multiplicacion por coheficiente para profesor"+levelPercentageTeacher)
 
 
 
   var addedPriceFlatStudent = getAddedPriceFlatStudent(levelPercentageStudent, locationTransformation);
   var addedCostFlatTeacher = getAddedPriceFlatTeacher(levelPercentageTeacher, locationTransformation);
-  console.log("soy la adicion plana para estudiante"+addedPriceFlatStudent)
-  console.log("soy la adicion plana para profesor"+addedCostFlatTeacher)
+  // console.log("soy la adicion plana para estudiante"+addedPriceFlatStudent)
+  // console.log("soy la adicion plana para profesor"+addedCostFlatTeacher)
 
 
 
@@ -56,8 +56,8 @@ export default function getPriceAndCostCalculation(
   var resultS = addedPriceFlatStudent * hours;
   var resultT = addedCostFlatTeacher * hours;
 
-  console.log("soy el precio por estudiante"+resultS)
-  console.log("soy el costo por profesor"+resultT)
+  // console.log("soy el precio por estudiante"+resultS)
+  // console.log("soy el costo por profesor"+resultT)
 
 
 

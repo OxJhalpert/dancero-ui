@@ -233,7 +233,9 @@ function StepNine({
     rest = Math.round(rest);
     var restStripe = (rest * config.STRIPE_PERCENTAGE) / 100;
     var restPaypal = (rest * config.PAYPAL_PERCENTAGE) / 100;
-    setTotalPaypal(restPaypal + rest);
+    restPaypal = restPaypal+rest;
+    restPaypal= Math.round(restPaypal)
+    setTotalPaypal(restPaypal);
     setTotalStripe(restStripe + rest);
     setPriceToPay(rest);
   }
