@@ -28,10 +28,8 @@ function StepEigth({ update, goBackPage }) {
       </div>
 
       <div className="hours_list">
-        <div
-          className="hours_list-item "
-          
-        >
+        <div className="hours_list-item ">
+          <div className="list-item_img"></div>
           <div className="list-item_hours-number" onClick={() => update("Hours", "5")}>
             <img src={fiveHours} alt="" />
             <div>5</div> 
@@ -39,9 +37,8 @@ function StepEigth({ update, goBackPage }) {
           <div className="list-item_line list-item_line-firts"></div>
         </div>
 
-        <div
-          className="hours_list-item "
-        >
+        <div className="hours_list-item ">
+          <div className="list-item_img"></div>
           <div className="list-item_hours-number" onClick={() => update("Hours", "10")}>
           <img src={tenHours} alt="" />
             <div>10</div>
@@ -49,10 +46,8 @@ function StepEigth({ update, goBackPage }) {
           <div className="list-item_line"></div>
         </div>
 
-        <div
-          className="hours_list-item "
-          
-        >
+        <div className="hours_list-item">
+          <div className="list-item_img"></div>
           <div className="list-item_hours-number" onClick={() => update("Hours", "15")}>
             <img src={fifteenHours} alt="" />
             <div>15</div> 
@@ -60,9 +55,8 @@ function StepEigth({ update, goBackPage }) {
           <div className="list-item_line"></div>
         </div>
 
-        <div
-          className="hours_list-item "
-        >
+        <div className="hours_list-item ">
+          <div className="list-item_img"></div>
           <div className="list-item_hours-number" onClick={() => update("Hours", "20")}>
             <img src={twentyHours} alt="" />
             <div>20</div> 
@@ -70,9 +64,8 @@ function StepEigth({ update, goBackPage }) {
           <div className="list-item_line"></div>
         </div>
 
-        <div
-          className="hours_list-item "
-        >
+        <div className="hours_list-item ">
+          <div className="list-item_img"></div>
           <div className="list-item_hours-number" onClick={() => update("Hours", "25")}>
             <img src={twentyFiveHours} alt="" />
             <div>25</div>
@@ -80,9 +73,8 @@ function StepEigth({ update, goBackPage }) {
           <div className="list-item_line"></div>
         </div>
 
-        <div
-          className="hours_list-item "
-        >
+        <div className="hours_list-item">
+          <div className="list-item_img"></div>
           <div className="list-item_hours-number" onClick={() => update("Hours", "30")}>
             <img src={thirtyHours} alt="" />
             <div>30</div>
@@ -90,9 +82,8 @@ function StepEigth({ update, goBackPage }) {
           <div className="list-item_line"></div>
         </div>
 
-        <div
-          className="hours_list-item "
-        >
+        <div className="hours_list-item ">
+        <div className="list-item_img"></div>
           <div className="list-item_hours-number" onClick={() => update("Hours", "40")}>
               <img src={fourtyHours} alt="" />
               <div>40</div>
@@ -101,9 +92,8 @@ function StepEigth({ update, goBackPage }) {
           
         </div>
 
-        <div
-          className="hours_list-item "
-        >
+        <div className="hours_list-item ">
+          <div className="list-item_img"></div>
           <div className="list-item_hours-number" onClick={() => update("Hours", "50")}>
             <img src={fiftyHours} alt="" />
             <div>50</div> 

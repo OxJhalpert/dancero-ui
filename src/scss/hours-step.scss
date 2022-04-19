@@ -5,29 +5,22 @@
     width: 100%;
     justify-content: center;
 
-    @media screen and (max-width: 768px) {
-        flex-direction: column;
-        gap: 2rem;
-        .hours_list-item{
-            .list-item_line{
-                display: none;
-            }
-        }
-        
-    }
+    
 
     .hours_list-item{
         margin-top: auto;
         width: 100%;
-
-        &::before{
-            content: url("../images/selected-hour.png");
-            display: block;
-            display: none;
-            margin: auto;
-            width: 66px;
-            margin-bottom: 1rem;
+        
+        .list-item_img{
+            &::before{
+                content: url("../images/selected-hour.png");
+                display: block;
+                margin: auto;
+                width: 66px;
+                margin-bottom: 1rem;
+            }
         }
+        
 
         .list-item_hours-number{
             position: relative;
@@ -56,14 +49,13 @@
                 font-size: 1.5rem;
                 font-weight: 700;    
             }
-            &:hover ~ & div{
-                color: aqua;
+            &:hover{
+                color: #f2cf00;
             }
+
+            
         }
 
-        .list-item_bar:hover ~ .hours_list-item::before{
-                display: block;
-            }
         .list-item_line{
             position: relative;
             margin: 2rem 0;
@@ -75,8 +67,8 @@
                 content: "";
                 display: block;
                 position: absolute;
-                width: 7px;
-                height: 7px;
+                width: 5px;
+                height: 5px;
                 background-color: #fff;
                 border: .6rem solid #2e3290;
                 border-radius: 100%;
@@ -85,7 +77,10 @@
                 left: 0;
                 right: 0;
                 top: 0;
+                cursor: pointer;
             }
+
+            
         }
         .list-item_line-firts{
             width: 50%;
@@ -104,7 +99,23 @@
             }
         }
 
-        
+        .list-item_hours-number:hover ~ .list-item_line::before{
+            border-color: #f2cf00;
+        }
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+            gap: 2rem;
+            .hours_list-item{
+                .list-item_img{
+                    display: none;
+                }
+                .list-item_line{
+                    display: none;
+                }
+            }
+            
+        }
+    
     }
     
 }

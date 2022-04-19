@@ -13,10 +13,14 @@ body{
         width: 120px;
     }
     .wallet-button{
+        padding: .5rem 1rem;
         margin-left: auto;
         text-transform: none;
         font-family: "mali";
         font-weight: bold;
+        border-radius: 10px;
+        background-color: #615bf9;
+        font-size: 0.875rem;
     }
 }
 .progress-bar{

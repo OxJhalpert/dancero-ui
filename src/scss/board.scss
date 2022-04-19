@@ -178,7 +178,11 @@
                             color: #fff;
                             
                             font-size: 0.625rem;
-
+                            
+                            span{
+                                text-decoration-line: underline;
+                            }
+                            
                             &:after {
                                 content: '';
                                 position: absolute;
@@ -303,6 +307,10 @@
 
                 display: flex;
                 align-items: center;
+
+                label{
+                    cursor: pointer;
+                }
             }
 
             input[type="radio"]{
@@ -319,6 +327,7 @@
                 margin-right: .5rem;
                 display: grid;
                 place-content: center;
+                cursor: pointer;
 
                 &::before {
                     display: block;
@@ -353,18 +362,16 @@
             padding: 3rem 0rem 2rem 4rem;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: start;
             height: 100%;
             width: 80%;
             max-width: 700px;
             .nft-img{
                 position: relative;
-                flex-basis: 100%;
                 display: flex;
                 flex-direction: column;
                 flex-shrink: 1;
                 margin: auto;
-                background-color: #2c2d93;
                 max-width:100%;
                 height: auto;
                 
@@ -390,7 +397,12 @@
                 font-size: 1.1rem;
             }
         }
-
+        @media screen and (max-width: 991px) {
+            .aside{
+                height: auto;
+            }
+            
+        }
         @media screen and (max-width: 768px) {
             .aside{
                 padding: 3rem 1rem;

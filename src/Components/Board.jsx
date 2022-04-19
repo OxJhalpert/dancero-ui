@@ -488,7 +488,7 @@ function StepNine({
                   <div className="pay_method-info">
                       <div className="pay_method-info_bubble-floor">
                         <div className="pay_method-info_bubble">
-                          We charge 5% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
+                          You can pay with crypto stablecoin by connecting the <span>Metamask.Chrome extension</span>  to the <span>Binance Smart Chain.</span>                          
                         </div>
                       </div>
                       <div className="pay_method-info_button"><img src={questionMark} /></div>
@@ -562,7 +562,7 @@ function StepNine({
                   name="val"
                   value="payWithUst"
                 ></input>
-                <label htmlFor="payWithUsdc">UST</label>
+                <label htmlFor="payWithUst">UST</label>
                 </div>
 
                 </div>
