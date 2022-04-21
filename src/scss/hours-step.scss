@@ -5,7 +5,27 @@
     width: 100%;
     justify-content: center;
 
-    
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 2rem;
+        .hours_list-item{
+            .list-item_img{
+                display: none;
+            }
+            .list-item_line{
+                display: none;
+            }
+        }
+        
+    }
+
+    @media screen and (min-width: 768px) and (max-height: 763px) {
+        .hours_list-item{
+            .list-item_img{
+                display: none;
+            }
+        }
+    }
 
     .hours_list-item{
         margin-top: auto;
@@ -102,20 +122,7 @@
         .list-item_hours-number:hover ~ .list-item_line::before{
             border-color: #f2cf00;
         }
-        @media screen and (max-width: 768px) {
-            flex-direction: column;
-            gap: 2rem;
-            .hours_list-item{
-                .list-item_img{
-                    display: none;
-                }
-                .list-item_line{
-                    display: none;
-                }
-            }
-            
-        }
-    
+
     }
     
 }

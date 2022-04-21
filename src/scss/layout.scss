@@ -21,6 +21,11 @@ body{
         border-radius: 10px;
         background-color: #615bf9;
         font-size: 0.875rem;
+
+        img{
+            width: 18px;
+            margin-left: 1.5rem;
+        }
     }
 }
 .progress-bar{
@@ -37,6 +42,7 @@ body{
         border-radius: 5px;
         font-weight: 700;
         font-size: 0.875rem;
+        color: #2c2d93;
     }
     .css-eglki6-MuiLinearProgress-root{
         padding: .2rem;
@@ -73,10 +79,3 @@ body{
     }
 }
 
-.btn-primary{
-    
-    padding: .7rem 1.5rem;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-}

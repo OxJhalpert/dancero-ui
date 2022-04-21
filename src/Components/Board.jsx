@@ -10,7 +10,7 @@ import React from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import "../scss/layout.scss";
 import "../scss/board.scss";
-
+import Fab from "@mui/material/Fab";
 import config from "../config.json";
 
 import nftImg from "../images/NFT-img.png"
@@ -27,6 +27,7 @@ import dateFromIcon from "../images/date-from.png"
 import dateToIcon from "../images/date-to.png"
 import pricePerHourIcon from "../images/price-per-hour.png"
 import totalInPesosIcon from "../images/total-in-pesos.png"
+import goBackIcon from "../images/go-back.png"
 
 function createData(name, option, name2, option2) {
   return { name, option, name2, option2 };
@@ -58,8 +59,7 @@ function StepNine({
   var dataSend = data;
   var costUsd = "";
 
-
-  
+ 
 
   function getExchangeRate() {
     fetch("https://api.exchangerate-api.com/v4/latest/USD")
@@ -242,7 +242,6 @@ function StepNine({
   function RoundTo(number, roundTo) {
     return roundTo * Math.ceil(number / roundTo);
   }
-
   const payWithStripe = () => {
     var total = priceS;
     var comission = costUsd;
@@ -429,15 +428,37 @@ function StepNine({
                 </div>
                 <img src={totalInPesosIcon} className="board_header-item_icon last-icons"/>
               </div>
+              <div className="board_header-item">
+                <div className="board_header-item_content">
+                  <div className="board_header-item-name">
+                      Booking fee:
+                  </div>
+                  <div className="board_header-item_res">
+                      {priceToPay ? priceToPay : "..."} USD  
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           
-            <div className="price">
-                Pay: {priceToPay ? priceToPay : "..."} USD
+            <div className="go-back-section">
+              <div className="go-back">
+                <Fab
+                  variant="extended"
+                  size="medium"
+                  color="primary"
+                  onClick={() => goBackPage()}
+                  >
+                  <img src={goBackIcon} alt="" />
+                  Back
+                </Fab>
+              </div>
+
+                
             </div>
 
             <p>
-              Your total price is <span> {priceS} </span> the booking fee to be paid is 
+              Your total price is <span> {priceS}. </span> the booking fee to be paid is 
               <span> {totalCop} </span> pesos o <span> {priceToPay} </span> USD at an exchange rate
               <span> {exchangeRatio} </span> COP per USD. We accept <span>crypto stablecoins (no
               commission), stripe ({config.STRIPE_PERCENTAGE}% )and pay pal (
@@ -569,19 +590,16 @@ function StepNine({
                 
               </div>
 
-            <p>
+            <p className="secondary-text">
               Upon completing your payment, please use the live chat feature in the bottom right comer to message your phone number (or Whatsapp) to our team, so we can share it with your instructor, who will usually message you the same day. Feel free to use the live chat any time before or after payment to communicate with us.
             </p>
         </div>
         <aside>
           <div className="aside">
             <div>
-              <p>
+              <p className="secondary-text">
                 We have launched Dancero, a collection of hand-drawn NFTs trading on several blockchain ecosystems. 
-              </p>
-              <p>
-                The NFTs unlock a long list of exclusive benefits to their owners, including free access to classes and bootcamps, and can even be rented out for passive income. 
-                <a href="">Learn more.</a>
+                The NFTs unlock a long list of exclusive benefits to their owners, including free access to classes and bootcamps, and can even be rented out for passive income. <a href="">Learn more.</a>
               </p>
             </div>
             
