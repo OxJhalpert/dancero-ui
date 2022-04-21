@@ -58,6 +58,10 @@ function StepNine({
   const [pricePerHour, setPricePerHour] = useState(0);
   var dataSend = data;
   var costUsd = "";
+  const [priceTotalCop,setpriceTotalCop] = useState(0);
+  const [priceHoursCop,setpriceHoursCop] = useState(0);
+  const [comissionCop,setcomissionCop] = useState(0);
+  const [costTeacherCop,setcostTeacherCop] = useState(0);
 
  
 
@@ -72,8 +76,10 @@ function StepNine({
       });
   }
 
+
   useEffect(() => {
     getExchangeRate();
+    currencyCop()
   }, [setexchangeRatio]);
 
 
@@ -197,6 +203,14 @@ function StepNine({
     return actions.order.capture();
   };
 
+  function currencyCop(number){
+    return new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD', minimumFractionDigits: 0}).format(number);
+  };
+
+  function currencyDollar(number){
+    return new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD', minimumFractionDigits: 2}).format(number);
+  };
+
   async function calculatePrice(exchangeRate) {
     const roundTo = 5000;
     const roundToHours =1000;
@@ -218,6 +232,7 @@ function StepNine({
     roundToHour= RoundTo(roundToHour, roundToHours)
     setPriceSend(roundToHour);
     Math.round(priceSend)
+
     var dif = costT/data.Hours
     setCostHour(dif)
     var dollarFee = priceS / exchangeRate;
@@ -237,7 +252,14 @@ function StepNine({
     restPaypal= Math.round(restPaypal)
     setTotalPaypal(restPaypal);
     setTotalStripe(restStripe + rest);
+    rest=currencyDollar(rest)
     setPriceToPay(rest);
+
+     setpriceTotalCop(currencyCop(priceS));
+     setpriceHoursCop(currencyCop(roundToHour));
+     setcomissionCop(currencyCop(totalCopRound));
+     setcostTeacherCop(currencyCop(costT));
+
   }
   function RoundTo(number, roundTo) {
     return roundTo * Math.ceil(number / roundTo);
@@ -414,7 +436,7 @@ function StepNine({
                   <div className="board_header-item_name">
                     Price per hour:
                   </div>
-                  <div className="board_header-item_res">{priceSend} COP</div>
+                  <div className="board_header-item_res">{priceHoursCop} COP</div>
                 </div>
 
                 <img src={pricePerHourIcon} className="board_header-item_icon last-icons"/>
@@ -424,7 +446,7 @@ function StepNine({
                   <div className="board_header-item_name">
                     Total in pesos:
                   </div>
-                  <div className="board_header-item_res"> {priceS} COP</div>
+                  <div className="board_header-item_res"> {priceTotalCop} COP</div>
                 </div>
                 <img src={totalInPesosIcon} className="board_header-item_icon last-icons"/>
               </div>
@@ -456,13 +478,12 @@ function StepNine({
 
                 
             </div>
-
             <p>
-              Your total price is <span> {priceS}. </span> the booking fee to be paid is 
-              <span> {totalCop} </span> pesos o <span> {priceToPay} </span> USD at an exchange rate
-              <span> {exchangeRatio} </span> COP per USD. We accept <span>crypto stablecoins (no
+              Your total price is <span> {priceTotalCop} </span> the booking fee to be paid is 
+              <span> {comissionCop} </span> pesos o <span> {priceToPay} </span> USD at an exchange rate
+              <span> ${exchangeRatio} </span> COP per USD. We accept <span>crypto stablecoins (no
               commission), stripe ({config.STRIPE_PERCENTAGE}% )and pay pal (
-              {config.PAYPAL_PERCENTAGE}%)</span>. The reminding <span> {costTeacher} </span> are paid
+              {config.PAYPAL_PERCENTAGE}%)</span>. The reminding <span> {costTeacherCop} </span> are paid
               directly in cash to your instructor please check out our terms
               <a href={"https://salsaclasses.co/packs/"}> here.</a>
             </p>
@@ -508,11 +529,15 @@ function StepNine({
                   </Button>
                   <div className="pay_method-info">
                       <div className="pay_method-info_bubble-floor">
-                        <div className="pay_method-info_bubble">
+                        <div className="pay_method-info_bubble" id="div2" >
                           You can pay with crypto stablecoin by connecting the <span>Metamask.Chrome extension</span>  to the <span>Binance Smart Chain.</span>                          
                         </div>
                       </div>
-                      <div className="pay_method-info_button"><img src={questionMark} /></div>
+                      <div className="pay_method-info_button" id="activatordiv1" onMouseEnter={() => {
+                        document.getElementById('div2').style.visibility='visible'
+                      }} onMouseLeave={() => {
+                        document.getElementById('div2').style.visibility='hidden'
+                      }}><img src={questionMark} /></div>
                     </div>
                 </div>
                 <div className="pay_method">  
@@ -527,13 +552,17 @@ function StepNine({
                       onApprove={(data, actions) => onApprove(data, actions)}
                     />
                   </PayPalScriptProvider>
-                  <div className="pay_method-info">
+                  <div className="pay_method-info"  >
                       <div className="pay_method-info_bubble-floor">
-                        <div className="pay_method-info_bubble">
+                        <div className="pay_method-info_bubble" id="div1" >
                           We charge 5% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
                         </div>
                       </div>
-                      <div className="pay_method-info_button"><img src={questionMark} /></div>
+                      <div className="pay_method-info_button" onMouseEnter={() => {
+                        document.getElementById('div1').style.visibility='visible'
+                      }} onMouseLeave={() => {
+                        document.getElementById('div1').style.visibility='hidden'
+                      }} ><img src={questionMark}  /></div>
                     </div>
                 </div>
                 <div className="pay_method">
@@ -544,11 +573,16 @@ function StepNine({
                   
                   <div className="pay_method-info">
                     <div className="pay_method-info_bubble-floor">
-                      <div className="pay_method-info_bubble">
+                      <div className="pay_method-info_bubble" id="div3">
                         We charge 5% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
                       </div>
                     </div>
-                    <div className="pay_method-info_button"><img src={questionMark} /></div>
+                    <div className="pay_method-info_button"
+                    onMouseEnter={() => {
+                      document.getElementById('div3').style.visibility='visible'
+                    }} onMouseLeave={() => {
+                      document.getElementById('div3').style.visibility='hidden'
+                    }}><img src={questionMark} /></div>
                   </div>
                 </div>
               </div>

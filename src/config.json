@@ -1,6 +1,6 @@
 {
     "CLIENT_ID_PAYPAL":"AQ_Qiip-PYzDW2tacR6FO22P8DhfgIsvdBlANNwqCSQ-hTrVYCB7zrrZFocURXAS2d_S5CHqN9cRVaOK",
-    "STRIPE_CHECKOUT": "http://localhost:3000/create-checkout-session",
+    "STRIPE_CHECKOUT": "https://localhost:3000/create-checkout-session",
     "PAYPAL_PERCENTAGE" : 5,
     "STRIPE_PERCENTAGE" : 5,
     "URL_BASE" : "https://deep-index.moralis.io/api/v2",
@@ -8,8 +8,8 @@
     "UST_TOKEN" :"0xE2D78188B938CEcEf2Dd44634e6c08b7Feb93c3f",
     "USDC_TOKEN" :"0xDDb0B4FD529267d7f894C4E1552445dE94c643F8",
     "PAYMENT_ACCOUNT" : "0x02a10A6182B60Ee989fd611cab17bd0512885205",
-    "SEND_MAIL_ENDPOINT" : "http://localhost:3000/sendmail",
-    "SAVEDATA_ENDPOINT" : "http://localhost:3000/savedata",
+    "SEND_MAIL_ENDPOINT" : "https://localhost:3000/sendmail",
+    "SAVEDATA_ENDPOINT" : "https://localhost:3000/savedata",
     "BLOCKHAIN_VALIDATION" : "0x13881",
     "MESSAGE_BLOCKCHAIN" : "Please select polygon Mumbai testnet"
 }
