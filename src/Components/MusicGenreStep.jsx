@@ -5,7 +5,7 @@ import bachata from "../images/bachata.png";
 import kizomba from "../images/kizomba.png";
 import Fab from "@mui/material/Fab";
 import goBackIcon from "../images/go-back.png"
-import "../scss/cards.scss";
+import "../scss/step.scss";
 import "../scss/layout.scss";
 
 function StepThree({ update, goBackPage }) {

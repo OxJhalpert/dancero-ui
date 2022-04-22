@@ -3,7 +3,7 @@ import man from "../images/man.png";
 import woman from "../images/woman.png";
 import Fab from "@mui/material/Fab";
 import goBackIcon from "../images/go-back.png"
-import "../scss/cards.scss";
+import "../scss/step.scss";
 import "../scss/layout.scss";
 
 function StepTwo({ data, update, goBackPage, setPage }) {

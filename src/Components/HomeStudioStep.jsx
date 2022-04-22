@@ -3,7 +3,7 @@ import studio from "../images/studio.png";
 import home from "../images/home.png";
 import goBackIcon from "../images/go-back.png"
 import Fab from "@mui/material/Fab";
-import "../scss/cards.scss";
+import "../scss/step.scss";
 import "../scss/layout.scss";
 
 function HomeStudioStep({ update, goBackPage }) {

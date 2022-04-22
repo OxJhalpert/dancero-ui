@@ -3,7 +3,7 @@ import basic from "../images/basic.png";
 import standard from "../images/standard.png";
 import premium from "../images/premium.png"
 import goBackIcon from "../images/go-back.png"
-import "../scss/cards.scss";
+import "../scss/step.scss";
 import "../scss/layout.scss";
 
 function StepSix({ update, goBackPage }) {
@@ -11,8 +11,7 @@ function StepSix({ update, goBackPage }) {
     <div className="container flex-container">
       <div className="section-title">
         <p>
-        <b>Basic:</b> You’re connected with an instructor that matches the requirements. <b>Standard:</b> You have the freedom to switch up your instructors. <b>Premium:</b> Enjoy a virtual concierge service to help you book taxis, hotels, tours or anything else.
-          <a href={"https://salsaclasses.co/packs/"}>Lear more.</a>
+        <b>Basic:</b> You’re connected with an instructor that matches the requirements. <b>Standard:</b> You have the freedom to switch up your instructors. <b>Premium:</b> Enjoy a virtual concierge service to help you book taxis, hotels, tours or anything else. <a href={"https://salsaclasses.co/packs/"}> Learn more.</a>
         </p>
       </div>
 

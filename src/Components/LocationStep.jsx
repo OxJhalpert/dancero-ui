@@ -6,7 +6,7 @@ import medellin from "../images/medellin.png";
 
 import goBackIcon from "../images/go-back.png"
 import Fab from "@mui/material/Fab";
-import "../scss/cards.scss";
+import "../scss/step.scss";
 import "../scss/layout.scss";
 
 function StepFour({ data, update, goBackPage, setPage }) {

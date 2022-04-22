@@ -3,7 +3,7 @@ import Fab from "@mui/material/Fab";
 import goBackIcon from "../images/go-back.png"
 import hourSelectedIcon from "../images/hour-selected.png"
 import "../scss/hours-step.scss"
-import "../scss/cards.scss";
+import "../scss/step.scss";
 import "../scss/layout.scss";
 
 import fiveHours from "../images/five-hours.png"

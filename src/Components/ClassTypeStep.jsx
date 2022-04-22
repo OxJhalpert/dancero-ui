@@ -2,7 +2,7 @@ import online from "../images/online.png";
 import studio from '../images/regular.png';
 import Fab from "@mui/material/Fab";
 import Grid from "@mui/material/Grid";
-import "../scss/cards.scss"
+import "../scss/step.scss"
 import "../scss/layout.scss"
 
 

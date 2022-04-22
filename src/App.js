@@ -19,7 +19,7 @@ import './css/cards.css';
 import HomeStudioStep from "./Components/HomeStudioStep.jsx";
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import config from "./config.json";
-import "./scss/cards.scss";
+import "./scss/step.scss";
 import "./scss/layout.scss";
 import danceroLogo from "./images/dancero-logo.png"
 

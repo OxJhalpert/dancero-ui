@@ -11,7 +11,7 @@ import DatePicker from "@mui/lab/DatePicker";
 import Fab from "@mui/material/Fab";
 import moment from "moment";
 import { Box } from "@mui/system";
-import "../scss/cards.scss";
+import "../scss/step.scss";
 import "../scss/dates-step.scss";
 
 function StepFive({ update, goBackPage }) {
