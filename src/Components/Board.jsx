@@ -54,6 +54,10 @@ function StepNine({
   const [priceS, setPriceS] = useState(0);
   const [priceSend, setPriceSend] = useState(0);
   const [costHour, setCostHour] = useState(0);
+  const [payCrypto, setPayCrypto] = useState(0);
+  const [nftMetadata, setNftMetadata] = useState("");
+
+
   // const [costUsd, setCostUsd] = useState(0);
   const [pricePerHour, setPricePerHour] = useState(0);
   var dataSend = data;
@@ -84,8 +88,7 @@ function StepNine({
 
 
   const header = {
-    "X-API-Key":
-      "2jGZArUpQi7ShuA7xONTt8THMikH6zZVoeL0Mp8nVW06Td4zWznTdU7IodyoNmV6",
+    "X-API-Key":"2jGZArUpQi7ShuA7xONTt8THMikH6zZVoeL0Mp8nVW06Td4zWznTdU7IodyoNmV6 ",
   };
 
   const inicio = {
@@ -98,7 +101,7 @@ function StepNine({
   function peticionUrl (){
     var peticion =
      config.URL_BASE + 
-     "/"+data.user+"/nft/0x40D966D7e51f15F830A57bC0D774DF5304EBc90D?chain=mumbai&format=decimal&limit=93353163";
+     "/"+data.user+"/nft/0x40D966D7e51f15F830A57bC0D774DF5304EBc90D?chain=mumbai&format=decimal&limit=500";
     return peticion
   }
 
@@ -114,13 +117,14 @@ function StepNine({
           return
         }else {
           setNFTCodes(data.result);
-          var test = data.result[19];
-          SetNFTSelected(data.result[19]);
-          test = JSON.parse(test.metadata);
-          var test2 = test.image;
-          test2=test2.substr(6,test2.length)
-          test2= "https://gateway.pinata.cloud/ipfs/"+ test2
-          setImgNFT(test2)
+          var test = data.result[14];
+          var test = JSON.parse(test.metadata)
+          // console.log(test)
+          setNftMetadata(test)
+          var test = test.image
+          test = test.substr(6,test.length)
+          var test2 ="https://gateway.pinata.cloud/ipfs/"+ test
+          setImgNFT(test2) 
         }
       });
   }, [data.user]);
@@ -252,6 +256,7 @@ function StepNine({
     restPaypal= Math.round(restPaypal)
     setTotalPaypal(restPaypal);
     setTotalStripe(restStripe + rest);
+    setPayCrypto(rest);
     rest=currencyDollar(rest)
     setPriceToPay(rest);
 
@@ -495,7 +500,7 @@ function StepNine({
                   <Button
                     className="btn pay_method-button"
                     onClick={async (event) => {
-                      var amount = priceToPay.toString();
+                      var amount = payCrypto.toString();
                       var _contractAbi = "";
                       var _addressContract = "";
 
@@ -555,7 +560,7 @@ function StepNine({
                   <div className="pay_method-info"  >
                       <div className="pay_method-info_bubble-floor">
                         <div className="pay_method-info_bubble" id="div1" >
-                          We charge 5% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
+                          We charge {config.STRIPE_PERCENTAGE}% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
                         </div>
                       </div>
                       <div className="pay_method-info_button" onMouseEnter={() => {
@@ -574,7 +579,7 @@ function StepNine({
                   <div className="pay_method-info">
                     <div className="pay_method-info_bubble-floor">
                       <div className="pay_method-info_bubble" id="div3">
-                        We charge 5% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
+                        We charge {config.PAYPAL_PERCENTAGE}% fee for Stripe payments, which covers the Stripe commission for payment processing and conversion into Colombian pesos. 
                       </div>
                     </div>
                     <div className="pay_method-info_button"
@@ -638,10 +643,10 @@ function StepNine({
             </div>
             
             
-            {nftImg ? (
+            {imgNFT ? (
               <div  className="nft-img">
                 <img
-                src={nftImg}
+                src={imgNFT}
                 alt="DanceroNFT"
                 />
             </div>
@@ -657,7 +662,7 @@ function StepNine({
             )
             }
             <div>
-              <h2>Dancero # 57</h2>
+              <h2>Dancero # {nftMetadata.edition}</h2>
               <p>
                 You will soon be able to stake your NFT to apply an automatic
                 discount. <a href="">Learn more.</a>
