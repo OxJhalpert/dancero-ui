@@ -17,7 +17,7 @@ import BoardStep from './Components/Board.jsx';
 
 import './css/cards.css';
 import HomeStudioStep from "./Components/HomeStudioStep.jsx";
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import walletIcon from './images/wallet-icon.png';
 import config from "./config.json";
 import "./scss/step.scss";
 import "./scss/layout.scss";
@@ -162,13 +162,14 @@ export default function App() {
           <Button
                 className="wallet-button"
                 disabled={data.user}
-                endIcon={<AccountBalanceWalletIcon />}
                 variant="contained"
                 onClick={async (e) => {
                   connect();
                 }}
               >
                 Connect Wallet 
+
+              <img src={walletIcon}/>
           </Button>
           </Toolbar>
         </AppBar>
