@@ -128,9 +128,15 @@ function StepNine({
         }
       });
   }, [data.user]);
+  const months = ["JAN", "FEB", "MAR","APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
-  var initialDate = moment(data.dates.dateFrom).format("MMM Do YY");
-  var finalDate = moment(data.dates.dateTo).format("MMM Do YY");
+  function formatDate (date){
+    let formatted_date = date.getDate() + "-" + months[date.getMonth()] + "-" + date.getFullYear()
+    return formatted_date;
+}
+  var initialDate= formatDate(data.dates.dateFrom)
+  var finalDate= formatDate(data.dates.dateTo)
+
   const rows = [
     createData(<b>Date from</b>, initialDate, <b>City</b>, data.City),
     createData(<b>Date to</b>, finalDate, <b>Service Type</b>, data.Service),
@@ -356,7 +362,7 @@ function StepNine({
                   <div className="board_header-item_name">
                     City: 
                   </div>
-                  <div className="board_header-item_res">{data.City}</div>
+                  <div className="board_header-item_res">{data.City} {data.place}</div>
                 </div>
                 <img src={cityIcon} className="board_header-item_icon"/>
               </div>
@@ -419,7 +425,7 @@ function StepNine({
                   <div className="board_header-item_name">
                     From:
                   </div>
-                  <div className="board_header-item_res">{moment(data.dates.dateFrom).format("MMM Do YY")}</div>
+                  <div className="board_header-item_res">{initialDate}</div>
                 </div>
                 <img src={dateFromIcon} className="board_header-item_icon"/>
               </div>
@@ -427,7 +433,7 @@ function StepNine({
               <div className="board_header-item">
                 <div className="board_header-item_content">
                   <div  className="board_header-item_name"> To: </div>
-                  <div className="board_header-item_res"> {moment(data.dates.dateTo).format("MMM Do YY")}</div>
+                  <div className="board_header-item_res"> {finalDate}</div>
                 </div>
                 <img src={dateToIcon} className="board_header-item_icon"/>
               </div>
