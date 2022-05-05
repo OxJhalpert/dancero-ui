@@ -65,6 +65,59 @@ export default function App() {
     goNextPage();    
   }
 
+  // chain id changed
+  const networks = {
+    polygon: {
+      // chainId: `0x${Number(138).toString(81)}`,
+      chainId: config.BLOCKHAIN_VALIDATION,
+      chainName: "Polygon Mumbai",
+      nativeCurrency: {
+        name: "MATIC",
+        symbol: "MATIC",
+        decimals: 18
+      },
+      rpcUrls: ["https://rpc-mumbai.matic.today"],
+      blockExplorerUrls: ["https://polygonscan.com/"]
+    }
+  };
+
+  const changeNetwork = async ({ networkName, setError }) => {
+    try {
+      if (!window.ethereum) throw new Error("No crypto wallet found");
+      await window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            ...networks[networkName]
+          }
+        ]
+      });
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const [error, setError] = useState();
+
+  const handleNetworkSwitch = async (networkName) => {
+    setError();
+    await changeNetwork({ networkName, setError });
+  };
+
+  const networkChanged = (chainId) => {
+    console.log({ chainId });
+  };
+
+  useEffect(() => {
+    window.ethereum.on("chainChanged", networkChanged);
+
+    return () => {
+      window.ethereum.removeListener("chainChanged", networkChanged);
+    };
+  }, []);
+
+  
+
   async function transferToken(amount, _contractAbi, _addressContract, exchangeRatio,totalCop,priceS,priceSend,dollarfee,costHour,costTeacher,costUsd) {
     var chainId = await window.ethereum.request({  method: 'eth_chainId'  });
     const user = await window.web3.eth.getAccounts();
@@ -134,8 +187,11 @@ export default function App() {
         });
       });
     }else
-    {
-      window.alert(config.MESSAGE_BLOCKCHAIN)
+    { 
+      // window.alert(config.MESSAGE_BLOCKCHAIN)
+      // const provider = new ethers.providers.Web3Provider(window.ethereum);
+      // const signer = provider.getSigner();
+      handleNetworkSwitch("polygon");
     }
   }
 
@@ -175,7 +231,7 @@ export default function App() {
         </AppBar>
       </Box>
       <div className="progress-bar">
-        <span>{page} / 9</span>
+        <span>{page} / 10</span>
         <LinearProgress variant="determinate" value= {(page) * 10}  />
       </div>
        <div>

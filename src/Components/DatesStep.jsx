@@ -37,7 +37,7 @@ function StepFive({ update, goBackPage }) {
                 <DatePicker 
                   className="date-picker"
                   label="Start date"
-                  minDate={new Date()}
+                  minDate={Date.now()}
                   value={dateFrom}
                   onChange={(newValue) => {
                     setDateFrom(newValue);
@@ -45,11 +45,31 @@ function StepFive({ update, goBackPage }) {
                   }}
                   renderInput={(params) => <TextField {...params} />}
                 />
+                <Fab
+                variant="extended"
+                size="medium"
+                color="primary"
+                onClick={() => {
+                  var now = moment();
+                  var initialDate = moment(dateFrom)
+                  var finalDate =  moment(dateTo)
+                  var diff = finalDate.diff(initialDate,'days')
+                  var difToday = initialDate.diff(now,'days')
+                  // console.log(diff, difToday)
+                  if((dateFrom !== null && dateTo !== null) && (diff >= 0 && difToday >=0)){
+                    update("dates", { dateFrom: dateFrom, dateTo: dateTo });
+                  }else {
+                    setError(true);
+                  }
+                }}
+              >
+                Next
+              </Fab>
                 <DatePicker
                   className="date-picker"
                   label="Finish date"
                   value={dateTo}
-                  minDate={new Date()}
+                  minDate={Date.now()}
                   onChange={(newValue) => {
                     setDateTo(newValue);
                   }}
@@ -58,32 +78,6 @@ function StepFive({ update, goBackPage }) {
                 />
               </div>
             </LocalizationProvider>
-            
-            <Fab
-                variant="extended"
-                size="medium"
-                color="primary"
-                onClick={() => {
-                  var now = moment();
-                  var today = moment(now, "DD.MM.YYYY"); 
-                  var finalDate = moment(dateFrom, "DD.MM.YYYY");
-                  var isAfter = moment(today).isAfter(finalDate);
-                  var dateFinal = moment(dateTo, "DD.MM.YYYY");
-                  var isAfterTwo = moment(finalDate).isAfter(dateFinal);
-                  if (
-                    dateFrom !== null &&
-                    dateTo !== null &&
-                    isAfter === false &&
-                    isAfterTwo === false
-                  ) {
-                    update("dates", { dateFrom: dateFrom, dateTo: dateTo });
-                  } else {
-                    setError(true);
-                  }
-                }}
-              >
-                Next
-              </Fab>
             {error ? (
               <Alert
                 variant="outlined"

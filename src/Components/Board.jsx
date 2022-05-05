@@ -47,7 +47,7 @@ function StepNine({
   const [nftSelected, SetNFTSelected] = useState([]);
   const [priceToPay, setPriceToPay] = useState(0);
   const [totalCop, setTotalCop] = useState(0);
-  const [totalPaypal, setTotalPaypal] = useState(0);
+  // const [totalPaypal, setTotalPaypal] = useState(0);
   const [totalStripe, setTotalStripe] = useState(0);
   const [dollarfee, setDollarFee] = useState(0);
   const [costTeacher, setCostTeacher] = useState(0);
@@ -60,6 +60,7 @@ function StepNine({
 
   // const [costUsd, setCostUsd] = useState(0);
   const [pricePerHour, setPricePerHour] = useState(0);
+  var totalPaypal ='';
   var dataSend = data;
   var costUsd = "";
   const [priceTotalCop,setpriceTotalCop] = useState(0);
@@ -128,7 +129,7 @@ function StepNine({
         }
       });
   }, [data.user]);
-  const months = ["JAN", "FEB", "MAR","APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+  const months = ["Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   function formatDate (date){
     let formatted_date = date.getDate() + "-" + months[date.getMonth()] + "-" + date.getFullYear()
@@ -260,7 +261,9 @@ function StepNine({
     var restPaypal = (rest * config.PAYPAL_PERCENTAGE) / 100;
     restPaypal = restPaypal+rest;
     restPaypal= Math.round(restPaypal)
-    setTotalPaypal(restPaypal);
+    // setTotalPaypal(restPaypal);
+    totalPaypal=restPaypal;
+    // console.log(totalPaypal)
     setTotalStripe(restStripe + rest);
     setPayCrypto(rest);
     rest=currencyDollar(rest)
@@ -272,9 +275,11 @@ function StepNine({
      setcostTeacherCop(currencyCop(costT));
 
   }
+
   function RoundTo(number, roundTo) {
     return roundTo * Math.ceil(number / roundTo);
   }
+
   const payWithStripe = () => {
     var total = priceS;
     var comission = costUsd;
@@ -344,7 +349,17 @@ function StepNine({
         
       })
       .then(({ url }) => {
-        window.location = url;
+        // window.open(url);
+        window.open(url,'targetWindow',
+                                   `toolbar=no,
+                                    location=no,
+                                    status=no,
+                                    menubar=no,
+                                    scrollbars=yes,
+                                    resizable=yes,
+                                    width=600,
+                                    height=600`);
+        return false;
       })
       .catch((e) => {
         console.error(e.error);
@@ -362,7 +377,7 @@ function StepNine({
                   <div className="board_header-item_name">
                     City: 
                   </div>
-                  <div className="board_header-item_res">{data.City} {data.place}</div>
+                  <div className="board_header-item_res">{data.City} ({data.place ? (data.place):(data.Venue)})</div>
                 </div>
                 <img src={cityIcon} className="board_header-item_icon"/>
               </div>
