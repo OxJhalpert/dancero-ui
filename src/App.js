@@ -68,7 +68,6 @@ export default function App() {
   // chain id changed
   const networks = {
     polygon: {
-      // chainId: `0x${Number(138).toString(81)}`,
       chainId: config.BLOCKHAIN_VALIDATION,
       chainName: "Polygon Mumbai",
       nativeCurrency: {
