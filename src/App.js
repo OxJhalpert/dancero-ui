@@ -66,7 +66,7 @@ export default function App() {
   }
 
   // chain id changed
-  const networks = {
+const networks = {
     polygon: {
       chainId: config.BLOCKHAIN_VALIDATION,
       chainName: "Polygon Mumbai",
@@ -107,6 +107,7 @@ export default function App() {
     console.log({ chainId });
   };
 
+/*
   useEffect(() => {
     window.ethereum.on("chainChanged", networkChanged);
 
@@ -114,7 +115,7 @@ export default function App() {
       window.ethereum.removeListener("chainChanged", networkChanged);
     };
   }, []);
-
+*/
   
 
   async function transferToken(amount, _contractAbi, _addressContract, exchangeRatio,totalCop,priceS,priceSend,dollarfee,costHour,costTeacher,costUsd) {
@@ -190,7 +191,7 @@ export default function App() {
       // window.alert(config.MESSAGE_BLOCKCHAIN)
       // const provider = new ethers.providers.Web3Provider(window.ethereum);
       // const signer = provider.getSigner();
-      handleNetworkSwitch("polygon");
+     handleNetworkSwitch("polygon");
     }
   }
 

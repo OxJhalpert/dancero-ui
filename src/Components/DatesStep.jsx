@@ -45,26 +45,7 @@ function StepFive({ update, goBackPage }) {
                   }}
                   renderInput={(params) => <TextField {...params} />}
                 />
-                <Fab
-                variant="extended"
-                size="medium"
-                color="primary"
-                onClick={() => {
-                  var now = moment();
-                  var initialDate = moment(dateFrom)
-                  var finalDate =  moment(dateTo)
-                  var diff = finalDate.diff(initialDate,'days')
-                  var difToday = initialDate.diff(now,'days')
-                  // console.log(diff, difToday)
-                  if((dateFrom !== null && dateTo !== null) && (diff >= 0 && difToday >=0)){
-                    update("dates", { dateFrom: dateFrom, dateTo: dateTo });
-                  }else {
-                    setError(true);
-                  }
-                }}
-              >
-                Next
-              </Fab>
+                
                 <DatePicker
                   className="date-picker"
                   label="Finish date"
@@ -76,6 +57,30 @@ function StepFive({ update, goBackPage }) {
                   placeholder="End of the classes"
                   renderInput={(params) => <TextField {...params} />}
                 />
+
+
+              <div className="next-button-container">
+                <Fab
+                  variant="extended"
+                  size="medium"
+                  color="primary"
+                  onClick={() => {
+                    var now = moment();
+                    var initialDate = moment(dateFrom)
+                    var finalDate =  moment(dateTo)
+                    var diff = finalDate.diff(initialDate,'days')
+                    var difToday = initialDate.diff(now,'days')
+                    // console.log(diff, difToday)
+                    if((dateFrom !== null && dateTo !== null) && (diff >= 0 && difToday >=0)){
+                      update("dates", { dateFrom: dateFrom, dateTo: dateTo });
+                    }else {
+                      setError(true);
+                    }
+                  }}
+                >
+                  Next
+                </Fab>
+              </div>
               </div>
             </LocalizationProvider>
             {error ? (

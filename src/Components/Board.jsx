@@ -27,6 +27,7 @@ import dateFromIcon from "../images/date-from.png"
 import dateToIcon from "../images/date-to.png"
 import pricePerHourIcon from "../images/price-per-hour.png"
 import totalInPesosIcon from "../images/total-in-pesos.png"
+import totalInDolarsIcon from "../images/total-in-dolars.png"
 import goBackIcon from "../images/go-back.png"
 
 function createData(name, option, name2, option2) {
@@ -485,6 +486,7 @@ function StepNine({
                       {priceToPay ? priceToPay : "..."} USD  
                   </div>
                 </div>
+                <img src={totalInDolarsIcon} className="board_header-item_icon last-icons" />
               </div>
             </div>
           </div>
