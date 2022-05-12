@@ -674,7 +674,7 @@ function StepNine({
                 />
             </div>
             ) : (
-              <div>
+              <div className="nft-space" style={{ border: "3px blue solid", padding :"30px " }}>
                   <p>
                     connect a web3 wallet to view your dancero nft. you don't have any
                     dancero nft in your wallet but you can purchase one{" "}
