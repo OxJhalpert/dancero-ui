@@ -48,7 +48,6 @@ function StepNine({
   const [nftSelected, SetNFTSelected] = useState([]);
   const [priceToPay, setPriceToPay] = useState(0);
   const [totalCop, setTotalCop] = useState(0);
-  // const [totalPaypal, setTotalPaypal] = useState(0);
   const [totalStripe, setTotalStripe] = useState(0);
   const [dollarfee, setDollarFee] = useState(0);
   const [costTeacher, setCostTeacher] = useState(0);
@@ -57,18 +56,23 @@ function StepNine({
   const [costHour, setCostHour] = useState(0);
   const [payCrypto, setPayCrypto] = useState(0);
   const [nftMetadata, setNftMetadata] = useState("");
-
-
-  // const [costUsd, setCostUsd] = useState(0);
+  const [costUsd, setCostUsd] = useState(0);
   const [pricePerHour, setPricePerHour] = useState(0);
   var totalPaypal ='';
   var dataSend = data;
-  var costUsd = "";
   const [priceTotalCop,setpriceTotalCop] = useState(0);
   const [priceHoursCop,setpriceHoursCop] = useState(0);
   const [comissionCop,setcomissionCop] = useState(0);
   const [costTeacherCop,setcostTeacherCop] = useState(0);
-
+  //sendpaypal
+  var costUsdpaypal="";
+  var priceSendpaypal="";
+  var costHourpaypal="";
+  var costTeacherpaypal = "";
+  var dollarfeepaypal="";
+  var exchangeRatiopaypal="";
+  var totalCoppaypal="";
+  var priceSpaypal="";
  
 
   function getExchangeRate() {
@@ -78,6 +82,7 @@ function StepNine({
       })
       .then((res) => {
         setexchangeRatio(res.rates.COP);
+        exchangeRatiopaypal=res.rates.COP;
         calculatePrice(res.rates.COP);
       });
   }
@@ -101,9 +106,11 @@ function StepNine({
   };
 
   function peticionUrl (){
-    var peticion =
-     config.URL_BASE + 
-     "/"+data.user+"/nft/0x40D966D7e51f15F830A57bC0D774DF5304EBc90D?chain=mumbai&format=decimal&limit=500";
+    // var peticion =
+    //  config.URL_BASE + 
+    //  "/"+data.user+"/nft/0x40D966D7e51f15F830A57bC0D774DF5304EBc90D?chain=mumbai&format=decimal&limit=500";
+    var peticion = config.URL_BASE +"/"+data.user+"/nft?chain=mumbai&format=decimal&limit=100&token_addresses=0x40D966D7e51f15F830A57bC0D774DF5304EBc90D"
+    // https://deep-index.moralis.io/api/v2/0x5603D86d741535da15C4b2c12BFcC59ef601E3b9/nft?chain=mumbai&format=decimal&limit=100&token_addresses=0x40D966D7e51f15F830A57bC0D774DF5304EBc90D
     return peticion
   }
 
@@ -115,13 +122,13 @@ function StepNine({
     fetch(peticion, inicio)
       .then((response) => response.json())
       .then((data) => {
+        // console.log(data)
         if(data.result.length === 0){
           return
         }else {
           setNFTCodes(data.result);
-          var test = data.result[14];
+          var test = data.result[19];
           var test = JSON.parse(test.metadata)
-          // console.log(test)
           setNftMetadata(test)
           var test = test.image
           test = test.substr(6,test.length)
@@ -130,6 +137,7 @@ function StepNine({
         }
       });
   }, [data.user]);
+  
   const months = ["Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   function formatDate (date){
@@ -165,48 +173,47 @@ function StepNine({
   };
 
   const onApprove = (data, actions) => {
-    var total = priceS;
-    var comission = costUsd;
-    var ch = costHour;
+    // console.log(data)
     fetch(config.SEND_MAIL_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        data : data,
-        costUsd: costTeacher,
-        priceSendHour: priceSend,
-        costHour: ch,
-        costTeacher: costTeacher,
-        totalDollar:dollarfee,
-        exchangeRatio : exchangeRatio,
-        comission : comission,
+        data : dataSend,
+        costUsd: costTeacherpaypal,
+        priceSendHour: priceSendpaypal,
+        costHour: costHourpaypal,
+        costTeacher: costTeacherpaypal,
+        totalDollar:dollarfeepaypal,
+        exchangeRatio : exchangeRatiopaypal,
+        comission : costUsdpaypal,
         paymentMethod : "paypal",
-        paymentFee : totalCop,
-        total: total,
+        paymentFee : totalCoppaypal,
+        total: priceSpaypal,
         paymentStatus : "received"
       }),
 
 
     })
+
     fetch(config.SAVEDATA_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        data : data,
-        costUsd: costTeacher,
-        priceSendHour: priceSend,
-        costHour: costHour,
-        costTeacher: costTeacher,
-        totalDollar:dollarfee,
-        exchangeRatio : exchangeRatio,
-        comission : costUsd,
+        data : dataSend,
+        costUsd: costTeacherpaypal,
+        priceSendHour: priceSendpaypal,
+        costHour: costHourpaypal,
+        costTeacher: costTeacherpaypal,
+        totalDollar:dollarfeepaypal,
+        exchangeRatio : exchangeRatiopaypal,
+        comission : costUsdpaypal,
         paymentMethod : "paypal",
-        paymentFee : totalCop,
-        total: priceS,
+        paymentFee : totalCoppaypal,
+        total: priceSpaypal,
         paymentStatus : "received"
       }),
     })
@@ -237,24 +244,31 @@ function StepNine({
     );
     var priceS = cost[1];
     priceS = RoundTo(priceS, roundTo);
+    priceSpaypal=priceS;
     setPriceS(priceS);
     var costT = cost[0];
+    costTeacherpaypal=costT;
     setCostTeacher(costT);
     var roundToHour = priceS / data.Hours
     roundToHour= RoundTo(roundToHour, roundToHours)
+    priceSendpaypal=roundToHour;
     setPriceSend(roundToHour);
     Math.round(priceSend)
 
     var dif = costT/data.Hours
+    costHourpaypal=dif;
     setCostHour(dif)
     var dollarFee = priceS / exchangeRate;
     dollarFee = Math.round(dollarFee);
+    dollarfeepaypal=dollarFee;
     setDollarFee(dollarFee);
     var rest = cost[1] - cost[0];
     var restUSD = rest / exchangeRate;
     var totalCopRound = RoundTo(rest, roundTo);
+    totalCoppaypal=totalCopRound;
     setTotalCop(totalCopRound);
-    costUsd=restUSD
+    costUsdpaypal=restUSD;
+    setCostUsd(restUSD)
 
     rest = totalCopRound / exchangeRate;
     rest = Math.round(rest);
@@ -262,14 +276,11 @@ function StepNine({
     var restPaypal = (rest * config.PAYPAL_PERCENTAGE) / 100;
     restPaypal = restPaypal+rest;
     restPaypal= Math.round(restPaypal)
-    // setTotalPaypal(restPaypal);
     totalPaypal=restPaypal;
-    // console.log(totalPaypal)
     setTotalStripe(restStripe + rest);
     setPayCrypto(rest);
     rest=currencyDollar(rest)
     setPriceToPay(rest);
-
      setpriceTotalCop(currencyCop(priceS));
      setpriceHoursCop(currencyCop(roundToHour));
      setcomissionCop(currencyCop(totalCopRound));
@@ -282,9 +293,6 @@ function StepNine({
   }
 
   const payWithStripe = () => {
-    var total = priceS;
-    var comission = costUsd;
-    var ch = costHour;
     fetch(config.STRIPE_CHECKOUT, {
       method: "POST",
       headers: {
@@ -302,6 +310,7 @@ function StepNine({
       }),
     })
       .then((res) => {
+        // console.log(res);
         if (res.ok){
           fetch(config.SEND_MAIL_ENDPOINT, {
             method: "POST",
@@ -312,14 +321,14 @@ function StepNine({
               data : dataSend,
               costUsd: costTeacher,
               priceSendHour: priceSend,
-              costHour: ch,
+              costHour: costHour,
               costTeacher: costTeacher,
               totalDollar:dollarfee,
               exchangeRatio : exchangeRatio,
-              comission : comission,
+              comission : costUsd,
               paymentMethod : "stripe",
               paymentFee : totalCop,
-              total: total,
+              total: priceS,
               paymentStatus : "received"
             }),
           });
@@ -347,10 +356,9 @@ function StepNine({
         }
          
         return res.json().then((json) => Promise.reject(json));
-        
+  
       })
       .then(({ url }) => {
-        // window.open(url);
         window.open(url,'targetWindow',
                                    `toolbar=no,
                                     location=no,
@@ -569,7 +577,7 @@ function StepNine({
                     </div>
                 </div>
                 <div className="pay_method">  
-                  <PayPalScriptProvider options={process.env.CLIENT_ID_PAYPAL}>
+                  <PayPalScriptProvider options={{ "client-id": 'AZ_pHxZ5pX49S7HZiMyyKdXlFlqHNw7Y2bNSzC179lga0VqK1gNeY1PIp7iqCR0iBCgvp_gBU7xAnDGN' }} >
                     <PayPalButtons
                       className="paypal-btn"
                       style={{ layout: "horizontal",
@@ -577,6 +585,7 @@ function StepNine({
                                 height: 55
                       }}
                       createOrder={(data, actions) => createOrder(data, actions)}
+                      // forceReRender={[priceS]}
                       onApprove={(data, actions) => onApprove(data, actions)}
                     />
                   </PayPalScriptProvider>
@@ -674,13 +683,17 @@ function StepNine({
                 />
             </div>
             ) : (
-              <div className="nft-space" style={{ border: "3px blue solid", padding :"30px " }}>
-                  <p>
-                    connect a web3 wallet to view your dancero nft. you don't have any
-                    dancero nft in your wallet but you can purchase one{" "}
-                    <a href={"https://salsaclasses.co/packs/"}>here.</a>
-                  </p>
-              </div>
+              // <div className="nft-space" style={{ border: "3px blue solid", padding :"30px " }}>
+              //     <p>
+              //       connect a web3 wallet to view your dancero nft. you don't have any
+              //       dancero nft in your wallet but you can purchase one{" "}
+              //       <a href={"https://salsaclasses.co/packs/"}>here.</a>
+              //     </p>
+              // </div>
+                <img
+                src={nftImg}
+                alt="DanceroNFT"
+                />
               
             )
             }

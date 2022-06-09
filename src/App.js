@@ -22,6 +22,7 @@ import config from "./config.json";
 import "./scss/step.scss";
 import "./scss/layout.scss";
 import danceroLogo from "./images/dancero-logo.png"
+import { SignalCellularConnectedNoInternet0BarTwoTone } from "@mui/icons-material";
 
 
 export default function App() {
@@ -38,7 +39,7 @@ export default function App() {
       window.web3 = new Web3(window.ethereum);
       const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
       setData({ ...data, 'user': account[0] });
-      
+      // document.getElementById('connectBtn').innerHTML(account[0])
     } else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider);
     } else {
@@ -47,7 +48,7 @@ export default function App() {
       );
     }
   }
-
+  
   function goNextPage() {
     if (page === 10) return;
     setPage((page) => page + 1);
@@ -104,7 +105,7 @@ const networks = {
   };
 
   const networkChanged = (chainId) => {
-    console.log({ chainId });
+    // console.log({ chainId });
   };
 
 /*
@@ -214,8 +215,9 @@ const networks = {
         <AppBar className="container navbar" position="static" sx={{ bgcolor: "#2F348B", boxShadow: "none" }}>
           <Toolbar>
             <img src={danceroLogo}/>
-          {data.user ? data.user : "" }
+          {/* {data.user ? data.user : "" } */}
           <Button
+                id="connectBtn"
                 className="wallet-button"
                 disabled={data.user}
                 variant="contained"
