@@ -27,6 +27,7 @@ import { SignalCellularConnectedNoInternet0BarTwoTone } from "@mui/icons-materia
 
 export default function App() {
   
+  const [btnConnect, setBtnConnect] = useState("Connect Wallet");
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
     "user" : ''
@@ -39,7 +40,12 @@ export default function App() {
       window.web3 = new Web3(window.ethereum);
       const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
       setData({ ...data, 'user': account[0] });
-      // document.getElementById('connectBtn').innerHTML(account[0])
+      var acwallet = account[0]
+      var acwallet1 = acwallet.slice(-4, acwallet.length)
+      var acwallet2 = acwallet.slice(acwallet.legth,5)
+      var acwallet3 = "..."
+      acwallet = acwallet2+acwallet3+acwallet1
+      setBtnConnect(acwallet)
     } else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider);
     } else {
@@ -105,25 +111,12 @@ const networks = {
   };
 
   const networkChanged = (chainId) => {
-    // console.log({ chainId });
   };
-
-/*
-  useEffect(() => {
-    window.ethereum.on("chainChanged", networkChanged);
-
-    return () => {
-      window.ethereum.removeListener("chainChanged", networkChanged);
-    };
-  }, []);
-*/
   
 
   async function transferToken(amount, _contractAbi, _addressContract, exchangeRatio,totalCop,priceS,priceSend,dollarfee,costHour,costTeacher,costUsd) {
     var chainId = await window.ethereum.request({  method: 'eth_chainId'  });
     const user = await window.web3.eth.getAccounts();
-    // console.log(exchangeRatio)
-    // console.log(chainId)
     if (chainId === config.BLOCKHAIN_VALIDATION)
     {
       window.web3.eth.getBlock("latest").then(async function (response) {
@@ -189,9 +182,6 @@ const networks = {
       });
     }else
     { 
-      // window.alert(config.MESSAGE_BLOCKCHAIN)
-      // const provider = new ethers.providers.Web3Provider(window.ethereum);
-      // const signer = provider.getSigner();
      handleNetworkSwitch("polygon");
     }
   }
@@ -209,13 +199,16 @@ const networks = {
     })();
   }, []);
 
+  function reload (){
+    window.location.reload();
+  }
+
   return (
     <div className="App" >
       <Box sx={{ flexGrow: 2, bgcolor: "#2F348B" }}>
         <AppBar className="container navbar" position="static" sx={{ bgcolor: "#2F348B", boxShadow: "none" }}>
           <Toolbar>
-            <img src={danceroLogo}/>
-          {/* {data.user ? data.user : "" } */}
+            <img src={danceroLogo} onClick={reload}/>
           <Button
                 id="connectBtn"
                 className="wallet-button"
@@ -225,7 +218,7 @@ const networks = {
                   connect();
                 }}
               >
-                Connect Wallet 
+                {btnConnect}
 
               <img src={walletIcon}/>
           </Button>

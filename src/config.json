@@ -1,8 +1,8 @@
 {
     "CLIENT_ID_PAYPAL":"AQ_Qiip-PYzDW2tacR6FO22P8DhfgIsvdBlANNwqCSQ-hTrVYCB7zrrZFocURXAS2d_S5CHqN9cRVaOK",
     "STRIPE_CHECKOUT": " https://danceroapi.herokuapp.com/create-checkout-session",
-    "PAYPAL_PERCENTAGE" : 6,
-    "STRIPE_PERCENTAGE" : 4,
+    "PAYPAL_PERCENTAGE" : 5,
+    "STRIPE_PERCENTAGE" : 5,
     "URL_BASE" : "https://deep-index.moralis.io/api/v2",
     "USDT_TOKEN" : "0xC8FDEd80D26E9a3CD998F160E2A3dCF55Bcaf7C5",
     "UST_TOKEN" :"0xE2D78188B938CEcEf2Dd44634e6c08b7Feb93c3f",
@@ -12,5 +12,6 @@
     "SUCCESS_PAGE" : "  https://danceroapi.herokuapp.com/success",
     "SAVEDATA_ENDPOINT" : " https://danceroapi.herokuapp.com/savedata",
     "BLOCKHAIN_VALIDATION" : "0x13881",
-    "MESSAGE_BLOCKCHAIN" : "Please select polygon Mumbai testnet"
+    "MESSAGE_BLOCKCHAIN" : "Please select polygon Mumbai testnet",
+    "contract_Adress" : "0x3Ff943C90f5aE868201aBbDB7c902f598d878C59"
 }

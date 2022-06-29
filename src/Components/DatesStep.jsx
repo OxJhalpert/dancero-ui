@@ -23,11 +23,11 @@ function StepFive({ update, goBackPage }) {
     <div className="container flex-container">
         <div className="section-title">
           <p>
-            What’s your approximate start and finish date to complete your
-            classes? Your answer here will also give us an idea of your
+            What’s your approximate start and end date for your classes.
+            Your answer here will also give us an idea of your
             preferred the volume per day or per week, which is useful to find an
             instructor with the appropriate availability. Note that you can
-            always change these dates later if you wish.{" "}
+            always change these dates later if you wish.
           </p>
         </div>
 

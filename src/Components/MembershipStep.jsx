@@ -11,7 +11,7 @@ function StepSix({ update, goBackPage }) {
     <div className="container flex-container">
       <div className="section-title">
         <p>
-        <b>Basic:</b> You’re connected with an instructor that matches the requirements. <b>Standard:</b> You have the freedom to switch up your instructors. <b>Premium:</b> Enjoy a virtual concierge service to help you book taxis, hotels, tours or anything else. <a href={"https://salsaclasses.co/packs/"}> Learn more.</a>
+        <b>Basic:</b> You’re connected with an instructor that matches the requirements. <b>Standard:</b> You have the freedom to switch up your instructors. <b>Premium:</b> Enjoy a virtual concierge service to help you book taxis, hotels, tours or anything else. <a href={"https://salsaclasses.co/packs/"}> Learn more</a>
         </p>
       </div>
 

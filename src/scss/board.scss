@@ -392,6 +392,26 @@
                 }
                 
             }
+            .nft-imgblur{
+                filter: blur(4px);
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                flex-shrink: 1;
+                margin: auto;
+                max-width:100%;
+                height: auto;
+                
+
+                img{
+                    position: relative;
+                    object-fit: contain;
+                    width: 100%;
+                    height: auto;
+                    flex-shrink: 1;
+                }
+                
+            }
 
             h2{
                 color: #2c2d93;

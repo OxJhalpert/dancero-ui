@@ -12,7 +12,7 @@ function StepOne({ update, setPage, goBackPage }) {
     <div className="container flex-container">
       <div className="section-title">
         <p>
-          <b>In-person classes are done at home or at a local studio.</b> Online classes via Zoom are a popular option for students that are not in Colombia, or have already left the country. <a href=""> Learn more.</a> 
+          <b>In-person classes are done at home or at a local studio.</b> Online classes via Zoom are a popular option for students that are not in Colombia, or have already left the country. <a href="https://salsaclasses.co/"> Learn more</a> 
         </p>
       </div>
       <div className="cards_container">

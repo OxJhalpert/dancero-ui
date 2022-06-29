@@ -13,7 +13,7 @@ function HomeStudioStep({ update, goBackPage }) {
         <p>
           Your instructor(s) can come to your home (or any other place you may
           have available to you, <b>including hotel, park, terrace</b> - a flat ground
-          is really all what’s needed) or we can book a studio close to your
+          is really all what’s needed) or we can book a convenient studio
           location.
         </p>
       </div>

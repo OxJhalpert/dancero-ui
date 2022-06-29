@@ -10,7 +10,7 @@ function StepSeven({ update, goBackPage }) {
     <div className="container flex-container">
       <div className="section-title">
         <p>
-          Our pricing takes into account the experience of your instructor.<b>Pro </b> instructors earn a living from dancing: teaching, performing in shows or participating in local competitions.<b> Semi-pros </b> practice and compete, but don't earn a living from dancing.<a>Master </a> are actual champions, and often choreographers as well. The pricing is the lowest with semi-pros and highest with masters.  
+          Our pricing takes into account the experience of your instructor.<b>Pro </b> instructors earn a living from dancing: teaching, performing in shows or participating in local competitions.<b> Semi-pros </b> practice and compete, but don't earn a living from dancing.<b>Masters</b> are actual champions, and often choreographers as well. The pricing is the lowest with semi-pros and highest with masters.  
         </p>
       </div>
 

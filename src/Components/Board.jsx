@@ -14,6 +14,10 @@ import Fab from "@mui/material/Fab";
 import config from "../config.json";
 
 import nftImg from "../images/NFT-img.png"
+import connectWallet from "../images/connectwallet.png"
+import nftconnect from "../images/nftconnect.png"
+
+
 import questionMark from "../images/question-mark.png"
 
 
@@ -106,11 +110,7 @@ function StepNine({
   };
 
   function peticionUrl (){
-    // var peticion =
-    //  config.URL_BASE + 
-    //  "/"+data.user+"/nft/0x40D966D7e51f15F830A57bC0D774DF5304EBc90D?chain=mumbai&format=decimal&limit=500";
-    var peticion = config.URL_BASE +"/"+data.user+"/nft?chain=mumbai&format=decimal&limit=100&token_addresses=0x40D966D7e51f15F830A57bC0D774DF5304EBc90D"
-    // https://deep-index.moralis.io/api/v2/0x5603D86d741535da15C4b2c12BFcC59ef601E3b9/nft?chain=mumbai&format=decimal&limit=100&token_addresses=0x40D966D7e51f15F830A57bC0D774DF5304EBc90D
+    var peticion = config.URL_BASE +"/"+data.user+"/nft?chain=mumbai&format=decimal&limit=100&token_addresses="+config.contract_Adress
     return peticion
   }
 
@@ -122,17 +122,18 @@ function StepNine({
     fetch(peticion, inicio)
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data)
+        // console.log(data.result)
         if(data.result.length === 0){
-          return
+          setImgNFT(nftconnect)
         }else {
           setNFTCodes(data.result);
-          var test = data.result[19];
+          var test = data.result[1];
           var test = JSON.parse(test.metadata)
           setNftMetadata(test)
           var test = test.image
           test = test.substr(6,test.length)
           var test2 ="https://gateway.pinata.cloud/ipfs/"+ test
+          // console.log(test2)
           setImgNFT(test2) 
         }
       });
@@ -515,11 +516,11 @@ function StepNine({
                 
             </div>
             <p>
-              Your total price is <span> {priceTotalCop} </span> the booking fee to be paid is 
-              <span> {comissionCop} </span> pesos o <span> {priceToPay} </span> USD at an exchange rate
+              Your total price is <span> {priceTotalCop} COP</span>. The booking fee to be paid is 
+              <span> {comissionCop} COP</span> or <span> {priceToPay} USD </span> at an exchange rate
               <span> ${exchangeRatio} </span> COP per USD. We accept <span>crypto stablecoins (no
-              commission), stripe ({config.STRIPE_PERCENTAGE}% )and pay pal (
-              {config.PAYPAL_PERCENTAGE}%)</span>. The reminding <span> {costTeacherCop} </span> are paid
+              commission), Stripe ({config.STRIPE_PERCENTAGE}% commission) and Paypal ({config.PAYPAL_PERCENTAGE}% commission)</span>.
+              The reminding <span> {costTeacherCop} </span> are paid
               directly in cash to your instructor please check out our terms
               <a href={"https://salsaclasses.co/packs/"}> here.</a>
             </p>
@@ -566,7 +567,7 @@ function StepNine({
                   <div className="pay_method-info">
                       <div className="pay_method-info_bubble-floor">
                         <div className="pay_method-info_bubble" id="div2" >
-                          You can pay with crypto stablecoin by connecting the <span>Metamask.Chrome extension</span>  to the <span>Binance Smart Chain.</span>                          
+                          You can pay with crypto stablecoin by connecting the Metamask.Chrome extension to the Binance Smart Chain.                          
                         </div>
                       </div>
                       <div className="pay_method-info_button" id="activatordiv1" onMouseEnter={() => {
@@ -662,7 +663,7 @@ function StepNine({
               </div>
 
             <p className="secondary-text">
-              Upon completing your payment, please use the live chat feature in the bottom right comer to message your phone number (or Whatsapp) to our team, so we can share it with your instructor, who will usually message you the same day. Feel free to use the live chat any time before or after payment to communicate with us.
+            Upon completing your payment, please use the live chat feature in the bottom right corner to message your phone number (or Whatsapp) to our team, so we can share it with your instructor, who will usually message directly the same day. Feel free to use the live chat at any time before or after payment to communicate with us.
             </p>
         </div>
         <aside>
@@ -670,38 +671,32 @@ function StepNine({
             <div>
               <p className="secondary-text">
                 We have launched Dancero, a collection of hand-drawn NFTs trading on several blockchain ecosystems. 
-                The NFTs unlock a long list of exclusive benefits to their owners, including free access to classes and bootcamps, and can even be rented out for passive income. <a href="">Learn more.</a>
+                The NFTs unlock a long list of exclusive benefits to their owners, including free access to classes and bootcamps, and can even be rented out for passive income. <a href="https://dancero.io/">Learn more</a>
               </p>
             </div>
             
             
             {imgNFT ? (
-              <div  className="nft-img">
+              <div  className="nft-img" >
                 <img
                 src={imgNFT}
                 alt="DanceroNFT"
                 />
             </div>
             ) : (
-              // <div className="nft-space" style={{ border: "3px blue solid", padding :"30px " }}>
-              //     <p>
-              //       connect a web3 wallet to view your dancero nft. you don't have any
-              //       dancero nft in your wallet but you can purchase one{" "}
-              //       <a href={"https://salsaclasses.co/packs/"}>here.</a>
-              //     </p>
-              // </div>
-                <img
-                src={nftImg}
-                alt="DanceroNFT"
-                />
-              
+              <div  className="nft-img">
+              <img
+              src={connectWallet}
+              alt="DanceroNFT"
+              />
+          </div>
             )
             }
             <div>
               <h2>Dancero # {nftMetadata.edition}</h2>
               <p>
                 You will soon be able to stake your NFT to apply an automatic
-                discount. <a href="">Learn more.</a>
+                discount. <a href="https://dancero.io/">Learn more</a>
               </p>
             </div>
           </div>
